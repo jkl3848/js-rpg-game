@@ -7,7 +7,7 @@ function combatInit() {
   cbtPlayer = structuredClone(player);
   // cbtPlayer.uuid = uuidv4()
   enemies = [];
-  enemies.push(structuredClone(mobs["slime"]));
+  enemies.push(structuredClone(mobs.find((item) => item.name == "slime")));
 
   // enemies = genCombatIDs(enemies)
 

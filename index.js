@@ -8,6 +8,7 @@ var player = {
   speed: 10,
   critChance: 1,
   items: [],
+  scale: [15, 1, 1, 1, 0],
 };
 
 function start() {
