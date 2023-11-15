@@ -3,6 +3,7 @@ var player = {
   player: true,
   combatId: 0,
   level: 1,
+  xp: 0,
   currentHP: 100,
   maxHP: 100,
   attack: 10,
@@ -16,6 +17,6 @@ var player = {
 };
 
 function start() {
-  let combatVal = 5;
+  let combatVal = 12;
   combatInit(combatVal);
 }

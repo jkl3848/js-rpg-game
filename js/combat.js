@@ -1,31 +1,27 @@
 let turnQueue = [];
 let cbtPlayer;
 let enemies = [];
+let playerTarget;
 
 async function combatInit(combatVal) {
   cbtPlayer = structuredClone(player);
-  // cbtPlayer.uuid = uuidv4()
   enemies = generateEnemies(combatVal);
-
-  // enemies = genCombatIDs(enemies)
 
   turnQueue = [cbtPlayer].concat(enemies);
   turnQueue.sort((a, b) => b.speed - a.speed);
 
   console.log(turnQueue);
-  //   addMessage(turnQueue);
 
   createCombatElements(turnQueue);
 
   while (cbtPlayer.currentHP > 0 && enemies.some((obj) => obj.currentHP > 0)) {
     const currentCharacter = turnQueue.shift();
+    let target = null;
 
     addMessage(`Turn: ${currentCharacter.name}`);
-    turnQueue.push(currentCharacter); // Move the current character to the end of the queue
-    // turnQueue.sort((a, b) => b.speed - a.speed); // Resort the queue based on speed
-
+    turnQueue.push(currentCharacter);
     // Show the next two turns in the turn list
-    const nextTwoTurns = turnQueue.slice(0, 2);
+    // const nextTwoTurns = turnQueue.slice(0, 2);
     // addMessage(
     //   "Next two turns:",
     //   nextTwoTurns.map((char) => char.name)
@@ -33,15 +29,23 @@ async function combatInit(combatVal) {
 
     // resolveStatusEffects(currentCharacter);
 
-    let target = getTarget(currentCharacter);
-
     if (currentCharacter.player) {
-      console.log("is player turn");
       await waitForUserAttack();
+      target = playerTarget;
+    } else {
+      target = cbtPlayer;
     }
+
     attack(currentCharacter, target);
 
     updateHealth(turnQueue);
+  }
+
+  if (cbtPlayer.currentHP > 0) {
+    addMessage("You Win!");
+  } else {
+    addMessage("You Lose!");
+    return;
   }
 }
 
@@ -49,9 +53,22 @@ function attack(attacker, target) {
   const damage = calcDamage(attacker, target);
 
   target.currentHP = target.currentHP - damage;
+  if (target.currentHP < 0) {
+    target.currentHP = 0;
+  }
 
   addMessage(target.name + " took " + damage + " damage");
   console.log(target + " took " + damage + " damage");
+
+  if (attacker.player) {
+    console.log(target);
+    //Reset target selection and color
+    const targetEl = document.getElementById("char-" + target.combatId);
+    targetEl.style.borderColor = "black";
+    playerTarget = null;
+    const atkBtn = document.getElementById("attackButton");
+    atkBtn.disabled = true;
+  }
 }
 
 function calcDamage(attacker, target) {
@@ -83,13 +100,14 @@ function calcDamage(attacker, target) {
   return damage - target.defense;
 }
 
-function getTarget(attacker) {
-  if (attacker.player) {
-    //TODO: Pause and let player choose target
-    return enemies[0];
-  } else {
-    return cbtPlayer;
-  }
+function setTarget(id) {
+  playerTarget = enemies.find((enemy) => enemy.combatId === id);
+
+  const target = document.getElementById("char-" + id);
+  target.style.borderColor = "red";
+
+  const atkBtn = document.getElementById("attackButton");
+  atkBtn.disabled = false;
 }
 
 function resolveStatusEffects(char) {
@@ -143,7 +161,10 @@ function createCombatElements(list) {
 
   list.forEach((char) => {
     const healthElement = document.createElement("div");
-    healthElement.innerHTML = `<strong>${char.name}</strong>: <div id='char-${char.combatId}'>${char.currentHP} HP</div>`;
+    healthElement.innerHTML = `<div class='combat-el' id='char-${char.combatId}'><strong>${char.name}</strong>: <div id='char-${char.combatId}-health'>${char.currentHP}/${char.maxHP} HP</div></div>`;
+    if (char.combatId > 0) {
+      healthElement.addEventListener("click", () => setTarget(char.combatId));
+    }
     container.appendChild(healthElement);
   });
 }
@@ -151,8 +172,10 @@ function createCombatElements(list) {
 function updateHealth(list) {
   console.log(list);
   list.forEach((char) => {
-    const healthElement = document.getElementById("char-" + char.combatId);
+    const healthElement = document.getElementById(
+      "char-" + char.combatId + "-health"
+    );
     console.log(healthElement);
-    healthElement.innerHTML = `${char.currentHP} HP`;
+    healthElement.innerHTML = `${char.currentHP}/${char.maxHP} HP`;
   });
 }

@@ -3,18 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <title>JS Game</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="main.css" />
   </head>
   <body>
-    <textarea id="messageField" readonly style="width: 500px; height: 300px">
-    </textarea>
+    <div id="game-space">
+      <div id="combat-space">
+        <textarea
+          id="messageField"
+          readonly
+          style="width: 500px; height: 300px"
+        >
+        </textarea>
 
-    <div>
-      <button onclick="start()">Start Game</button>
-      <button id="attackButton">Attack</button>
+        <div id="hud">
+          <button onclick="start()">Start Game</button>
+          <button id="attackButton" disabled>Attack</button>
+        </div>
+      </div>
+      <div id="characters"></div>
     </div>
-
-    <div id="characters"></div>
 
     <script src="index.js"></script>
     <script src="js/combat.js"></script>
