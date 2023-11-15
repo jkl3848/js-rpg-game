@@ -4,6 +4,9 @@ const gameMap = document.getElementById("game-map");
 let offsetX = 0;
 let offsetY = 0;
 
+let randomEncounter = 20;
+let encounterVal = 12;
+
 document.addEventListener("keydown", handleKeyDown);
 
 function handleKeyDown(event) {
@@ -36,6 +39,17 @@ function handleKeyDown(event) {
   }
 
   updateMapTransform();
+
+  randomEncounter--;
+
+  if (randomEncounter == 0) {
+    randomEncounter = 20;
+
+    const combatVal = Math.floor(Math.random() * (encounterVal - 5) + 5);
+
+    console.log("Starting combat at value " + combatVal);
+    combatInit(combatVal);
+  }
 }
 
 function updateMapTransform() {

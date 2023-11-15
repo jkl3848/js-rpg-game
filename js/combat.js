@@ -1,20 +1,21 @@
 let turnQueue = [];
-let cbtPlayer;
 let enemies = [];
 let playerTarget;
 
 async function combatInit(combatVal) {
-  cbtPlayer = structuredClone(player);
+  document.removeEventListener("keydown", handleKeyDown);
   enemies = generateEnemies(combatVal);
 
-  turnQueue = [cbtPlayer].concat(enemies);
+  const xpToGain = enemies.reduce((sum, obj) => sum + obj.xp, 0);
+
+  turnQueue = [player].concat(enemies);
   turnQueue.sort((a, b) => b.speed - a.speed);
 
   console.log(turnQueue);
 
-  createCombatElements(turnQueue);
+  createCombatElements(enemies);
 
-  while (cbtPlayer.currentHP > 0 && enemies.some((obj) => obj.currentHP > 0)) {
+  while (player.currentHP > 0 && enemies.some((obj) => obj.currentHP > 0)) {
     const currentCharacter = turnQueue.shift();
     let target = null;
 
@@ -33,7 +34,7 @@ async function combatInit(combatVal) {
       await waitForUserAttack();
       target = playerTarget;
     } else {
-      target = cbtPlayer;
+      target = player;
     }
 
     attack(currentCharacter, target);
@@ -41,12 +42,16 @@ async function combatInit(combatVal) {
     updateHealth(turnQueue);
   }
 
-  if (cbtPlayer.currentHP > 0) {
+  if (player.currentHP > 0) {
     addMessage("You Win!");
+    postCombat(xpToGain);
   } else {
     addMessage("You Lose!");
-    return;
   }
+  document.addEventListener("keydown", handleKeyDown);
+
+  const container = document.getElementById("characters");
+  container.innerHTML = "";
 }
 
 function attack(attacker, target) {
@@ -162,9 +167,8 @@ function createCombatElements(list) {
   list.forEach((char) => {
     const healthElement = document.createElement("div");
     healthElement.innerHTML = `<div class='combat-el' id='char-${char.combatId}'><strong>${char.name}</strong>: <div id='char-${char.combatId}-health'>${char.currentHP}/${char.maxHP} HP</div></div>`;
-    if (char.combatId > 0) {
-      healthElement.addEventListener("click", () => setTarget(char.combatId));
-    }
+    healthElement.addEventListener("click", () => setTarget(char.combatId));
+
     container.appendChild(healthElement);
   });
 }
@@ -172,10 +176,14 @@ function createCombatElements(list) {
 function updateHealth(list) {
   console.log(list);
   list.forEach((char) => {
-    const healthElement = document.getElementById(
-      "char-" + char.combatId + "-health"
-    );
-    console.log(healthElement);
+    let healthElement;
+    if (char.player) {
+      healthElement = document.getElementById("player-hp");
+    } else {
+      healthElement = document.getElementById(
+        "char-" + char.combatId + "-health"
+      );
+    }
     healthElement.innerHTML = `${char.currentHP}/${char.maxHP} HP`;
   });
 }
