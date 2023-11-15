@@ -2,12 +2,10 @@ let turnQueue = [];
 let cbtPlayer;
 let enemies = [];
 
-function combatInit() {
-  console.log("here");
+async function combatInit(combatVal) {
   cbtPlayer = structuredClone(player);
   // cbtPlayer.uuid = uuidv4()
-  enemies = [];
-  enemies.push(structuredClone(mobs.find((item) => item.name == "slime")));
+  enemies = generateEnemies(combatVal);
 
   // enemies = genCombatIDs(enemies)
 
@@ -17,7 +15,9 @@ function combatInit() {
   console.log(turnQueue);
   //   addMessage(turnQueue);
 
-  while (cbtPlayer.health > 0 && enemies.some((obj) => obj.health > 0)) {
+  createCombatElements(turnQueue);
+
+  while (cbtPlayer.currentHP > 0 && enemies.some((obj) => obj.currentHP > 0)) {
     const currentCharacter = turnQueue.shift();
 
     addMessage(`Turn: ${currentCharacter.name}`);
@@ -31,16 +31,24 @@ function combatInit() {
     //   nextTwoTurns.map((char) => char.name)
     // );
 
+    // resolveStatusEffects(currentCharacter);
+
     let target = getTarget(currentCharacter);
 
+    if (currentCharacter.player) {
+      console.log("is player turn");
+      await waitForUserAttack();
+    }
     attack(currentCharacter, target);
+
+    updateHealth(turnQueue);
   }
 }
 
 function attack(attacker, target) {
   const damage = calcDamage(attacker, target);
 
-  target.health = target.health - damage;
+  target.currentHP = target.currentHP - damage;
 
   addMessage(target.name + " took " + damage + " damage");
   console.log(target + " took " + damage + " damage");
@@ -84,9 +92,30 @@ function getTarget(attacker) {
   }
 }
 
-function genCombatIDs(enemies) {
-  for (let i = 0; i < chars.length; i++) {
-    enemies[i].uuid = uuidv4();
+function resolveStatusEffects(char) {
+  let effects = char.effects;
+
+  if (effects.find((item) => item.type === "burning")) {
+  }
+}
+
+function generateEnemies(combatVal) {
+  let enemies = [];
+  let enemyCombatVal = 0;
+  let combatId = 1;
+
+  while (enemyCombatVal < combatVal) {
+    const randomIndex = Math.floor(Math.random() * mobs.length);
+    const randomEnemy = structuredClone(mobs[randomIndex]);
+
+    randomEnemy.currentHP = randomEnemy.maxHP;
+    randomEnemy.combatId = combatId;
+
+    combatId++;
+    enemyCombatVal += randomEnemy.threatLevel;
+
+    // Otherwise, add the random item to the selectedItems array
+    enemies.push(randomEnemy);
   }
 
   return enemies;
@@ -96,4 +125,34 @@ function addMessage(message) {
   const messageField = document.getElementById("messageField");
   messageField.value += message + "\n";
   messageField.scrollTop = messageField.scrollHeight; // Auto-scroll to the bottom
+}
+
+function waitForUserAttack() {
+  return new Promise((resolve) => {
+    const button = document.getElementById("attackButton");
+    button.addEventListener("click", () => {
+      resolve();
+    });
+  });
+}
+
+function createCombatElements(list) {
+  const container = document.getElementById("characters");
+
+  container.innerHTML = "";
+
+  list.forEach((char) => {
+    const healthElement = document.createElement("div");
+    healthElement.innerHTML = `<strong>${char.name}</strong>: <div id='char-${char.combatId}'>${char.currentHP} HP</div>`;
+    container.appendChild(healthElement);
+  });
+}
+
+function updateHealth(list) {
+  console.log(list);
+  list.forEach((char) => {
+    const healthElement = document.getElementById("char-" + char.combatId);
+    console.log(healthElement);
+    healthElement.innerHTML = `${char.currentHP} HP`;
+  });
 }
