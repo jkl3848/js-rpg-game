@@ -16,3 +16,16 @@ flex-direction: row;
     padding: 4px;
 border: black 1px solid;
 }
+
+#map-container {
+    overflow: hidden;
+    width: 600px; /* Adjust as needed */
+    height: 600px; /* Adjust as needed */
+  }
+
+  #game-map {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.2s ease-in-out;
+    scale: 3;
+  }
