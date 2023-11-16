@@ -1,13 +1,13 @@
 const commonItems = [
   {
     name: "brokenWatch",
-    boost: 1,
-    stackBoost: 1,
+    boost: 5,
+    stackBoost: 5,
     boostType: "add",
     target: "self",
     attr: "critChance",
     desc: "Its right twice a day",
-    detailedDesc: "Adds a 1% (+1% per stack) critical chance",
+    detailedDesc: "Adds a 5% (+5% per stack) critical chance",
   },
   {
     name: "barbedBat",
@@ -15,9 +15,9 @@ const commonItems = [
     stackBoost: 5,
     boostType: "add",
     target: "self",
-    attr: "damage",
+    attr: "attack",
     desc: "",
-    detailedDesc: "Adds a 5 (+5 per stack) damage",
+    detailedDesc: "Adds a 5 (+5 per stack) to attack",
   },
   {
     name: "treeBark",

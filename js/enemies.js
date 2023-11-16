@@ -42,3 +42,25 @@ const bosses = [
     spawnLoc: [1],
   },
 ];
+
+function generateEnemies(combatVal) {
+  let enemies = [];
+  let enemyCombatVal = 0;
+  let combatId = 1;
+
+  while (enemyCombatVal < combatVal) {
+    const randomIndex = Math.floor(Math.random() * mobs.length);
+    const randomEnemy = structuredClone(mobs[randomIndex]);
+
+    randomEnemy.currentHP = randomEnemy.maxHP;
+    randomEnemy.combatId = combatId;
+
+    combatId++;
+    enemyCombatVal += randomEnemy.threatLevel;
+
+    // Otherwise, add the random item to the selectedItems array
+    enemies.push(randomEnemy);
+  }
+
+  return enemies;
+}

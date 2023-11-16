@@ -5,7 +5,7 @@ let offsetX = 0;
 let offsetY = 0;
 
 let randomEncounter = 20;
-let encounterVal = 12;
+let encounterVal = 5;
 
 document.addEventListener("keydown", handleKeyDown);
 

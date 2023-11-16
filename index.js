@@ -16,6 +16,8 @@ var player = {
   effects: [],
 };
 
+var itemChance = [50, 35, 12, 3];
+
 function start() {
   updatePlayerHUD();
   // combatInit(12);
@@ -49,6 +51,8 @@ function levelUp() {
 
   player.currentHP = player.maxHP;
   addMessage("You are now level " + player.level);
+
+  gainItem();
 }
 
 function updatePlayerHUD() {
@@ -59,10 +63,77 @@ function updatePlayerHUD() {
   playerXP.innerHTML = `${player.xp} / ${player.level * 10} XP`;
 
   const playerItems = document.getElementById("player-items");
-  playerItems.innerHTML = `${player.items}`;
+  playerItems.innerHTML = "";
+  player.items.forEach((el) => {
+    playerItems.innerHTML += `${el.name}: ${el.stack}`;
+  });
 
   const playerStats = document.getElementById("player-stats");
   playerStats.innerHTML = `ATK: ${player.attack} DEF: ${player.defense} SPD: ${player.speed} CRT: ${player.critChance}%`;
 }
 
-function gainItem() {}
+function gainItem() {
+  let item = null;
+
+  const itemPoolNumber = Math.floor(Math.random() * 100) + 1;
+
+  let itemPool;
+
+  if (itemPoolNumber <= itemChance[0]) {
+    itemPool = commonItems;
+  } else if (
+    itemPoolNumber > itemChance[0] &&
+    itemPoolNumber <= itemChance[0] + itemChance[1]
+  ) {
+    itemPool = uncommonItems;
+  } else if (
+    itemPoolNumber > itemChance[0] + itemChance[1] &&
+    itemPoolNumber <= itemChance[0] + itemChance[1] + itemChance[2]
+  ) {
+    itemPool = rareItems;
+  } else if (
+    itemPoolNumber > itemChance[0] + itemChance[1] + itemChance[2] &&
+    itemPoolNumber <=
+      itemChance[0] + itemChance[1] + itemChance[2] + itemChance[3]
+  ) {
+    itemPool = legendaryItems;
+  }
+
+  const itemNumber = Math.floor(Math.random() * itemPool.length);
+
+  item = itemPool[itemNumber];
+  let itemObj;
+  //If the item already exists, then stack it
+  if (player.items.find((obj) => obj.name === item.name)) {
+    itemObj = player.items.find((obj) => obj.name === item.name);
+    itemObj.stack++;
+  }
+  //otherwise add it
+  else {
+    itemObj = structuredClone(item);
+    itemObj.stack = 1;
+    player.items.push(itemObj);
+  }
+
+  addMessage("You gained " + item.name);
+
+  applyItemEffect(itemObj);
+}
+
+function applyItemEffect(item) {
+  if (item.target === "self") {
+    let boost;
+    if (item.stack == 1) {
+      boost = item.boost;
+    } else {
+      boost = item.stackBoost;
+    }
+    if (item.boostType == "add") {
+      player[item.attr] += boost;
+      //Figure out the multiplier
+      // } else if (item.boostType == "mult") {
+      //   player[item.attr] = player[item.attr] * boost;
+    }
+  }
+  console.log(player);
+}
