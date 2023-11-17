@@ -17,6 +17,7 @@ var player = {
 };
 
 var itemChance = [50, 35, 12, 3];
+var levelPoints = 4;
 
 function start() {
   updatePlayerHUD();
@@ -40,19 +41,63 @@ function gainXP(xp) {
 
 function levelUp() {
   addMessage("You leveled up!");
-  const statScale = player.scale;
+  // const statScale = player.scale;
 
+  levelPoints = 4;
   player.level++;
-  player.maxHP += statScale[0];
-  player.attack += statScale[1];
-  player.defense += statScale[2];
-  player.speed += statScale[3];
-  player.critChance += statScale[4];
+  // player.maxHP += statScale[0];
+  // player.attack += statScale[1];
+  // player.defense += statScale[2];
+  // player.speed += statScale[3];
+  // player.critChance += statScale[4];
+
+  document.getElementById("point-allocator-points").style = "display:block;";
+  document.getElementById("point-level").innerHTML = "Level" + player.level;
+  document.getElementById("point-hp-value").innerHTML = player.maxHP;
+  document.getElementById("point-attack-value").innerHTML = player.attack;
+  document.getElementById("point-defense-value").innerHTML = player.defense;
+  document.getElementById("point-speed-value").innerHTML = player.speed;
+  document.getElementById("point-crit-value").innerHTML = player.critChance;
 
   player.currentHP = player.maxHP;
   addMessage("You are now level " + player.level);
 
   gainItem();
+}
+
+function addAttrValue(prop) {
+  if (levelPoints <= 0) {
+    return;
+  }
+  if (prop == "maxHP") {
+    player[prop] += 10;
+  } else {
+    player[prop]++;
+    if (prop == "critChance" && player[prop] > 100) {
+      player[prop] = 100;
+    }
+  }
+
+  document.getElementById("point-" + prop + "-value").innerHTML = player[prop];
+  levelPoints--;
+  document.getElementById("point-total").innerHTML = "Points: " + levelPoints;
+}
+function subAttrValue(prop) {
+  if (levelPoints == 4) {
+    return;
+  }
+  if (prop == "maxHP") {
+    player[prop] -= 10;
+  } else {
+    player[prop]--;
+    if (player[prop] < 0) {
+      player[prop] = 0;
+    }
+  }
+
+  document.getElementById("point-" + prop + "-value").innerHTML = player[prop];
+  levelPoints++;
+  document.getElementById("point-total").innerHTML = "Points: " + levelPoints;
 }
 
 function updatePlayerHUD() {

@@ -37,6 +37,54 @@
       <div id="characters"></div>
     </div>
 
+    <div id="point-allocator">
+      <div id="point-allocator-header">
+        <h2 id="point-name">Jake</h2>
+        <h2 id="point-level">Level 1</h2>
+        <h2 id="point-total">Points</h2>
+      </div>
+
+      <div id="point-allocator-points">
+        <table>
+          <tr class="point-section">
+            <td>HP</td>
+            <td onclick="subAttrValue('maxHP')"><button>-</button></td>
+            <td id="point-maxHP-value">7</td>
+            <td onclick="addAttrValue('maxHP')"><button>+</button></td>
+          </tr>
+          <tr class="point-section">
+            <td>ATK</td>
+            <td onclick="subAttrValue('attack')"><button>-</button></td>
+            <td id="point-attack-value"></td>
+            <td onclick="addAttrValue('attack')"><button>+</button></td>
+          </tr>
+
+          <tr class="point-section">
+            <td>DEF</td>
+            <td onclick="subAttrValue('defense')"><button>-</button></td>
+            <td id="point-defense-value"></td>
+            <td onclick="addAttrValue('defense')"><button>+</button></td>
+          </tr>
+
+          <tr class="point-section">
+            <td>SPD</td>
+            <td onclick="subAttrValue('speed')"><button>-</button></td>
+            <td id="point-speed-value"></td>
+            <td onclick="addAttrValue('speed')"><button>+</button></td>
+          </tr>
+          <tr class="point-section">
+            <td>CRT</td>
+            <td onclick="subAttrValue('critChance')"><button>-</button></td>
+            <td id="point-critChance-value"></td>
+            <td onclick="addAttrValue('critChance')"><button>+</button></td>
+          </tr>
+        </table>
+      </div>
+      <div>
+        <button>Level Up</button>
+      </div>
+    </div>
+
     <script src="index.js"></script>
     <script src="js/combat.js"></script>
     <script src="js/damage.js"></script>

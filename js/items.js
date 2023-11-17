@@ -137,6 +137,17 @@ const rareItems = [
     desc: "Faster than fast",
     detailedDesc: "Reduce enemy speed by 1 (+1 per stack) each attack",
   },
+  {
+    name: "tbd",
+    boost: 1,
+    stackBoost: 1,
+    boostType: "heal",
+    target: "self",
+    attr: "health",
+    desc: "Faster than fast",
+    detailedDesc:
+      "10% chance (+5% per stack) to recover 5% health (+5% per stack) after attacking",
+  },
 ];
 
 const legendaryItems = [

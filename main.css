@@ -1,31 +1,67 @@
-#game-space{
-display: flex;
-flex-direction: row;
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-#characters{
-    margin-left: 8px;
+#game-space {
+  z-index: 0;
+  display: flex;
+  flex-direction: row;
 }
 
-#char-0{
-    margin-bottom: 4px;
-
+#characters {
+  margin-left: 8px;
 }
 
-.combat-el{
-    padding: 4px;
-border: black 1px solid;
+#char-0 {
+  margin-bottom: 4px;
+}
+
+.combat-el {
+  padding: 4px;
+  border: black 1px solid;
 }
 
 #map-container {
-    overflow: hidden;
-    width: 600px; /* Adjust as needed */
-    height: 600px; /* Adjust as needed */
-  }
+  overflow: hidden;
+  width: 600px; /* Adjust as needed */
+  height: 600px; /* Adjust as needed */
+}
 
-  #game-map {
-    width: 100%;
-    height: 100%;
-    transition: transform 0.2s ease-in-out;
-    scale: 3;
-  }
+#game-map {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.2s ease-in-out;
+  scale: 3;
+}
+
+#game-space {
+  z-index: 0;
+}
+
+#point-allocator {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+
+  padding: 4px;
+  width: 40%;
+  height: 40%;
+
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+}
+
+.point-section {
+  border: 8px solid rgb(167, 5, 5) !important;
+  border-radius: 4px;
+}
+
+#point-allocator-header > h2 {
+  margin: 4px;
+}
