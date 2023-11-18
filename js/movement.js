@@ -1,6 +1,8 @@
 const mapContainer = document.getElementById("map-container");
 const gameMap = document.getElementById("game-map");
 
+let moveLock = false;
+
 let offsetX = 0;
 let offsetY = 0;
 
@@ -11,6 +13,10 @@ document.addEventListener("keydown", handleKeyDown);
 
 function handleKeyDown(event) {
   const step = 5; // Adjust as needed
+
+  if (moveLock) {
+    return;
+  }
 
   switch (event.key) {
     case "ArrowLeft":

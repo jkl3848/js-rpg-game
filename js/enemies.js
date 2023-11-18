@@ -17,7 +17,7 @@ const mobs = [
     level: 1,
     xp: 10,
     maxHP: 150,
-    attack: 10,
+    attack: 7,
     defense: 4,
     speed: 10,
     critChance: 0,
