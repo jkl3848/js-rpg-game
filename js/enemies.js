@@ -173,20 +173,60 @@ function generateEnemies(combatVal) {
   let enemies = [];
   let enemyCombatVal = 0;
   let combatId = 1;
+  let levelUp = false;
+
+  let bannedEnemies = [];
 
   while (enemyCombatVal < combatVal) {
-    const randomIndex = Math.floor(Math.random() * mobs.length);
+    if (
+      enemies.length === 4 ||
+      enemies.length + bannedEnemies.length >= mobs.length
+    ) {
+      levelUp = true;
+      break;
+    }
+
+    do {
+      randomIndex = Math.floor(Math.random() * mobs.length);
+    } while (bannedEnemies.includes(randomIndex));
+
     const randomEnemy = structuredClone(mobs[randomIndex]);
 
-    randomEnemy.currentHP = randomEnemy.maxHP;
-    randomEnemy.combatId = combatId;
+    console.log(randomEnemy);
 
-    combatId++;
-    enemyCombatVal += randomEnemy.threatLevel;
+    if (randomEnemy.threatLevel + enemyCombatVal <= combatVal * 1.2) {
+      randomEnemy.currentHP = randomEnemy.maxHP;
+      randomEnemy.combatId = combatId;
 
-    // Otherwise, add the random item to the selectedItems array
-    enemies.push(randomEnemy);
+      combatId++;
+      enemyCombatVal += randomEnemy.threatLevel;
+
+      // Otherwise, add the random item to the selectedItems array
+      enemies.push(randomEnemy);
+      console.log("added new enemy");
+    } else {
+      bannedEnemies.push(randomIndex);
+    }
   }
 
+  if (levelUp) {
+    enemies = levelUpEnemies(enemies, enemyCombatVal, combatVal);
+  }
+
+  return enemies;
+}
+
+function levelUpEnemies(enemies, enemyCombatVal, combatVal) {
+  console.log("leveling up enemies");
+  for (let i = 0; i < enemies.length; i++) {
+    if (enemyCombatVal < combatVal) {
+      let scale = enemies[i].scale;
+
+      for (let attr in scale) {
+        enemies[i][attr] += scale[attr];
+      }
+      enemyCombatVal += scale[threatLevel];
+    }
+  }
   return enemies;
 }

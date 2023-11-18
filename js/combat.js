@@ -3,7 +3,7 @@ let enemies = [];
 let playerTarget;
 
 async function combatInit(combatVal) {
-  document.removeEventListener("keydown", handleKeyDown);
+  moveLock = true;
   enemies = generateEnemies(combatVal);
 
   const xpToGain = enemies.reduce((sum, obj) => sum + obj.xp, 0);
@@ -48,10 +48,10 @@ async function combatInit(combatVal) {
   } else {
     addMessage("You Lose!");
   }
-  document.addEventListener("keydown", handleKeyDown);
 
   const container = document.getElementById("characters");
   container.innerHTML = "";
+  moveLock = false;
 }
 
 function attack(attacker, target) {
@@ -63,7 +63,7 @@ function attack(attacker, target) {
   }
 
   addMessage(target.name + " took " + damage + " damage");
-  console.log(target + " took " + damage + " damage");
+  console.log(target.name + " took " + damage + " damage");
 
   if (attacker.player) {
     console.log(target);
@@ -119,20 +119,5 @@ function createCombatElements(list) {
     healthElement.addEventListener("click", () => setTarget(char.combatId));
 
     container.appendChild(healthElement);
-  });
-}
-
-function updateHealth(list) {
-  console.log(list);
-  list.forEach((char) => {
-    let healthElement;
-    if (char.player) {
-      healthElement = document.getElementById("player-hp");
-    } else {
-      healthElement = document.getElementById(
-        "char-" + char.combatId + "-health"
-      );
-    }
-    healthElement.innerHTML = `${char.currentHP}/${char.maxHP} HP`;
   });
 }

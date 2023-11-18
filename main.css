@@ -65,3 +65,19 @@ body {
 #point-allocator-header > h2 {
   margin: 4px;
 }
+
+.item-common {
+  color: grey;
+}
+
+.item-uncommon {
+  color: rgb(54, 131, 226);
+}
+
+.item-rare {
+  color: darkorchid;
+}
+
+.item-legendary {
+  color: gold;
+}

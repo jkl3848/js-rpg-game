@@ -7,7 +7,8 @@ let offsetX = 0;
 let offsetY = 0;
 
 let randomEncounter = 20;
-let encounterVal = 5;
+let encounterVal = 6;
+let areaCombatVal = 0;
 
 document.addEventListener("keydown", handleKeyDown);
 
@@ -51,10 +52,12 @@ function handleKeyDown(event) {
   if (randomEncounter == 0) {
     randomEncounter = 20;
 
-    const combatVal = Math.floor(Math.random() * (encounterVal - 5) + 5);
+    encounterVal = encounterVal + player.level + areaCombatVal;
 
-    console.log("Starting combat at value " + combatVal);
-    combatInit(combatVal);
+    // const combatVal = Math.floor(Math.random() * (encounterVal - 5) + 5);
+
+    console.log("Starting combat at value " + encounterVal);
+    combatInit(encounterVal);
   }
 }
 
