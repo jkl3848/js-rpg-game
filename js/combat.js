@@ -28,7 +28,7 @@ async function combatInit(combatVal) {
     //   nextTwoTurns.map((char) => char.name)
     // );
 
-    // resolveStatusEffects(currentCharacter);
+    resolveStatusEffects(currentCharacter);
 
     if (currentCharacter.player) {
       await waitForUserAttack();
@@ -65,6 +65,8 @@ function attack(attacker, target) {
   addMessage(target.name + " took " + damage + " damage");
   console.log(target.name + " took " + damage + " damage");
 
+  applyStatusEffect(attacker, target);
+
   if (attacker.player) {
     console.log(target);
     //Reset target selection and color
@@ -84,13 +86,6 @@ function setTarget(id) {
 
   const atkBtn = document.getElementById("attackButton");
   atkBtn.disabled = false;
-}
-
-function resolveStatusEffects(char) {
-  let effects = char.effects;
-
-  if (effects.find((item) => item.type === "burning")) {
-  }
 }
 
 function addMessage(message) {

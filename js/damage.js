@@ -24,5 +24,66 @@ function calcDamage(attacker, target) {
     damage = damage * 2;
   }
 
+  healthSteal(damage);
+
   return damage - target.defense;
+}
+
+function resolveStatusEffects(char) {
+  let effects = char.effects;
+
+  if (effects.find((item) => item.type === "burn")) {
+    char.currentHP -= char.maxHP * 0.1;
+  }
+}
+
+function applyStatusEffect(attacker, target) {
+  //For Hero (based on items)
+  if (attacker.player) {
+    let effects = target.effects;
+    let molotov = attacker.items.find((item) => item.name === "molotov");
+    let moonshine = attacker.items.find((item) => item.name === "moonshine");
+
+    let poison = effects.find((item) => item.type === "poison");
+    let burn = effects.find((item) => item.type === "burn");
+
+    if (molotov) {
+      if (burn) {
+        burn.stack++;
+      } else {
+        target.effects.push({ type: "burn", stack: 1 });
+      }
+    } else {
+      if (burn) {
+        if (burn.stack > 1) {
+          burn.stack--;
+        } else {
+          target.effects = target.effects.filter(
+            (item) => item.type !== "burn"
+          );
+        }
+      }
+    }
+
+    if (moonshine) {
+      if (poison) {
+        poison.stack++;
+      } else {
+        target.effects.push({ type: "poison", stack: 1 });
+      }
+      target.speed--;
+    } else {
+      if (poison) {
+        if (poison.stack > 1) {
+          poison.stack--;
+        } else {
+          target.effects = target.effects.filter(
+            (item) => item.type !== "poison"
+          );
+        }
+        target.speed++;
+      }
+    }
+  }
+  //For mobs
 }

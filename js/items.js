@@ -4,7 +4,7 @@ const commonItems = [
     boost: 5,
     stackBoost: 5,
     boostType: "add",
-    target: "self",
+    target: "attr",
     attr: "critChance",
     desc: "Its right twice a day",
     detailedDesc: "Adds a 5% (+5% per stack) critical chance",
@@ -14,7 +14,7 @@ const commonItems = [
     boost: 5,
     stackBoost: 5,
     boostType: "add",
-    target: "self",
+    target: "attr",
     attr: "attack",
     desc: "",
     detailedDesc: "Adds a 5 (+5 per stack) to attack",
@@ -24,10 +24,30 @@ const commonItems = [
     boost: 10,
     stackBoost: 5,
     boostType: "add",
-    target: "self",
+    target: "attr",
     attr: "hp",
     desc: "",
     detailedDesc: "Recover 5 (+5 per stack) hp after combat",
+  },
+  {
+    name: "textbook",
+    boost: 5,
+    stackBoost: 5,
+    boostType: "mult",
+    target: "self",
+    attr: "xp",
+    desc: "Filled with knowledge",
+    detailedDesc: "Gain 5% (+5% per stack) more experience",
+  },
+  {
+    name: "siphon",
+    boost: 0.5,
+    stackBoost: 0.5,
+    boostType: "mult",
+    target: "heal",
+    attr: "health",
+    desc: "",
+    detailedDesc: "Heal for 0.5% (+0.5% per stack) health per damage dealt",
   },
 ];
 
@@ -43,14 +63,14 @@ const uncommonItems = [
     detailedDesc: "Adds a 5% (+5% per stack) chance to evade an enemy attack",
   },
   {
-    name: "textbook",
-    boost: 5,
-    stackBoost: 5,
-    boostType: "mult",
+    name: "ironGauntlet",
+    boost: 1,
+    stackBoost: 1,
+    boostType: "add",
     target: "self",
-    attr: "xp",
-    desc: "Filled with knowledge",
-    detailedDesc: "Gain 5% (+5% per stack) more experience",
+    attr: "maxHP",
+    desc: "",
+    detailedDesc: "Gain 1 (+1 per stack) max HP after combat",
   },
   {
     name: "molotov",
@@ -81,16 +101,6 @@ const uncommonItems = [
     attr: "walking",
     desc: "",
     detailedDesc: "Adds a 10% (+10% per stack) movement speed in the overworld",
-  },
-  {
-    name: "",
-    boost: 0.5,
-    stackBoost: 0.5,
-    boostType: "mult",
-    target: "self",
-    attr: "health",
-    desc: "",
-    detailedDesc: "Heal for 0.5% (+0.5% per stack) health per damage dealt",
   },
 ];
 
@@ -142,7 +152,7 @@ const rareItems = [
     boost: 1,
     stackBoost: 1,
     boostType: "heal",
-    target: "self",
+    target: "heal",
     attr: "health",
     desc: "Faster than fast",
     detailedDesc:
@@ -156,7 +166,7 @@ const legendaryItems = [
     boost: 20,
     stackBoost: 5,
     boostType: "add",
-    target: "self",
+    target: "attr",
     attr: "speed",
     desc: "Faster than fast",
     detailedDesc: "Gain 20 (+5 per stack) speed",
@@ -242,7 +252,7 @@ function gainItem() {
 
 //Applies item stat to hero
 function applyItemEffect(item) {
-  if (item.target === "self") {
+  if (item.target === "attr") {
     let boost;
     if (item.stack == 1) {
       boost = item.boost;

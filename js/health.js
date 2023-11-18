@@ -20,8 +20,14 @@ function postCombatHeal() {
   healTotal = player.maxHP * 0.05;
 
   let bark = player.items.find((item) => item.name === "treeBark");
+  let gauntlet = player.items.find((item) => item.name === "ironGauntlet");
+
   if (bark) {
     healTotal += 5 * bark.stack;
+  }
+
+  if (gauntlet) {
+    maxHP += gauntlet.stack;
   }
 
   player.currentHP += healTotal;
@@ -29,4 +35,9 @@ function postCombatHeal() {
   addMessage("Healed for " + healTotal);
 }
 
-function healthSteal(user, target, damage) {}
+function healthSteal(damage) {
+  let siphon = player.item.find((item) => item.name === "siphon");
+  if (siphon) {
+    player.currentHP += Math.ceil(damage * (siphon.stack / 100));
+  }
+}
