@@ -183,3 +183,78 @@ const legendaryItems = [
       "When health drops below 10% (+5% per stack) you will be immune to the next attack. Occurs 1 per combat.",
   },
 ];
+
+let itemChance = [50, 35, 12, 3];
+//Gives player a random item
+function gainItem() {
+  let item = null;
+  let type;
+
+  const itemPoolNumber = Math.floor(Math.random() * 100) + 1;
+
+  let itemPool;
+
+  if (itemPoolNumber <= itemChance[0]) {
+    itemPool = commonItems;
+    type = "common";
+  } else if (
+    itemPoolNumber > itemChance[0] &&
+    itemPoolNumber <= itemChance[0] + itemChance[1]
+  ) {
+    itemPool = uncommonItems;
+    type = "uncommon";
+  } else if (
+    itemPoolNumber > itemChance[0] + itemChance[1] &&
+    itemPoolNumber <= itemChance[0] + itemChance[1] + itemChance[2]
+  ) {
+    itemPool = rareItems;
+    type = "rare";
+  } else if (
+    itemPoolNumber > itemChance[0] + itemChance[1] + itemChance[2] &&
+    itemPoolNumber <=
+      itemChance[0] + itemChance[1] + itemChance[2] + itemChance[3]
+  ) {
+    itemPool = legendaryItems;
+    type = "legendary";
+  }
+
+  const itemNumber = Math.floor(Math.random() * itemPool.length);
+
+  item = itemPool[itemNumber];
+  let itemObj;
+  //If the item already exists, then stack it
+  if (player.items.find((obj) => obj.name === item.name)) {
+    itemObj = player.items.find((obj) => obj.name === item.name);
+    itemObj.stack++;
+  }
+  //otherwise add it
+  else {
+    itemObj = structuredClone(item);
+    itemObj.stack = 1;
+    itemObj.type = type;
+    player.items.push(itemObj);
+  }
+
+  addMessage("You gained " + item.name);
+
+  applyItemEffect(itemObj);
+}
+
+//Applies item stat to hero
+function applyItemEffect(item) {
+  if (item.target === "self") {
+    let boost;
+    if (item.stack == 1) {
+      boost = item.boost;
+    } else {
+      boost = item.stackBoost;
+    }
+    if (item.boostType == "add") {
+      player[item.attr] += boost;
+      //Figure out the multiplier
+      // } else if (item.boostType == "mult") {
+      //   player[item.attr] = player[item.attr] * boost;
+    }
+  }
+  console.log(player);
+}
