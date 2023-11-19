@@ -39,7 +39,7 @@ function gainXP(xp) {
   addMessage("You gained " + xp + " XP!");
   let textbook = player.items.find((item) => item.name === "textbook");
   if (textbook) {
-    xp += (xp * (5 * textbook.stack)) / 100;
+    xp += (xp * (textbook.boost * textbook.stack)) / 100;
   }
   player.xp += xp;
 
@@ -149,7 +149,7 @@ function updatePlayerHUD() {
   const playerItems = document.getElementById("player-items");
   playerItems.innerHTML = "";
   player.items.forEach((el) => {
-    playerItems.innerHTML += `<span class='item-${el.type}'>${el.name}:</span> ${el.stack}`;
+    playerItems.innerHTML += `<span class='item-${el.type}'>${el.displayName}:</span> ${el.stack}`;
   });
 
   const playerStats = document.getElementById("player-stats");

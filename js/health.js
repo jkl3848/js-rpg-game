@@ -23,7 +23,11 @@ function postCombatHeal() {
   let gauntlet = player.items.find((item) => item.name === "ironGauntlet");
 
   if (bark) {
-    healTotal += 5 * bark.stack;
+    let heal = bark.boost;
+    if (bark.stack > 1) {
+      heal += bark.stackBoost * bark.stack - 1;
+    }
+    healTotal += barkBoos;
   }
 
   if (gauntlet) {

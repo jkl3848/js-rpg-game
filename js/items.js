@@ -1,6 +1,7 @@
 const commonItems = [
   {
     name: "brokenWatch",
+    displayName: "Broken Watch",
     boost: 5,
     stackBoost: 5,
     boostType: "add",
@@ -11,6 +12,7 @@ const commonItems = [
   },
   {
     name: "barbedBat",
+    displayName: "Barbed Bat",
     boost: 5,
     stackBoost: 5,
     boostType: "add",
@@ -20,17 +22,30 @@ const commonItems = [
     detailedDesc: "Adds a 5 (+5 per stack) to attack",
   },
   {
+    name: "chainmail",
+    displayName: "Chainmail",
+    boost: 5,
+    stackBoost: 5,
+    boostType: "add",
+    target: "attr",
+    attr: "defense",
+    desc: "",
+    detailedDesc: "Adds a 5 (+5 per stack) to defense",
+  },
+  {
     name: "treeBark",
-    boost: 10,
+    displayName: "Tree Bark",
+    boost: 15,
     stackBoost: 5,
     boostType: "add",
     target: "attr",
     attr: "hp",
     desc: "",
-    detailedDesc: "Recover 5 (+5 per stack) hp after combat",
+    detailedDesc: "Recover 15 (+5 per stack) hp after combat",
   },
   {
     name: "textbook",
+    displayName: "Textbook",
     boost: 5,
     stackBoost: 5,
     boostType: "mult",
@@ -41,6 +56,7 @@ const commonItems = [
   },
   {
     name: "siphon",
+    displayName: "Siphon",
     boost: 0.5,
     stackBoost: 0.5,
     boostType: "mult",
@@ -49,11 +65,34 @@ const commonItems = [
     desc: "",
     detailedDesc: "Heal for 0.5% (+0.5% per stack) health per damage dealt",
   },
+  {
+    name: "oil",
+    displayName: "Oil of Slipperiness",
+    boost: 10,
+    stackBoost: 10,
+    boostType: "add",
+    target: "attr",
+    attr: "flee",
+    desc: "",
+    detailedDesc: "Adds a 10% (+10% per stack) chance to flee",
+  },
+  {
+    name: "blankCheck",
+    displayName: "Blank Check",
+    boost: 10,
+    stackBoost: 10,
+    boostType: "mult",
+    target: "self",
+    attr: "coin",
+    desc: "",
+    detailedDesc: "Gain an extra 10% (+10% per stack) coin after combat",
+  },
 ];
 
 const uncommonItems = [
   {
-    name: "mirroredSunglasses",
+    name: "sunglasses",
+    displayName: "Mirrored Sunglasses",
     boost: 5,
     stackBoost: 5,
     boostType: "mult",
@@ -63,7 +102,30 @@ const uncommonItems = [
     detailedDesc: "Adds a 5% (+5% per stack) chance to evade an enemy attack",
   },
   {
+    name: "wallet",
+    displayName: "Empty Wallet",
+    boost: 2,
+    stackBoost: 1,
+    boostType: "mult",
+    target: "enemy",
+    attr: "damage",
+    desc: "",
+    detailedDesc: "Deal extra damage equal to 2% (+1% per stack) of your coin",
+  },
+  {
+    name: "rareCoin",
+    displayName: "Rare Coin",
+    boost: 1,
+    stackBoost: 1,
+    boostType: "mult",
+    target: "self",
+    attr: "coin",
+    desc: "",
+    detailedDesc: "Gain coin equal to 1% (+1% per stack) of damage taken",
+  },
+  {
     name: "ironGauntlet",
+    displayName: "Iron Gauntlet",
     boost: 1,
     stackBoost: 1,
     boostType: "add",
@@ -74,6 +136,7 @@ const uncommonItems = [
   },
   {
     name: "molotov",
+    displayName: "Molotov Cocktail",
     boost: 10,
     stackBoost: 10,
     boostType: "",
@@ -84,6 +147,7 @@ const uncommonItems = [
   },
   {
     name: "moonshine",
+    displayName: "Moonshine",
     boost: 10,
     stackBoost: 10,
     boostType: "",
@@ -94,6 +158,7 @@ const uncommonItems = [
   },
   {
     name: "sneakers",
+    displayName: "Old Sneakers",
     boost: 10,
     stackBoost: 10,
     boostType: "mult",
@@ -107,6 +172,7 @@ const uncommonItems = [
 const rareItems = [
   {
     name: "finalFight",
+    displayName: "Final Fight",
     boost: 1,
     stackBoost: 1,
     boostType: "mult",
@@ -118,6 +184,7 @@ const rareItems = [
   },
   {
     name: "shinobiMask",
+    displayName: "Shinobi Mask",
     boost: 25,
     stackBoost: 15,
     boostType: "mult",
@@ -129,6 +196,7 @@ const rareItems = [
   },
   {
     name: "joker",
+    displayName: "Joker",
     boost: 0,
     stackBoost: 0,
     boostType: "flat",
@@ -139,6 +207,7 @@ const rareItems = [
   },
   {
     name: "ballAndChain",
+    displayName: "Ball & Chain",
     boost: 1,
     stackBoost: 1,
     boostType: "add",
@@ -149,6 +218,7 @@ const rareItems = [
   },
   {
     name: "tbd",
+    displayName: "",
     boost: 1,
     stackBoost: 1,
     boostType: "heal",
@@ -163,6 +233,7 @@ const rareItems = [
 const legendaryItems = [
   {
     name: "wingedBoots",
+    displayName: "Winged Boots",
     boost: 20,
     stackBoost: 5,
     boostType: "add",
@@ -173,6 +244,7 @@ const legendaryItems = [
   },
   {
     name: "tbd",
+    displayName: "",
     boost: 50,
     stackBoost: 5,
     boostType: "mult",
@@ -183,6 +255,7 @@ const legendaryItems = [
   },
   {
     name: "turtleneck",
+    displayName: "Turtleneck",
     boost: 0,
     stackBoost: 0,
     boostType: "flat",
