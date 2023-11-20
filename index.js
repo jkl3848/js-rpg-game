@@ -17,6 +17,49 @@ let player = {
   effects: [],
 };
 
+const classes = [
+  {
+    name: "knight",
+    maxHP: 150,
+    attack: 12,
+    defense: 12,
+    speed: 10,
+    critChance: 1,
+  },
+  {
+    name: "archer",
+    maxHP: 120,
+    attack: 15,
+    defense: 9,
+    speed: 13,
+    critChance: 5,
+  },
+  {
+    name: "guardian",
+    maxHP: 180,
+    attack: 10,
+    defense: 15,
+    speed: 7,
+    critChance: 0,
+  },
+  {
+    name: "berserker",
+    maxHP: 170,
+    attack: 14,
+    defense: 10,
+    speed: 10,
+    critChance: 3,
+  },
+  {
+    name: "alchemist",
+    maxHP: 120,
+    attack: 12,
+    defense: 10,
+    speed: 14,
+    critChance: 1,
+  },
+];
+
 let levelPoints = 4;
 let nextXPLevel = 10;
 let oldStats;
