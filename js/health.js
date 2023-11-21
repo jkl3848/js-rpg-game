@@ -50,6 +50,7 @@ function healthSteal(damage) {
     let siphon = player.items?.find((item) => item.name === "siphon");
     if (siphon) {
       player.currentHP += Math.ceil(damage * (siphon.stack / 100));
+      addMessage("Healed for " + siphon);
     }
   }
 }

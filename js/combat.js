@@ -103,6 +103,14 @@ function attack(attacker, target, damage) {
 
   applyStatusEffect(attacker, target);
 
+  if (target.player) {
+    let coin = target.items.find((item) => item.name === "rareCoin");
+
+    if (coin) {
+      player.money += Math.ceil(damage * (coin.stack / 100));
+    }
+  }
+
   // if (attacker.player) {
   //   const atkBtn = document.getElementById("attackButton");
   //   atkBtn.disabled = true;
