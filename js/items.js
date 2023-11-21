@@ -167,6 +167,17 @@ const uncommonItems = [
     desc: "",
     detailedDesc: "Adds a 10% (+10% per stack) movement speed in the overworld",
   },
+  {
+    name: "tbd",
+    displayName: "",
+    boost: 5,
+    stackBoost: 5,
+    boostType: "add",
+    target: "enemy",
+    attr: "critChance",
+    desc: "",
+    detailedDesc: "Reduce enemy crit chance by 5% (5% per stack)",
+  },
 ];
 
 const rareItems = [
@@ -227,6 +238,17 @@ const rareItems = [
     desc: "Faster than fast",
     detailedDesc:
       "10% chance (+5% per stack) to recover 5% health (+5% per stack) after attacking",
+  },
+  {
+    name: "tbd",
+    displayName: "",
+    boost: 1,
+    stackBoost: 1,
+    boostType: "add",
+    target: "self",
+    attr: "cooldown",
+    desc: "",
+    detailedDesc: "Reduce 2nd ability cooldown by 1 turn (+1 per stack)",
   },
 ];
 

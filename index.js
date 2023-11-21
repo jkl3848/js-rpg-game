@@ -25,14 +25,32 @@ const classes = [
     defense: 12,
     speed: 10,
     critChance: 1,
+    secondAbility: {
+      name: "For Honor",
+      desc: "Deal 1.25x damage and reduce enemy armor by 20%",
+      cooldown: 3,
+    },
+    passive: {
+      name: "Dutiful",
+      desc: "Heal an extra 5% after combat",
+    },
   },
   {
-    name: "archer",
+    name: "thief",
     maxHP: 120,
     attack: 15,
     defense: 9,
     speed: 13,
     critChance: 5,
+    secondAbility: {
+      name: "Dual Slash",
+      desc: "Deal .75x damage twice and gain 2 speed",
+      cooldown: 3,
+    },
+    passive: {
+      name: "Sticky Finger",
+      desc: "Earn 15% more coin",
+    },
   },
   {
     name: "guardian",
@@ -41,6 +59,15 @@ const classes = [
     defense: 15,
     speed: 7,
     critChance: 0,
+    secondAbility: {
+      name: "Barrier",
+      desc: "Increase defense by 50% on the next turn",
+      cooldown: 2,
+    },
+    passive: {
+      name: "Spiked Armor",
+      desc: "Enemies take 5% damage given on attack",
+    },
   },
   {
     name: "berserker",
@@ -49,6 +76,15 @@ const classes = [
     defense: 10,
     speed: 10,
     critChance: 3,
+    secondAbility: {
+      name: "Rage",
+      desc: "Consume 20% HP and gain 20% attack",
+      cooldown: 2,
+    },
+    passive: {
+      name: "Bloodlust",
+      desc: "Heal 5% on enemy death",
+    },
   },
   {
     name: "alchemist",
@@ -57,6 +93,15 @@ const classes = [
     defense: 10,
     speed: 14,
     critChance: 1,
+    secondAbility: {
+      name: "Toxin",
+      desc: "Deal .25x damage and apply 3 stacks of POISON to all enemies",
+      cooldown: 2,
+    },
+    passive: {
+      name: "Antidote",
+      desc: "Immune to POISON",
+    },
   },
 ];
 
