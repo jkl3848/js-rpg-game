@@ -1,6 +1,7 @@
 let turnQueue = [];
 let enemies = [];
 let playerTarget;
+let secondCooldown = 0;
 
 async function combatInit(combatVal) {
   moveLock = true;
@@ -34,6 +35,13 @@ async function combatInit(combatVal) {
     resolveStatusEffects(currentCharacter);
 
     if (currentCharacter.player) {
+      if (secondCooldown > 0) {
+        secondCooldown--;
+        if (secondCooldown == 0) {
+          const btn = document.getElementById("2ndActionButton");
+          btn.disabled = false;
+        }
+      }
       action = await waitForUserAttack();
       console.log(action);
       target = playerTarget;
@@ -58,6 +66,7 @@ async function combatInit(combatVal) {
       addMessage("You failed to flee");
     }
 
+    console.log(target.defense);
     updateHealth(turnQueue);
 
     if (target.currentHP === 0) {
@@ -79,8 +88,10 @@ async function combatInit(combatVal) {
   moveLock = false;
 }
 
-function attack(attacker, target) {
-  const damage = calcDamage(attacker, target);
+function attack(attacker, target, damage) {
+  if (!damage) {
+    damage = calcDamage(attacker, target);
+  }
 
   target.currentHP = target.currentHP - damage;
   if (target.currentHP < 0) {
@@ -171,4 +182,22 @@ function fleeCombat() {
     return true;
   }
   return false;
+}
+
+function secondAction(currentCharacter, target) {
+  if (player.secondAbility.name === "For Honor") {
+    const damage = calcDamage(currentCharacter, target, 1.25);
+    attack(currentCharacter, target, damage);
+
+    let defReduce = Math.ceil(target.defense * 0.2);
+    if (defReduce < 1) {
+      defReduce = 1;
+    }
+
+    target.defense -= defReduce;
+  }
+
+  secondCooldown = player.secondAbility.cooldown + 1;
+  const btn = document.getElementById("2ndActionButton");
+  btn.disabled = true;
 }

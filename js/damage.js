@@ -1,6 +1,8 @@
-function calcDamage(attacker, target) {
-  const atkType = 1;
-  let damage = attacker.attack * 3 * atkType;
+function calcDamage(attacker, target, mult) {
+  if (!mult) {
+    mult = 1;
+  }
+  let damage = attacker.attack * 3 * mult;
 
   const range = damage * 0.1;
   // Generate a random value within the range
