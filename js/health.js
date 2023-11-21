@@ -31,7 +31,13 @@ function postCombatHeal() {
   }
 
   if (gauntlet) {
-    maxHP += gauntlet.stack;
+    player.maxHP += gauntlet.stack;
+  }
+
+  if (healTotal > 1) {
+    healTotal = Math.floor(healTotal);
+  } else if (healTotal > 0 && healTotal < 1) {
+    healTotal = 1;
   }
 
   player.currentHP += healTotal;

@@ -24,13 +24,15 @@ function calcDamage(attacker, target) {
     damage = damage * 2;
   }
 
+  damage -= target.defense;
+
   if (damage < 0) {
     damage = 0;
   }
 
   healthSteal(damage);
 
-  return damage - target.defense;
+  return damage;
 }
 
 function resolveStatusEffects(char) {

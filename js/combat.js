@@ -40,6 +40,12 @@ async function combatInit(combatVal) {
     attack(currentCharacter, target);
 
     updateHealth(turnQueue);
+
+    if (target.currentHP === 0) {
+      turnQueue = turnQueue.filter((obj) => obj.combatId !== target.combatId);
+      console.log(turnQueue);
+      addMessage(`${target.name} defeated!`);
+    }
   }
 
   if (player.currentHP > 0) {
@@ -110,7 +116,7 @@ function createCombatElements(list) {
 
   list.forEach((char) => {
     const healthElement = document.createElement("div");
-    healthElement.innerHTML = `<div class='combat-el' id='char-${char.combatId}'><strong>${char.name}</strong>: <div id='char-${char.combatId}-health'>${char.currentHP}/${char.maxHP} HP</div></div>`;
+    healthElement.innerHTML = `<div class='combat-el' id='char-${char.combatId}'><strong>${char.name}</strong>: <div id='char-${char.combatId}-health'>${char.currentHP}/${char.maxHP} HP</div><div>LV: ${char.level}</div></div>`;
     healthElement.addEventListener("click", () => setTarget(char.combatId));
 
     container.appendChild(healthElement);

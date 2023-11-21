@@ -23,15 +23,29 @@ function handleKeyDown(event) {
     case "ArrowLeft":
       offsetX += step;
       break;
+    case "a":
+      offsetX += step;
+      break;
     case "ArrowRight":
+      offsetX -= step;
+      break;
+    case "d":
       offsetX -= step;
       break;
     case "ArrowUp":
       offsetY += step;
       break;
+    case "w":
+      offsetY += step;
+      break;
     case "ArrowDown":
       offsetY -= step;
       break;
+    case "s":
+      offsetY -= step;
+      break;
+    default:
+      return;
   }
 
   if (offsetX < -200) {

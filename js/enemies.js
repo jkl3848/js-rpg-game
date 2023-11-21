@@ -222,8 +222,10 @@ function levelUpEnemies(enemies, enemyCombatVal, combatVal) {
     if (enemyCombatVal < combatVal) {
       let scale = enemies[i].scale;
 
+      enemies[i].level++;
       for (let attr in scale) {
         enemies[i][attr] += scale[attr];
+        enemies[i].currentHP = enemies[i].maxHP;
       }
       enemyCombatVal += scale["threatLevel"];
     }
