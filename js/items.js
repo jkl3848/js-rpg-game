@@ -289,6 +289,27 @@ const legendaryItems = [
   },
 ];
 
+const consumables = [
+  {
+    name: "potion",
+    type: "heal",
+    attr: "currentHP",
+    boost: 50,
+    desc: "heal by 50",
+  },
+];
+
+const weapons = [
+  {
+    name: "sword",
+    class: "knight",
+    type: "boost",
+    attr: "atk",
+    boost: 5,
+    desc: "increase atk by 5",
+  },
+];
+
 let itemChance = [50, 35, 12, 3];
 //Gives player a random item
 function gainItem() {

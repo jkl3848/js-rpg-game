@@ -15,6 +15,17 @@ let player = {
   items: [],
   scale: [15, 1, 1, 1, 0],
   effects: [],
+  backpack: [
+    {
+      name: "potion",
+      type: "heal",
+      attr: "currentHP",
+      boost: 50,
+      desc: "heal by 50",
+      stack: 2,
+    },
+  ],
+  weapon: "",
 };
 
 const classes = [
@@ -111,14 +122,12 @@ let oldStats;
 
 function start() {
   updatePlayerHUD();
-  // combatInit(12);
 }
 
 function postCombat(xp) {
   postCombatHeal();
   gainXP(xp);
   gainMoney(xp);
-  encounterVal++;
 
   updatePlayerHUD();
 }
