@@ -5,7 +5,7 @@ const mobs = [
     xp: 10,
     maxHP: 200,
     attack: 5,
-    defense: 5,
+    defense: 6,
     speed: 8,
     critChance: 0,
     threatLevel: 5,
@@ -45,12 +45,12 @@ const mobs = [
     name: "evil moose",
     level: 1,
     xp: 15,
-    maxHP: 300,
-    attack: 4,
-    defense: 8,
+    maxHP: 400,
+    attack: 8,
+    defense: 14,
     speed: 6,
     critChance: 1,
-    threatLevel: 14,
+    threatLevel: 16,
     scale: {
       xp: 8,
       maxHP: 30,
@@ -116,7 +116,7 @@ const mobs = [
     defense: 15,
     speed: 13,
     critChance: 4,
-    threatLevel: 15,
+    threatLevel: 21,
     scale: {
       xp: 13,
       maxHP: 35,
@@ -138,7 +138,7 @@ const mobs = [
     defense: 22,
     speed: 18,
     critChance: 4,
-    threatLevel: 25,
+    threatLevel: 40,
     scale: {
       xp: 20,
       maxHP: 55,
@@ -197,6 +197,7 @@ function generateEnemies(combatVal) {
     if (randomEnemy.threatLevel + enemyCombatVal <= combatVal * 1.2) {
       randomEnemy.currentHP = randomEnemy.maxHP;
       randomEnemy.combatId = combatId;
+      randomEnemy.effects = [];
 
       combatId++;
       enemyCombatVal += randomEnemy.threatLevel;
