@@ -52,6 +52,7 @@ async function combatInit(combatVal) {
     if (action === "attack" || !currentCharacter.player) {
       attack(currentCharacter, target);
     } else if (action === "second") {
+      secondAction(currentCharacter, target);
     } else if (action === "flee") {
       const flee = fleeCombat();
 
@@ -66,7 +67,6 @@ async function combatInit(combatVal) {
       addMessage("You failed to flee");
     }
 
-    console.log(target.defense);
     updateHealth(turnQueue);
 
     if (target.currentHP === 0) {
