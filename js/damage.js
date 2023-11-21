@@ -13,7 +13,7 @@ function calcDamage(attacker, target) {
 
   function isCriticalHit(critChance) {
     // Generate a random number between 1 and 100
-    const randomValue = Math.floor(Math.random() * 100) + 1;
+    const randomValue = random100();
 
     // Check if the random number is within the crit chance range
     return randomValue <= critChance;
@@ -94,4 +94,8 @@ function applyStatusEffect(attacker, target) {
     }
   }
   //For mobs
+}
+
+function random100() {
+  return Math.floor(Math.random() * 100) + 1;
 }

@@ -15,9 +15,12 @@ async function combatInit(combatVal) {
 
   createCombatElements(enemies);
 
+  setTarget(1);
+
   while (player.currentHP > 0 && enemies.some((obj) => obj.currentHP > 0)) {
     const currentCharacter = turnQueue.shift();
     let target = null;
+    let action;
 
     addMessage(`Turn: ${currentCharacter.name}`);
     turnQueue.push(currentCharacter);
@@ -31,13 +34,29 @@ async function combatInit(combatVal) {
     resolveStatusEffects(currentCharacter);
 
     if (currentCharacter.player) {
-      await waitForUserAttack();
+      action = await waitForUserAttack();
+      console.log(action);
       target = playerTarget;
     } else {
       target = player;
     }
 
-    attack(currentCharacter, target);
+    if (action === "attack" || !currentCharacter.player) {
+      attack(currentCharacter, target);
+    } else if (action === "second") {
+    } else if (action === "flee") {
+      const flee = fleeCombat();
+
+      if (flee) {
+        addMessage("You successfully fled");
+        const container = document.getElementById("characters");
+        container.innerHTML = "";
+        moveLock = false;
+        return;
+      }
+
+      addMessage("You failed to flee");
+    }
 
     updateHealth(turnQueue);
 
@@ -73,25 +92,24 @@ function attack(attacker, target) {
 
   applyStatusEffect(attacker, target);
 
-  if (attacker.player) {
-    console.log(target);
-    //Reset target selection and color
-    const targetEl = document.getElementById("char-" + target.combatId);
-    targetEl.style.borderColor = "black";
-    playerTarget = null;
-    const atkBtn = document.getElementById("attackButton");
-    atkBtn.disabled = true;
-  }
+  // if (attacker.player) {
+  //   const atkBtn = document.getElementById("attackButton");
+  //   atkBtn.disabled = true;
+  // }
 }
 
 function setTarget(id) {
+  //Reset target selection and color
+  const targetEl = document.querySelectorAll(".combat-el");
+
+  targetEl.forEach((el) => {
+    el.style.borderColor = "black";
+  });
+
   playerTarget = enemies.find((enemy) => enemy.combatId === id);
 
   const target = document.getElementById("char-" + id);
   target.style.borderColor = "red";
-
-  const atkBtn = document.getElementById("attackButton");
-  atkBtn.disabled = false;
 }
 
 function addMessage(message) {
@@ -102,9 +120,24 @@ function addMessage(message) {
 
 function waitForUserAttack() {
   return new Promise((resolve) => {
-    const button = document.getElementById("attackButton");
-    button.addEventListener("click", () => {
-      resolve();
+    const attack = document.getElementById("attackButton");
+    attack.addEventListener("click", () => {
+      resolve("attack");
+    });
+
+    const second = document.getElementById("2ndActionButton");
+    second.addEventListener("click", () => {
+      resolve("second");
+    });
+
+    const flee = document.getElementById("fleeButton");
+    flee.addEventListener("click", () => {
+      resolve("flee");
+    });
+
+    const backpack = document.getElementById("backpackButton");
+    backpack.addEventListener("click", () => {
+      resolve("backpack");
     });
   });
 }
@@ -121,4 +154,21 @@ function createCombatElements(list) {
 
     container.appendChild(healthElement);
   });
+}
+
+function fleeCombat() {
+  let fleeChance = 50;
+
+  let oil = player.items.find((item) => item.name === "oil");
+
+  if (oil) {
+    fleeChance += oil.stack * 10;
+  }
+
+  const chance = random100();
+
+  if (chance <= fleeChance) {
+    return true;
+  }
+  return false;
 }

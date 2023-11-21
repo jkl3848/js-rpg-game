@@ -316,7 +316,7 @@ function gainItem() {
   let item = null;
   let type;
 
-  const itemPoolNumber = Math.floor(Math.random() * 100) + 1;
+  const itemPoolNumber = random100();
 
   let itemPool;
 
