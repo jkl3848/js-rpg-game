@@ -40,8 +40,10 @@ function postCombatHeal() {
 }
 
 function healthSteal(damage) {
-  let siphon = player.item.find((item) => item.name === "siphon");
-  if (siphon) {
-    player.currentHP += Math.ceil(damage * (siphon.stack / 100));
+  if (player.items.length > 0) {
+    let siphon = player.items?.find((item) => item.name === "siphon");
+    if (siphon) {
+      player.currentHP += Math.ceil(damage * (siphon.stack / 100));
+    }
   }
 }

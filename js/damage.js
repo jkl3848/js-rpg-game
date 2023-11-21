@@ -24,28 +24,34 @@ function calcDamage(attacker, target) {
     damage = damage * 2;
   }
 
+  if (damage < 0) {
+    damage = 0;
+  }
+
   healthSteal(damage);
 
   return damage - target.defense;
 }
 
 function resolveStatusEffects(char) {
-  let effects = char.effects;
+  if (char.effects?.length > 0) {
+    let effects = char.effects;
 
-  if (effects.find((item) => item.type === "burn")) {
-    char.currentHP -= char.maxHP * 0.1;
+    if (effects.find((item) => item.type === "burn")) {
+      char.currentHP -= char.maxHP * 0.1;
+    }
   }
 }
 
 function applyStatusEffect(attacker, target) {
   //For Hero (based on items)
-  if (attacker.player) {
+  if (attacker.player && player.items.length > 0) {
     let effects = target.effects;
     let molotov = attacker.items.find((item) => item.name === "molotov");
     let moonshine = attacker.items.find((item) => item.name === "moonshine");
 
-    let poison = effects.find((item) => item.type === "poison");
-    let burn = effects.find((item) => item.type === "burn");
+    let poison = effects?.find((item) => item.type === "poison");
+    let burn = effects?.find((item) => item.type === "burn");
 
     if (molotov) {
       if (burn) {

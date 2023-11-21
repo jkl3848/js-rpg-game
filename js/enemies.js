@@ -16,7 +16,7 @@ const mobs = [
       defense: 1,
       speed: 0.5,
       critChance: 0.1,
-      treatLevel: 1,
+      threatLevel: 1,
     },
     spawnLoc: [1],
   },
@@ -37,7 +37,7 @@ const mobs = [
       defense: 1,
       speed: 1,
       critChance: 0.2,
-      treatLevel: 1,
+      threatLevel: 1,
     },
     spawnLoc: [1],
   },
@@ -58,7 +58,7 @@ const mobs = [
       defense: 2,
       speed: 1,
       critChance: 0.1,
-      treatLevel: 2,
+      threatLevel: 2,
     },
 
     spawnLoc: [1],
@@ -80,7 +80,7 @@ const mobs = [
       defense: 0.5,
       speed: 1,
       critChance: 0.5,
-      treatLevel: 1,
+      threatLevel: 1,
     },
 
     spawnLoc: [1],
@@ -102,7 +102,7 @@ const mobs = [
       defense: 1,
       speed: 1,
       critChance: 0.2,
-      treatLevel: 1,
+      threatLevel: 1,
     },
 
     spawnLoc: [1],
@@ -124,7 +124,7 @@ const mobs = [
       defense: 2,
       speed: 1,
       critChance: 0.4,
-      treatLevel: 2,
+      threatLevel: 2,
     },
 
     spawnLoc: [1],
@@ -146,7 +146,7 @@ const mobs = [
       defense: 2,
       speed: 1,
       critChance: 0.4,
-      treatLevel: 3,
+      threatLevel: 3,
     },
 
     spawnLoc: [1],
@@ -225,7 +225,7 @@ function levelUpEnemies(enemies, enemyCombatVal, combatVal) {
       for (let attr in scale) {
         enemies[i][attr] += scale[attr];
       }
-      enemyCombatVal += scale[threatLevel];
+      enemyCombatVal += scale["threatLevel"];
     }
   }
   return enemies;
