@@ -198,6 +198,7 @@ function generateEnemies(combatVal) {
       randomEnemy.currentHP = randomEnemy.maxHP;
       randomEnemy.combatId = combatId;
       randomEnemy.effects = [];
+      randomEnemy.turnCounter = randomEnemy.speed;
 
       combatId++;
       enemyCombatVal += randomEnemy.threatLevel;

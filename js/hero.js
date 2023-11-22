@@ -5,6 +5,7 @@ let player = {
   combatId: 0,
   level: 1,
   xp: 0,
+  turnCounter: 0,
   money: 0,
   currentHP: 0,
   evasion: 0,
