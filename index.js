@@ -3,6 +3,7 @@ function start() {
   updatePlayerHUD();
 }
 
+//Functions to run after winning combat
 function postCombat(xp) {
   postCombatHeal();
   gainXP(xp);
@@ -11,6 +12,7 @@ function postCombat(xp) {
   updatePlayerHUD();
 }
 
+//Gain xp for user
 function gainXP(xp) {
   addMessage("You gained " + xp + " XP!");
   let textbook = player.items.find((item) => item.name === "textbook");
@@ -26,10 +28,12 @@ function gainXP(xp) {
   }
 }
 
+//Adds money for user
 function gainMoney(money) {
   player.money += money;
 }
 
+//If the hero has enough xp, level up
 function levelUp() {
   moveLock = true;
   addMessage("You leveled up!");
@@ -53,6 +57,7 @@ function levelUp() {
   // player.speed += statScale[3];
   // player.critChance += statScale[4];
 
+  //Opens level up ui for point allocation
   document.getElementById("overlay").style.display = "flex";
   document.getElementById("point-allocator").style.display = "block";
   document.getElementById("point-level").innerHTML = "Level" + player.level;

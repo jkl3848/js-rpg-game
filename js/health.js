@@ -45,6 +45,7 @@ function postCombatHeal() {
   addMessage("Healed for " + healTotal);
 }
 
+//Heals user based on damage dealt to target
 function healthSteal(damage) {
   if (player.items.length > 0) {
     let siphon = player.items?.find((item) => item.name === "siphon");

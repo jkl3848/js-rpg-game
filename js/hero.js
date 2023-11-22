@@ -117,8 +117,9 @@ let levelPoints = 4;
 let nextXPLevel = 10;
 let oldStats;
 
+//Creates hero based on class
 function createHero() {
-  //Need to pick class
+  //TODO: Need to pick class
   const heroClass = classes[0];
 
   for (const prop in heroClass) {

@@ -169,6 +169,7 @@ const bosses = [
   },
 ];
 
+//Generates combat units based on stats and combat value
 function generateEnemies(combatVal) {
   let enemies = [];
   let enemyCombatVal = 0;
@@ -178,6 +179,7 @@ function generateEnemies(combatVal) {
   let bannedEnemies = [];
 
   while (enemyCombatVal < combatVal) {
+    //Dont allow more than 4 enemy units. If still a big combat gap, then level them up
     if (
       enemies.length === 4 ||
       enemies.length + bannedEnemies.length >= mobs.length
@@ -186,14 +188,14 @@ function generateEnemies(combatVal) {
       break;
     }
 
+    //Pick random units that have not been banned (banned units are too strong for current combat level)
     do {
       randomIndex = Math.floor(Math.random() * mobs.length);
     } while (bannedEnemies.includes(randomIndex));
 
     const randomEnemy = structuredClone(mobs[randomIndex]);
 
-    console.log(randomEnemy);
-
+    //Create mobs combat element
     if (randomEnemy.threatLevel + enemyCombatVal <= combatVal * 1.2) {
       randomEnemy.currentHP = randomEnemy.maxHP;
       randomEnemy.combatId = combatId;
@@ -211,6 +213,7 @@ function generateEnemies(combatVal) {
     }
   }
 
+  //Levels up enemies if below combat threshold
   if (levelUp) {
     enemies = levelUpEnemies(enemies, enemyCombatVal, combatVal);
   }
@@ -218,8 +221,11 @@ function generateEnemies(combatVal) {
   return enemies;
 }
 
+//Levels up enemy units to meet combat value
 function levelUpEnemies(enemies, enemyCombatVal, combatVal) {
   console.log("leveling up enemies");
+  //Levels up one unit at a time until combat val is met
+  //TODO: This might just level up one level each
   for (let i = 0; i < enemies.length; i++) {
     if (enemyCombatVal < combatVal) {
       let scale = enemies[i].scale;

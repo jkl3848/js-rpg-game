@@ -1,3 +1,4 @@
+//Calculates damage of an attack
 function calcDamage(attacker, target, mult) {
   if (!mult) {
     mult = 1;
@@ -5,19 +6,16 @@ function calcDamage(attacker, target, mult) {
   let damage = attacker.attack * 3 * mult;
 
   const range = damage * 0.1;
-  // Generate a random value within the range
   const randomValue = Math.random() * (2 * range) - range;
 
-  // Round to the nearest whole number
   damage = Math.round(damage + randomValue);
 
   const isCrit = isCriticalHit(attacker.critChance);
 
+  //Determines if hit is crit (double damage)
   function isCriticalHit(critChance) {
-    // Generate a random number between 1 and 100
     const randomValue = random100();
 
-    // Check if the random number is within the crit chance range
     return randomValue <= critChance;
   }
 
@@ -37,6 +35,7 @@ function calcDamage(attacker, target, mult) {
   return damage;
 }
 
+//Resolves applied status effect to chars
 function resolveStatusEffects(char) {
   if (char.effects?.length > 0) {
     let effects = char.effects;
@@ -47,6 +46,7 @@ function resolveStatusEffects(char) {
   }
 }
 
+//Adds stack of a status to a char
 function applyStatusEffect(attacker, target) {
   //For Hero (based on items)
   if (attacker.player && player.items.length > 0) {
@@ -98,6 +98,7 @@ function applyStatusEffect(attacker, target) {
   //For mobs
 }
 
+//Generates a random number between 1 and 100
 function random100() {
   return Math.floor(Math.random() * 100) + 1;
 }
