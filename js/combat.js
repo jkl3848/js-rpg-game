@@ -3,9 +3,20 @@ let enemies = [];
 let playerTarget;
 let secondCooldown = 0;
 
+let thiefStartSpeed;
+let guardianStartDefense;
+let berserkerStartAttack;
+
 async function combatInit(combatVal) {
   moveLock = true;
   enemies = generateEnemies(combatVal);
+  if (player.class === "thief") {
+    thiefStartSpeed = player.speed;
+  } else if (player.class === "guardian") {
+    guardianStartDefense = player.defense;
+  } else if (player.class === "berserker") {
+    berserkerStartAttack = player.attack;
+  }
 
   const xpToGain = enemies.reduce((sum, obj) => sum + obj.xp, 0);
 
@@ -71,6 +82,11 @@ async function combatInit(combatVal) {
         target = player;
       }
 
+      //Reset guardian defense for 2nd ability
+      if (player.class === "guardian") {
+        resetStats();
+      }
+
       //Different action types
       if (action === "attack" || !currentCharacter.player) {
         attack(currentCharacter, target);
@@ -84,6 +100,8 @@ async function combatInit(combatVal) {
           const container = document.getElementById("characters");
           container.innerHTML = "";
           moveLock = false;
+
+          resetStats(true);
           return;
         }
 
@@ -101,8 +119,7 @@ async function combatInit(combatVal) {
     }
   }
 
-  player.turnCounter = 0;
-
+  resetStats(true);
   if (player.currentHP > 0) {
     addMessage("You Win!");
     postCombat(xpToGain);
@@ -113,6 +130,20 @@ async function combatInit(combatVal) {
   const container = document.getElementById("characters");
   container.innerHTML = "";
   moveLock = false;
+}
+
+function resetStats(end) {
+  if (end) {
+    player.turnCounter = 0;
+  }
+
+  if (player.class === "thief") {
+    player.speed = thiefStartSpeed;
+  } else if (player.class === "guardian") {
+    player.defense = guardianStartDefense;
+  } else if (player.class === "berserker") {
+    player.attack = berserkerStartAttack;
+  }
 }
 
 //Attacks a target
@@ -227,6 +258,7 @@ function fleeCombat() {
 
 //2nd actions, different per class
 function secondAction(currentCharacter, target) {
+  //Knight
   if (player.secondAbility.name === "For Honor") {
     const damage = calcDamage(currentCharacter, target, 1.25);
     attack(currentCharacter, target, damage);
@@ -237,6 +269,46 @@ function secondAction(currentCharacter, target) {
     }
 
     target.defense -= defReduce;
+  }
+  //Thief
+  else if (player.secondAbility.name === "Dual Slash") {
+    const firstAtkDamage = calcDamage(currentCharacter, target, 0.75);
+    attack(currentCharacter, target, firstAtkDamage);
+
+    const secondAtkDamage = calcDamage(currentCharacter, target, 0.75);
+    attack(currentCharacter, target, secondAtkDamage);
+
+    player.speed += 2;
+  }
+  //Guardian
+  else if (player.secondAbility.name === "Barrier") {
+    //TODO: Somehow this needs to reset after the next turn
+    player.defense += player.defense;
+  }
+  //Berserker
+  else if (player.secondAbility.name === "Rage") {
+    player.currentHP -= Math.ceil(player.maxHP * 0.2);
+    player.attack += Math.ceil(player.attack * 1.2);
+  }
+  //Alchemist
+  else if (player.secondAbility.name === "Toxin") {
+    let enemyList = turnQueue.filter((item) => !item.player);
+
+    for (let i = 0; i < enemyList; i++) {
+      let target = enemyList[i];
+      const damage = calcDamage(currentCharacter, target, 0.25);
+      attack(currentCharacter, target, damage);
+      applyStatusEffect(currentCharacter, target, "poison", 3);
+    }
+  }
+  //Professor
+  else if (player.secondAbility.name === "Advantage") {
+    let enemyList = turnQueue.filter((item) => !item.player);
+
+    for (let i = 0; i < enemyList; i++) {
+      let target = enemyList[i];
+      applyStatusEffect(currentCharacter, target, "stun", 1);
+    }
   }
 
   secondCooldown = player.secondAbility.cooldown + 1;

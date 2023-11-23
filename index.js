@@ -137,4 +137,7 @@ function updatePlayerHUD() {
 
   const playerStats = document.getElementById("player-stats");
   playerStats.innerHTML = `ATK: ${player.attack} DEF: ${player.defense} SPD: ${player.speed} CRT: ${player.critChance}%`;
+
+  const secondAtk = document.getElementById("2ndActionButton");
+  secondAtk.innerHTML = player.secondAbility.name;
 }

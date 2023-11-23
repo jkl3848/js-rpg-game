@@ -47,10 +47,22 @@ function resolveStatusEffects(char) {
 }
 
 //Adds stack of a status to a char
-function applyStatusEffect(attacker, target) {
+function applyStatusEffect(attacker, target, effect, effectStack) {
+  const effects = target.effects;
+
+  //Force apply a specific effect
+  if (effect) {
+    let thisEffect = effects?.find((item) => item.type === effect);
+    if (thisEffect) {
+      thisEffect.stack += effectStack;
+    } else {
+      target.effects.push({ type: effect, stack: effectStack });
+    }
+    return;
+  }
+
   //For Hero (based on items)
   if (attacker.player && player.items.length > 0) {
-    let effects = target.effects;
     let molotov = attacker.items.find((item) => item.name === "molotov");
     let moonshine = attacker.items.find((item) => item.name === "moonshine");
 
@@ -95,7 +107,6 @@ function applyStatusEffect(attacker, target) {
       }
     }
   }
-  //For mobs
 }
 
 //Generates a random number between 1 and 100

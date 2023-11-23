@@ -69,7 +69,7 @@ const classes = [
     critChance: 0,
     secondAbility: {
       name: "Barrier",
-      desc: "Increase defense by 50% on the next turn",
+      desc: "Increase defense by 100% on the next turn",
       cooldown: 2,
     },
     passive: {
@@ -109,6 +109,23 @@ const classes = [
     passive: {
       name: "Antidote",
       desc: "Immune to POISON",
+    },
+  },
+  {
+    name: "professor",
+    maxHP: 110,
+    attack: 8,
+    defense: 11,
+    speed: 16,
+    critChance: 5,
+    secondAbility: {
+      name: "Advantage",
+      desc: "Stun all enemies for 1 turn",
+      cooldown: 3,
+    },
+    passive: {
+      name: "Studious",
+      desc: "Gains +10% XP",
     },
   },
 ];
