@@ -15,6 +15,9 @@ function postCombat(xp) {
 //Gain xp for user
 function gainXP(xp) {
   addMessage("You gained " + xp + " XP!");
+  if (player.class === "professor") {
+    xp += Math.ceil(xp * 0.1);
+  }
   let textbook = player.items.find((item) => item.name === "textbook");
   if (textbook) {
     xp += (xp * (textbook.boost * textbook.stack)) / 100;
@@ -30,6 +33,9 @@ function gainXP(xp) {
 
 //Adds money for user
 function gainMoney(money) {
+  if (player.class === "thief") {
+    money += Math.floor(money * 0.15);
+  }
   player.money += money;
 }
 

@@ -111,10 +111,14 @@ async function combatInit(combatVal) {
       //Updates all chars health in ui
       updateHealth(turnQueue);
 
-      if (target.currentHP === 0) {
+      if (target.currentHP === 0 && !target.player) {
         turnQueue = turnQueue.filter((obj) => obj.combatId !== target.combatId);
         console.log(turnQueue);
         addMessage(`${target.name} defeated!`);
+
+        if (player.class === "berserker") {
+          player.currentHP += Math.ceil(player.maxHP * 0.05);
+        }
       }
     }
   }
@@ -167,6 +171,10 @@ function attack(attacker, target, damage) {
 
     if (coin) {
       player.money += Math.ceil(damage * (coin.stack / 100));
+    }
+
+    if (player.class === "guardian") {
+      attacker.currentHP -= Math.ceil(damage * 0.05);
     }
   }
 

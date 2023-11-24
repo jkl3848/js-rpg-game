@@ -19,6 +19,10 @@ function postCombatHeal() {
 
   healTotal = player.maxHP * 0.05;
 
+  if (player.class === "knight") {
+    healTotal += Math.ceil(healTotal * 0.05);
+  }
+
   let bark = player.items.find((item) => item.name === "treeBark");
   let gauntlet = player.items.find((item) => item.name === "ironGauntlet");
 
