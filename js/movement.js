@@ -7,6 +7,7 @@ let offsetX = 0;
 let offsetY = 0;
 
 let randomEncounter = 20;
+let areaEncounterVal = 1;
 let encounterVal = 6;
 let areaCombatVal = 0;
 
@@ -64,7 +65,7 @@ function handleKeyDown(event) {
   randomEncounter--;
 
   if (randomEncounter == 0) {
-    randomEncounter = 20;
+    randomEncounter = Math.floor(Math.random() * 40) + areaEncounterVal;
 
     encounterVal = encounterVal + player.level + areaCombatVal;
 

@@ -148,5 +148,6 @@ function createHero() {
     }
   }
   player.currentHP = player.maxHP;
-  console.log(player);
+  document.getElementById("2ndActionTooltip").innerHTML =
+    heroClass.secondAbility.desc;
 }

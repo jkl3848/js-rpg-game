@@ -1,4 +1,6 @@
 function start() {
+  document.getElementById("startButton").disabled = true;
+
   createHero();
   updatePlayerHUD();
 }
@@ -138,7 +140,7 @@ function updatePlayerHUD() {
   const playerItems = document.getElementById("player-items");
   playerItems.innerHTML = "";
   player.items.forEach((el) => {
-    playerItems.innerHTML += `<span class='item-${el.type}'>${el.displayName}:</span> ${el.stack}`;
+    playerItems.innerHTML += `<div class='tooltip'><span class='item-${el.type}'>${el.displayName}:</span> ${el.stack} <span class='tooltip-text'>${el.detailedDesc}</span></div>`;
   });
 
   const playerStats = document.getElementById("player-stats");

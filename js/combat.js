@@ -57,8 +57,11 @@ async function combatInit(combatVal) {
 
     currentCharacter.turnCounter += currentCharacter.speed;
 
+    const stunned = currentCharacter.effects?.find(
+      (item) => item.type === "stun"
+    );
     //If the turn counter reaches the max, take an action
-    if (currentCharacter.turnCounter >= maxTurnCount) {
+    if (currentCharacter.turnCounter >= maxTurnCount && !stunned) {
       currentCharacter.turnCounter -= maxTurnCount;
       addMessage(`Turn: ${currentCharacter.name}`);
 
@@ -120,6 +123,9 @@ async function combatInit(combatVal) {
           player.currentHP += Math.ceil(player.maxHP * 0.05);
         }
       }
+    } else if (stunned) {
+      currentCharacter.turnCounter -= maxTurnCount;
+      resolveStatusEffects(currentCharacter);
     }
   }
 
@@ -129,6 +135,7 @@ async function combatInit(combatVal) {
     postCombat(xpToGain);
   } else {
     addMessage("You Lose!");
+    document.getElementById("startButton").disabled = false;
   }
 
   const container = document.getElementById("characters");

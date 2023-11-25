@@ -87,6 +87,17 @@ const commonItems = [
     desc: "",
     detailedDesc: "Gain an extra 10% (+10% per stack) coin after combat",
   },
+  {
+    name: "molotov",
+    displayName: "Molotov Cocktail",
+    boost: 10,
+    stackBoost: 10,
+    boostType: "",
+    target: "enemy",
+    attr: "effect",
+    desc: "Shaken not stirred",
+    detailedDesc: "Gain 10% (+10% per stack) chance to inflict BURN on enemy",
+  },
 ];
 
 const uncommonItems = [
@@ -135,17 +146,6 @@ const uncommonItems = [
     detailedDesc: "Gain 1 (+1 per stack) max HP after combat",
   },
   {
-    name: "molotov",
-    displayName: "Molotov Cocktail",
-    boost: 10,
-    stackBoost: 10,
-    boostType: "",
-    target: "enemy",
-    attr: "effect",
-    desc: "Shaken not stirred",
-    detailedDesc: "Gain 10% (+10% per stack) chance to inflict BURN on enemy",
-  },
-  {
     name: "moonshine",
     displayName: "Moonshine",
     boost: 10,
@@ -166,6 +166,17 @@ const uncommonItems = [
     attr: "walking",
     desc: "",
     detailedDesc: "Adds a 10% (+10% per stack) movement speed in the overworld",
+  },
+  {
+    name: "pointyRock",
+    displayName: "Pointy Rock",
+    boost: 10,
+    stackBoost: 10,
+    boostType: "",
+    target: "enemy",
+    attr: "effect",
+    desc: "",
+    detailedDesc: "Gain 10% (+10% per stack) chance to inflict BROKEN on enemy",
   },
   {
     name: "tbd",

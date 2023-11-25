@@ -31,11 +31,23 @@
         </div>
 
         <div id="hud">
-          <button onclick="start()">Start Game</button>
-          <button id="attackButton">Attack</button>
-          <button id="2ndActionButton">2nd Action</button>
-          <button id="fleeButton">Flee</button>
-          <button id="backpackButton">Backpack</button>
+          <button id="startButton" onclick="start()">Start Game</button>
+          <div class="tooltip">
+            <button id="attackButton">Attack</button
+            ><span class="tooltip-text">Attack for 100% damage</span>
+          </div>
+          <div class="tooltip">
+            <button id="2ndActionButton">2nd Action</button
+            ><span class="tooltip-text" id="2ndActionTooltip"></span>
+          </div>
+          <div class="tooltip">
+            <button id="fleeButton">Flee</button
+            ><span class="tooltip-text">Flee from combat</span>
+          </div>
+          <div class="tooltip">
+            <button id="backpackButton" disabled>Backpack</button
+            ><span class="tooltip-text">Work In Progress</span>
+          </div>
         </div>
       </div>
       <div id="characters"></div>
