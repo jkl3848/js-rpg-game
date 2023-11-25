@@ -179,8 +179,8 @@ const uncommonItems = [
     detailedDesc: "Gain 10% (+10% per stack) chance to inflict BROKEN on enemy",
   },
   {
-    name: "tbd",
-    displayName: "",
+    name: "paddedArmor",
+    displayName: "Padded Armor",
     boost: 5,
     stackBoost: 5,
     boostType: "add",
@@ -239,8 +239,8 @@ const rareItems = [
     detailedDesc: "Reduce enemy speed by 1 (+1 per stack) each attack",
   },
   {
-    name: "tbd",
-    displayName: "",
+    name: "giantLeech",
+    displayName: "Giant Leech",
     boost: 1,
     stackBoost: 1,
     boostType: "heal",
@@ -251,8 +251,8 @@ const rareItems = [
       "10% chance (+5% per stack) to recover 5% health (+5% per stack) after attacking",
   },
   {
-    name: "tbd",
-    displayName: "",
+    name: "energyDrink",
+    displayName: "Energy Drink",
     boost: 1,
     stackBoost: 1,
     boostType: "add",
@@ -276,8 +276,8 @@ const legendaryItems = [
     detailedDesc: "Gain 20 (+5 per stack) speed",
   },
   {
-    name: "tbd",
-    displayName: "",
+    name: "glowingStone",
+    displayName: "Glowing Stone",
     boost: 50,
     stackBoost: 5,
     boostType: "mult",
