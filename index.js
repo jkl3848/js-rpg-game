@@ -39,6 +39,7 @@ function postCombat(xp) {
 
 //Gain xp for user
 function gainXP(xp) {
+  let newXPGap;
   addMessage("You gained " + xp + " XP!");
   if (player.class === "professor") {
     xp += Math.ceil(xp * 0.1);
@@ -52,8 +53,14 @@ function gainXP(xp) {
   if (player.xp >= nextXPLevel) {
     levelUp();
 
-    nextXPLevel += Math.floor((player.level * 10 + player.level) * 1.2);
+    newXPGap = Math.floor((player.level * 10 + player.level) * 1.2);
+    lastXPLevel = nextXPLevel;
+    nextXPLevel += newXPGap;
   }
+
+  document.getElementById("current-xp").style.width = `${
+    player.xp - lastXPLevel / nextXPLevel - lastXPLevel
+  }%`;
 }
 
 //Adds money for user
@@ -105,15 +112,15 @@ function closePointAll() {
   moveLock = false;
 }
 
-function closeBackpack() {
-  document.getElementById("overlay").style.display = "none";
-  document.getElementById("backpack-overlay").style.display = "none";
-  moveLock = false;
-}
-
 function openBackpack() {
   document.getElementById("overlay").style.display = "flex";
   document.getElementById("backpack-overlay").style.display = "block";
+  moveLock = true;
+}
+
+function openPlayerMenu() {
+  document.getElementById("overlay").style.display = "flex";
+  document.getElementById("player-menu").style.display = "block";
   moveLock = true;
 }
 
@@ -123,6 +130,7 @@ function clearAllOverlays() {
   document.getElementById("backpack-overlay").style.display = "none";
   document.getElementById("point-allocator").style.display = "none";
   document.getElementById("game-over").style.display = "none";
+  document.getElementById("player-menu").style.display = "none";
 }
 
 function openClassSelector() {
@@ -192,6 +200,9 @@ function updatePlayerHUD() {
   const playerName = document.getElementById("player-name");
   playerName.innerHTML = `${player.name}`;
 
+  const playerLevel = document.getElementById("player-level");
+  playerLevel.innerHTML = `Level ${player.level}`;
+
   const playerHP = document.getElementById("player-hp");
   playerHP.innerHTML = `${player.currentHP} / ${player.maxHP} HP`;
 
@@ -203,7 +214,4 @@ function updatePlayerHUD() {
 
   const playerStats = document.getElementById("player-stats");
   playerStats.innerHTML = `ATK: ${player.attack} DEF: ${player.defense} SPD: ${player.speed} CRT: ${player.critChance}%`;
-
-  const secondAtk = document.getElementById("2ndActionButton");
-  secondAtk.innerHTML = player.secondAbility.name;
 }

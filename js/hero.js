@@ -137,6 +137,7 @@ let heroIndex = 0;
 let selectedClass;
 let levelPoints = 4;
 let nextXPLevel = 10;
+let lastXPLevel = 0;
 let oldStats;
 
 //Creates hero based on class
@@ -157,4 +158,6 @@ function createHero() {
   player.currentHP = player.maxHP;
   document.getElementById("2ndActionTooltip").innerHTML =
     heroClass.secondAbility.desc;
+  secondAtk = document.getElementById("2ndActionButton");
+  secondAtk.innerHTML = player.secondAbility.name;
 }

@@ -11,6 +11,13 @@ function updateHealth(list) {
     }
     healthElement.innerHTML = `${char.currentHP}/${char.maxHP} HP`;
   });
+  updatePlayerHealth();
+}
+
+function updatePlayerHealth() {
+  document.getElementById("current-hp").style.width = `${
+    (player.currentHP / player.maxHP) * 100
+  }%`;
 }
 
 //Heals hero after combat

@@ -6,8 +6,58 @@
     <link rel="stylesheet" href="main.css" />
   </head>
   <body>
+    <!-- Top HUD -->
+    <div class="hud">
+      <div class="hud-item">
+        <span id="player-class"></span><span id="player-name"></span>
+      </div>
+      <div class="hud-item">
+        <span id="player-level" class="hud-item"></span
+        ><span id="player-money"></span>
+        <span onclick="openPlayerMenu()">i</span>
+      </div>
+    </div>
+
+    <div id="hp-bar">
+      <div id="current-hp">
+        <div id="player-hp" class="hud-item bar-text">100 HP</div>
+      </div>
+    </div>
+
+    <div id="xp-bar">
+      <div id="current-xp">
+        <span id="player-xp" class="hud-item bar-text"></span>
+      </div>
+    </div>
+
+    <!-- Main Map -->
     <div id="map-container">
       <img id="game-map" src="./assets/maps/test_map.jpg" />
+    </div>
+
+    <!-- Bottom HUD -->
+    <div class="hud" id="action-buttons">
+      <div class="tooltip">
+        <button class="action-button" id="attackButton">Attack</button
+        ><span class="tooltip-text">Attack for 100% damage</span>
+      </div>
+      <div class="tooltip">
+        <button class="action-button" id="2ndActionButton">2nd Action</button
+        ><span class="tooltip-text" id="2ndActionTooltip"></span>
+      </div>
+      <div class="tooltip">
+        <button class="action-button" id="fleeButton">Flee</button
+        ><span class="tooltip-text">Flee from combat</span>
+      </div>
+      <div class="tooltip">
+        <button
+          class="action-button"
+          id="backpackButton"
+          onclick="openBackpack()"
+        >
+          Backpack</button
+        ><span class="tooltip-text">Work In Progress</span>
+      </div>
     </div>
 
     <div id="game-space">
@@ -18,39 +68,6 @@
           style="width: 600px; height: 200px"
         >
         </textarea>
-
-        <div id="player-info">
-          <div class="stat-bar">
-            <span id="player-class"></span><span id="player-name"></span>
-          </div>
-
-          <div id="player-hp"></div>
-          <div id="player-xp"></div>
-          <div id="player-money"></div>
-
-          <div id="player-items"></div>
-          <div id="player-stats"></div>
-        </div>
-
-        <div id="hud">
-          <div class="tooltip">
-            <button id="attackButton">Attack</button
-            ><span class="tooltip-text">Attack for 100% damage</span>
-          </div>
-          <div class="tooltip">
-            <button id="2ndActionButton">2nd Action</button
-            ><span class="tooltip-text" id="2ndActionTooltip"></span>
-          </div>
-          <div class="tooltip">
-            <button id="fleeButton">Flee</button
-            ><span class="tooltip-text">Flee from combat</span>
-          </div>
-          <div class="tooltip">
-            <button id="backpackButton" onclick="openBackpack()">
-              Backpack</button
-            ><span class="tooltip-text">Work In Progress</span>
-          </div>
-        </div>
       </div>
       <div id="characters"></div>
     </div>
@@ -116,7 +133,9 @@
       </div>
       <!-- Backpack -->
       <div id="backpack-overlay">
-        <button onclick="closeBackpack()" id="close-overlay-button">X</button>
+        <button onclick="clearAllOverlays()" id="close-overlay-button">
+          X
+        </button>
         <table id="backpack">
           <tr class="pack-row">
             <td
@@ -460,6 +479,25 @@
       <div id="game-over">
         GAME OVER
         <div><button onclick="openClassSelector()">New Game</button></div>
+      </div>
+
+      <!-- Player Menu -->
+      <div id="player-menu">
+        <button onclick="clearAllOverlays()" id="close-overlay-button">
+          X
+        </button>
+        <!-- <div class="player-info">
+          <div id="player-name" class="hud-item">Player Name</div>
+          <div id="player-class" class="hud-item">Class: Warrior</div>
+          <div id="player-level" class="hud-item">Level: 1</div>
+          <div id="player-hp" class="hud-item">HP: 100/100</div>
+          <div id="player-xp" class="hud-item">XP: 0/100</div>
+          <div id="player-money" class="hud-item">Gold: 0</div>
+          <div id="player-stats"></div>
+        </div> -->
+
+        <div id="player-stats"></div>
+        <div id="player-items"></div>
       </div>
     </div>
 
