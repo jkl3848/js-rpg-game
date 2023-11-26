@@ -1,0 +1,10 @@
+function sendData(type) {
+  const dataToSend = {
+    player: player,
+    enemies: turnQueue,
+    version: version,
+  };
+  if (type === "lost") {
+  } else if (type === "win") {
+  }
+}

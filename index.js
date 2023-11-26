@@ -1,3 +1,5 @@
+const gameVersion = "0.1.2";
+
 function start() {
   clearAllOverlays();
   moveLock = false;
