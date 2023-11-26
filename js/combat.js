@@ -134,8 +134,7 @@ async function combatInit(combatVal) {
     addMessage("You Win!");
     postCombat(xpToGain);
   } else {
-    addMessage("You Lose!");
-    document.getElementById("startButton").disabled = false;
+    gameOver();
   }
 
   const container = document.getElementById("characters");

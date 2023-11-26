@@ -1,4 +1,5 @@
 function start() {
+  clearAllOverlays();
   moveLock = false;
 
   createHero();
@@ -6,22 +7,14 @@ function start() {
   updateBackpack();
 }
 
-function openClassSelector() {
-  document.getElementById("startButton").disabled = true;
-  document.getElementById("overlay").style.display = "flex";
-  document.getElementById("class-picker-container").style.display = "block";
-  document.getElementById("class-info-0").style.display = "block";
-
+function gameOver() {
+  clearAllOverlays();
+  addMessage("You Lose!");
+  document.getElementById("startButton").disabled = false;
   moveLock = true;
-}
 
-function chooseClass() {
-  document.getElementById("overlay").style.display = "none";
-  document.getElementById("class-picker-container").style.display = "none";
-  moveLock = false;
-
-  selectedClass = classes[heroIndex];
-  start();
+  document.getElementById("overlay").style.display = "flex";
+  document.getElementById("game-over").style.display = "block";
 }
 
 function scrollHeroes(value) {
@@ -122,6 +115,32 @@ function openBackpack() {
   document.getElementById("overlay").style.display = "flex";
   document.getElementById("backpack-overlay").style.display = "block";
   moveLock = true;
+}
+
+function clearAllOverlays() {
+  moveLock = false;
+  document.getElementById("overlay").style.display = "none";
+  document.getElementById("backpack-overlay").style.display = "none";
+  document.getElementById("point-allocator").style.display = "none";
+  document.getElementById("game-over").style.display = "none";
+}
+
+function openClassSelector() {
+  document.getElementById("startButton").disabled = true;
+  document.getElementById("overlay").style.display = "flex";
+  document.getElementById("class-picker-container").style.display = "block";
+  document.getElementById("class-info-0").style.display = "block";
+
+  moveLock = true;
+}
+
+function chooseClass() {
+  document.getElementById("overlay").style.display = "none";
+  document.getElementById("class-picker-container").style.display = "none";
+  moveLock = false;
+
+  selectedClass = classes[heroIndex];
+  start();
 }
 
 function addAttrValue(prop) {
