@@ -30,6 +30,11 @@ function scrollHeroes(value) {
 
 //Functions to run after winning combat
 function postCombat(xp) {
+  //Reset overlay style
+  const overlay = document.getElementById("overlay");
+  overlay.style.height = "740px";
+  overlay.style.top = "0";
+
   postCombatHeal();
   gainXP(xp);
   gainMoney(xp);
@@ -113,6 +118,16 @@ function closePointAll() {
   moveLock = false;
 }
 
+function openCombat() {
+  const overlay = document.getElementById("overlay");
+  document.getElementById("combat-space").style.display = "block";
+  moveLock = true;
+
+  overlay.style.display = "flex";
+  overlay.style.height = "595px";
+  overlay.style.top = "90px";
+}
+
 function openBackpack() {
   document.getElementById("overlay").style.display = "flex";
   document.getElementById("backpack-overlay").style.display = "block";
@@ -132,6 +147,7 @@ function clearAllOverlays() {
   document.getElementById("point-allocator").style.display = "none";
   document.getElementById("game-over").style.display = "none";
   document.getElementById("player-menu").style.display = "none";
+  document.getElementById("combat-space").style.display = "none";
 }
 
 function openClassSelector() {

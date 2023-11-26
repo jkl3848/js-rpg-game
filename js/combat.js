@@ -9,6 +9,8 @@ let berserkerStartAttack;
 
 async function combatInit(combatVal) {
   moveLock = true;
+  openCombat();
+
   enemies = generateEnemies(combatVal);
   if (player.class === "thief") {
     thiefStartSpeed = player.speed;

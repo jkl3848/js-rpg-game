@@ -70,7 +70,6 @@
         >
         </textarea>
       </div>
-      <div id="characters"></div>
     </div>
 
     <div id="overlay">
@@ -129,7 +128,7 @@
           </table>
         </div>
         <div>
-          <button onclick="closePointAll()">Level Up</button>
+          <button onclick="clearAllOverlays()">Level Up</button>
         </div>
       </div>
       <!-- Backpack -->
@@ -508,7 +507,9 @@
         <div id="player-items"></div>
       </div>
 
-      <div id="combat-space"></div>
+      <div id="combat-space">
+        <div id="characters"></div>
+      </div>
     </div>
 
     <script src="index.js"></script>
