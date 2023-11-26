@@ -1,5 +1,7 @@
-let player = {
-  name: "Jake",
+let player = {};
+
+const playerTemplate = {
+  name: "",
   player: true,
   class: "",
   combatId: 0,
@@ -139,6 +141,9 @@ let oldStats;
 
 //Creates hero based on class
 function createHero() {
+  player = structuredClone(playerTemplate);
+  player.name = document.getElementById("character-name-input").value;
+  console.log(document.getElementById("character-name-input").value);
   const heroClass = selectedClass;
 
   for (const prop in heroClass) {

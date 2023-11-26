@@ -126,7 +126,7 @@ function clearAllOverlays() {
 }
 
 function openClassSelector() {
-  document.getElementById("startButton").disabled = true;
+  document.getElementById("start-screen").style.display = "none";
   document.getElementById("overlay").style.display = "flex";
   document.getElementById("class-picker-container").style.display = "block";
   document.getElementById("class-info-0").style.display = "block";
@@ -184,6 +184,14 @@ function subAttrValue(prop) {
 }
 
 function updatePlayerHUD() {
+  const playerClass = document.getElementById("player-class");
+  playerClass.innerHTML = `${
+    player.class.charAt(0).toUpperCase() + player.class.slice(1)
+  } `;
+
+  const playerName = document.getElementById("player-name");
+  playerName.innerHTML = `${player.name}`;
+
   const playerHP = document.getElementById("player-hp");
   playerHP.innerHTML = `${player.currentHP} / ${player.maxHP} HP`;
 

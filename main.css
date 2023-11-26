@@ -39,7 +39,7 @@ body {
 }
 
 #overlay {
-  display: none;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -156,6 +156,7 @@ body {
 }
 
 #class-picker-container {
+  display: none;
   position: relative;
   width: 400px;
   margin: 20px auto;
@@ -198,7 +199,7 @@ body {
   right: 0;
 }
 
-#class-selection-button {
+.primary-button {
   background-color: #3498db; /* Blue */
   color: white;
   padding: 10px 20px;
@@ -212,6 +213,25 @@ body {
   cursor: pointer;
 }
 
-#class-selection-button:hover {
+.primary-button:hover {
   background-color: #2980b9; /* Darker blue on hover */
+}
+
+#game-over {
+  display: none;
+}
+
+#character-name-input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Add this if you want to style the placeholder text */
+#character-name-input::placeholder {
+  color: #999;
 }

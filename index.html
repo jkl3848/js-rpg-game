@@ -20,7 +20,9 @@
         </textarea>
 
         <div id="player-info">
-          <div id="player-name">Player</div>
+          <div class="stat-bar">
+            <span id="player-class"></span><span id="player-name"></span>
+          </div>
 
           <div id="player-hp"></div>
           <div id="player-xp"></div>
@@ -31,9 +33,6 @@
         </div>
 
         <div id="hud">
-          <button id="startButton" onclick="openClassSelector()">
-            Start Game
-          </button>
           <div class="tooltip">
             <button id="attackButton">Attack</button
             ><span class="tooltip-text">Attack for 100% damage</span>
@@ -57,6 +56,16 @@
     </div>
 
     <div id="overlay">
+      <!-- Start Screen -->
+      <div id="start-screen">
+        <button
+          id="startButton"
+          onclick="openClassSelector()"
+          class="primary-button"
+        >
+          Start Game
+        </button>
+      </div>
       <!-- Level up point allocator -->
       <div id="point-allocator">
         <div id="point-allocator-header">
@@ -173,6 +182,11 @@
 
       <!-- Class Selection -->
       <div id="class-picker-container">
+        <input
+          type="text"
+          id="character-name-input"
+          placeholder="Enter your character's name"
+        />
         <div class="class-picker">
           <table id="class-info-0" class="class-info">
             <tr>
@@ -440,12 +454,13 @@
         <button class="prev-button" onclick="scrollHeroes(-1)">&lt;</button>
         <button class="next-button" onclick="scrollHeroes(1)">&gt;</button>
 
-        <button onclick="chooseClass()" id="class-selection-button">
-          Start
-        </button>
+        <button onclick="chooseClass()" class="primary-button">Start</button>
       </div>
       <!-- Game Over -->
-      <div id="game-over">GAME OVER</div>
+      <div id="game-over">
+        GAME OVER
+        <div><button onclick="openClassSelector()">New Game</button></div>
+      </div>
     </div>
 
     <script src="index.js"></script>
