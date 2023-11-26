@@ -121,6 +121,7 @@ async function combatInit(combatVal) {
 
         if (player.class === "berserker") {
           player.currentHP += Math.ceil(player.maxHP * 0.05);
+          updatePlayerHealth();
         }
       }
     } else if (stunned) {
@@ -303,6 +304,8 @@ function secondAction(currentCharacter, target) {
   else if (player.secondAbility.name === "Rage") {
     player.currentHP -= Math.ceil(player.maxHP * 0.2);
     player.attack += Math.ceil(player.attack * 1.2);
+
+    updatePlayerHealth();
   }
   //Alchemist
   else if (player.secondAbility.name === "Toxin") {

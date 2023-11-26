@@ -54,6 +54,8 @@ function postCombatHeal() {
   player.currentHP += healTotal;
 
   addMessage("Healed for " + healTotal);
+
+  updatePlayerHealth();
 }
 
 //Heals user based on damage dealt to target
@@ -65,4 +67,5 @@ function healthSteal(damage) {
       addMessage("Healed for " + siphon);
     }
   }
+  updatePlayerHealth();
 }

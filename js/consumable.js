@@ -121,7 +121,7 @@ function useConsumable(itemName) {
         player.currentHP = player.maxHP;
       }
 
-      updateHealth(turnQueue);
+      updatePlayerHealth();
     } else {
       return;
     }
