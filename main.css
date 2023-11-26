@@ -314,3 +314,22 @@ body {
 #player-menu {
   display: none;
 }
+
+#info-button {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  background-color: #3498db;
+  border-radius: 50%;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 18px;
+  border: 1px solid #2980b9;
+  transition: background-color 0.3s ease;
+}
+
+#info-button:hover {
+  background-color: #2980b9;
+}
