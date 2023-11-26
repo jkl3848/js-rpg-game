@@ -67,5 +67,8 @@ function healthSteal(damage) {
       addMessage("Healed for " + siphon);
     }
   }
+  if (player.currentHP > player.maxHP) {
+    player.currentHP = player.maxHP;
+  }
   updatePlayerHealth();
 }
