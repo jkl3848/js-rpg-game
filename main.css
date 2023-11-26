@@ -307,8 +307,12 @@ body {
   transition: background-color 0.3s ease;
 }
 
-.action-button:hover {
+.action-button:hover:enabled {
   background-color: #c0392b; /* Darker red on hover */
+}
+
+.action-button:disabled {
+  background-color: #c03a2b75;
 }
 
 #player-menu {
