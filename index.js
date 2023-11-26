@@ -93,7 +93,8 @@ function levelUp() {
   //Opens level up ui for point allocation
   document.getElementById("overlay").style.display = "flex";
   document.getElementById("point-allocator").style.display = "block";
-  document.getElementById("point-level").innerHTML = "Level" + player.level;
+  document.getElementById("point-name").innerHTML = player.name;
+  document.getElementById("point-level").innerHTML = "Level " + player.level;
   document.getElementById("point-total").innerHTML = "Points: " + levelPoints;
   document.getElementById("point-maxHP-value").innerHTML = player.maxHP;
   document.getElementById("point-attack-value").innerHTML = player.attack;
