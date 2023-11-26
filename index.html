@@ -31,7 +31,9 @@
         </div>
 
         <div id="hud">
-          <button id="startButton" onclick="start()">Start Game</button>
+          <button id="startButton" onclick="openClassSelector()">
+            Start Game
+          </button>
           <div class="tooltip">
             <button id="attackButton">Attack</button
             ><span class="tooltip-text">Attack for 100% damage</span>
@@ -167,6 +169,280 @@
             ></td>
           </tr>
         </table>
+      </div>
+
+      <!-- Class Selection -->
+      <div id="class-picker-container">
+        <div class="class-picker">
+          <table id="class-info-0" class="class-info">
+            <tr>
+              <td colspan="2">Knight</td>
+            </tr>
+            <tr>
+              <td>HP</td>
+              <td>150</td>
+            </tr>
+            <tr>
+              <td>ATK</td>
+              <td>12</td>
+            </tr>
+            <tr>
+              <td>DEF</td>
+              <td>12</td>
+            </tr>
+            <tr>
+              <td>SPD</td>
+              <td>10</td>
+            </tr>
+            <tr>
+              <td>CRT</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>Ability</td>
+              <td>For Honor</td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                Deal 1.25x damage and reduce enemy armor by 20%
+              </td>
+            </tr>
+            <tr>
+              <td>Cooldown</td>
+              <td>3</td>
+            </tr>
+            <tr>
+              <td>Passive</td>
+              <td>Dutiful</td>
+            </tr>
+            <tr>
+              <td colspan="2">Heal an extra 5% after combat</td>
+            </tr>
+          </table>
+          <table id="class-info-1" class="class-info">
+            <tr>
+              <td colspan="2">Thief</td>
+            </tr>
+            <tr>
+              <td>HP</td>
+              <td>120</td>
+            </tr>
+            <tr>
+              <td>ATK</td>
+              <td>15</td>
+            </tr>
+            <tr>
+              <td>DEF</td>
+              <td>9</td>
+            </tr>
+            <tr>
+              <td>SPD</td>
+              <td>13</td>
+            </tr>
+            <tr>
+              <td>CRT</td>
+              <td>5</td>
+            </tr>
+            <tr>
+              <td>Ability</td>
+              <td>Dual Slash</td>
+            </tr>
+            <tr>
+              <td colspan="2">Deal .75x damage twice and gain 2 speed</td>
+            </tr>
+            <tr>
+              <td>Cooldown</td>
+              <td>3</td>
+            </tr>
+            <tr>
+              <td>Passive</td>
+              <td>Sticky Finger</td>
+            </tr>
+            <tr>
+              <td colspan="2">Earn 15% more coin</td>
+            </tr>
+          </table>
+          <table id="class-info-2" class="class-info">
+            <tr>
+              <td colspan="2">Guardian</td>
+            </tr>
+            <tr>
+              <td>HP</td>
+              <td>180</td>
+            </tr>
+            <tr>
+              <td>ATK</td>
+              <td>10</td>
+            </tr>
+            <tr>
+              <td>DEF</td>
+              <td>15</td>
+            </tr>
+            <tr>
+              <td>SPD</td>
+              <td>7</td>
+            </tr>
+            <tr>
+              <td>CRT</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>Ability</td>
+              <td>Barrier</td>
+            </tr>
+            <tr>
+              <td colspan="2">Increase defense by 100% on the next turn</td>
+            </tr>
+            <tr>
+              <td>Cooldown</td>
+              <td>2</td>
+            </tr>
+            <tr>
+              <td>Passive</td>
+              <td>Spiked Armor</td>
+            </tr>
+            <tr>
+              <td colspan="2">Enemies take 5% damage given on attack</td>
+            </tr>
+          </table>
+          <table id="class-info-3" class="class-info">
+            <tr>
+              <td colspan="2">Berserker</td>
+            </tr>
+            <tr>
+              <td>HP</td>
+              <td>170</td>
+            </tr>
+            <tr>
+              <td>ATK</td>
+              <td>14</td>
+            </tr>
+            <tr>
+              <td>DEF</td>
+              <td>10</td>
+            </tr>
+            <tr>
+              <td>SPD</td>
+              <td>10</td>
+            </tr>
+            <tr>
+              <td>CRT</td>
+              <td>3</td>
+            </tr>
+            <tr>
+              <td>Ability</td>
+              <td>Rage</td>
+            </tr>
+            <tr>
+              <td colspan="2">Consume 20% HP and gain 20% attack</td>
+            </tr>
+            <tr>
+              <td>Cooldown</td>
+              <td>2</td>
+            </tr>
+            <tr>
+              <td>Passive</td>
+              <td>Bloodlust</td>
+            </tr>
+            <tr>
+              <td colspan="2">Heal 5% on enemy death</td>
+            </tr>
+          </table>
+          <table id="class-info-4" class="class-info">
+            <tr>
+              <td colspan="2">Alchemist</td>
+            </tr>
+            <tr>
+              <td>HP</td>
+              <td>120</td>
+            </tr>
+            <tr>
+              <td>ATK</td>
+              <td>12</td>
+            </tr>
+            <tr>
+              <td>DEF</td>
+              <td>10</td>
+            </tr>
+            <tr>
+              <td>SPD</td>
+              <td>14</td>
+            </tr>
+            <tr>
+              <td>CRT</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>Ability</td>
+              <td>Toxin</td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                Deal .25x damage and apply 3 stacks of POISON to all enemies
+              </td>
+            </tr>
+            <tr>
+              <td>Cooldown</td>
+              <td>2</td>
+            </tr>
+            <tr>
+              <td>Passive</td>
+              <td>Antidote</td>
+            </tr>
+            <tr>
+              <td colspan="2">Immune to POISON</td>
+            </tr>
+          </table>
+          <table id="class-info-5" class="class-info">
+            <tr>
+              <td colspan="2">Professor</td>
+            </tr>
+            <tr>
+              <td>HP</td>
+              <td>110</td>
+            </tr>
+            <tr>
+              <td>ATK</td>
+              <td>8</td>
+            </tr>
+            <tr>
+              <td>DEF</td>
+              <td>11</td>
+            </tr>
+            <tr>
+              <td>SPD</td>
+              <td>16</td>
+            </tr>
+            <tr>
+              <td>CRT</td>
+              <td>5</td>
+            </tr>
+            <tr>
+              <td>Ability</td>
+              <td>Advantage</td>
+            </tr>
+            <tr>
+              <td colspan="2">Stun all enemies for 1 turn</td>
+            </tr>
+            <tr>
+              <td>Cooldown</td>
+              <td>3</td>
+            </tr>
+            <tr>
+              <td>Passive</td>
+              <td>Studious</td>
+            </tr>
+            <tr>
+              <td colspan="2">Gains +10% XP</td>
+            </tr>
+          </table>
+        </div>
+        <button class="prev-button" onclick="scrollHeroes(-1)">&lt;</button>
+        <button class="next-button" onclick="scrollHeroes(1)">&gt;</button>
+
+        <button onclick="chooseClass()" id="class-selection-button">
+          Start
+        </button>
       </div>
     </div>
 

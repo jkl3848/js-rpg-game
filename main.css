@@ -113,6 +113,10 @@ body {
   opacity: 1;
 }
 
+#backpack-overlay {
+  display: none;
+}
+
 #backpack {
   border-collapse: collapse;
   width: 100%;
@@ -149,4 +153,65 @@ body {
 
 #close-overlay-button:hover {
   color: #555; /* Text color on hover */
+}
+
+#class-picker-container {
+  position: relative;
+  width: 400px;
+  margin: 20px auto;
+}
+
+.class-picker {
+  overflow: hidden;
+}
+
+.class-info {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  display: none;
+}
+
+.class-info td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.prev-button,
+.next-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #555;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  margin: 0 -45px;
+}
+
+.prev-button {
+  left: -20;
+}
+
+.next-button {
+  right: 0;
+}
+
+#class-selection-button {
+  background-color: #3498db; /* Blue */
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 20px 20px 20px auto; /* Adjust margin for right side positioning */
+  border: none; /* Remove the border */
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#class-selection-button:hover {
+  background-color: #2980b9; /* Darker blue on hover */
 }

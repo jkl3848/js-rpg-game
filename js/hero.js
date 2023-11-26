@@ -131,14 +131,15 @@ const classes = [
   },
 ];
 
+let heroIndex = 0;
+let selectedClass;
 let levelPoints = 4;
 let nextXPLevel = 10;
 let oldStats;
 
 //Creates hero based on class
 function createHero() {
-  //TODO: Need to pick class
-  const heroClass = classes[0];
+  const heroClass = selectedClass;
 
   for (const prop in heroClass) {
     const val = heroClass[prop];

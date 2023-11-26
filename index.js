@@ -1,10 +1,38 @@
 function start() {
-  document.getElementById("startButton").disabled = true;
   moveLock = false;
 
   createHero();
   updatePlayerHUD();
   updateBackpack();
+}
+
+function openClassSelector() {
+  document.getElementById("startButton").disabled = true;
+  document.getElementById("overlay").style.display = "flex";
+  document.getElementById("class-picker-container").style.display = "block";
+  document.getElementById("class-info-0").style.display = "block";
+
+  moveLock = true;
+}
+
+function chooseClass() {
+  document.getElementById("overlay").style.display = "none";
+  document.getElementById("class-picker-container").style.display = "none";
+  moveLock = false;
+
+  selectedClass = classes[heroIndex];
+  start();
+}
+
+function scrollHeroes(value) {
+  document.getElementById("class-info-" + heroIndex).style.display = "none";
+  heroIndex += value;
+  if (heroIndex > classes.length - 1) {
+    heroIndex = 0;
+  } else if (heroIndex < 0) {
+    heroIndex = classes.length - 1;
+  }
+  document.getElementById("class-info-" + heroIndex).style.display = "block";
 }
 
 //Functions to run after winning combat
