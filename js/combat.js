@@ -123,9 +123,7 @@ async function combatInit(combatVal) {
 
         if (player.class === "berserker") {
           player.currentHP += Math.ceil(player.maxHP * 0.05);
-          if (player.currentHP > player.maxHP) {
-            player.currentHP = player.maxHP;
-          }
+          balanceHealth();
           updatePlayerHealth();
         }
       }

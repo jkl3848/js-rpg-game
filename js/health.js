@@ -54,7 +54,7 @@ function postCombatHeal() {
   player.currentHP += healTotal;
 
   addMessage("Healed for " + healTotal);
-
+  balanceHealth();
   updatePlayerHealth();
 }
 
@@ -67,8 +67,12 @@ function healthSteal(damage) {
       addMessage("Healed for " + siphon);
     }
   }
+  balanceHealth();
+  updatePlayerHealth();
+}
+
+function balanceHealth() {
   if (player.currentHP > player.maxHP) {
     player.currentHP = player.maxHP;
   }
-  updatePlayerHealth();
 }

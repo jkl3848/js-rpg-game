@@ -117,9 +117,7 @@ function useConsumable(itemName) {
     if (player.currentHP < player.maxHP) {
       console.log("healing");
       player.currentHP += item.boost;
-      if (player.currentHP > player.maxHP) {
-        player.currentHP = player.maxHP;
-      }
+      balanceHealth();
 
       updatePlayerHealth();
     } else {
