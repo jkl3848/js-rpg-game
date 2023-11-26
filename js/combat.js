@@ -136,16 +136,16 @@ async function combatInit(combatVal) {
   }
 
   resetStats(true);
+
+  const container = document.getElementById("characters");
+  container.innerHTML = "";
+
   if (player.currentHP > 0) {
     addMessage("You Win!");
     postCombat(xpToGain);
   } else {
     gameOver();
   }
-
-  const container = document.getElementById("characters");
-  container.innerHTML = "";
-  moveLock = false;
 }
 
 function resetStats(end) {

@@ -30,6 +30,7 @@ function scrollHeroes(value) {
 
 //Functions to run after winning combat
 function postCombat(xp) {
+  clearAllOverlays();
   //Reset overlay style
   const overlay = document.getElementById("overlay");
   overlay.style.height = "740px";
@@ -110,6 +111,7 @@ function levelUp() {
 
   player.currentHP = player.maxHP;
   addMessage("You are now level " + player.level);
+  updatePlayerHealth();
 }
 
 function closePointAll() {
