@@ -20,7 +20,7 @@ const playerTemplate = {
       displayName: "Small Potion",
       type: "heal",
       attr: "currentHP",
-      boost: 50,
+      boost: 75,
       desc: "heal by 50",
       stack: 2,
     },
@@ -31,7 +31,7 @@ const playerTemplate = {
 const classes = [
   {
     name: "knight",
-    maxHP: 150,
+    maxHP: 250,
     attack: 12,
     defense: 12,
     speed: 10,
@@ -48,7 +48,7 @@ const classes = [
   },
   {
     name: "thief",
-    maxHP: 120,
+    maxHP: 220,
     attack: 15,
     defense: 9,
     speed: 13,
@@ -65,7 +65,7 @@ const classes = [
   },
   {
     name: "guardian",
-    maxHP: 180,
+    maxHP: 280,
     attack: 10,
     defense: 15,
     speed: 7,
@@ -82,7 +82,7 @@ const classes = [
   },
   {
     name: "berserker",
-    maxHP: 170,
+    maxHP: 270,
     attack: 14,
     defense: 10,
     speed: 10,
@@ -99,7 +99,7 @@ const classes = [
   },
   {
     name: "alchemist",
-    maxHP: 120,
+    maxHP: 220,
     attack: 12,
     defense: 10,
     speed: 14,
@@ -116,7 +116,7 @@ const classes = [
   },
   {
     name: "professor",
-    maxHP: 110,
+    maxHP: 210,
     attack: 8,
     defense: 11,
     speed: 16,

@@ -4,7 +4,7 @@ const consumables = [
     displayName: "Small Potion",
     type: "heal",
     attr: "currentHP",
-    boost: 50,
+    boost: 75,
     desc: "heal by 50",
   },
   {
@@ -12,7 +12,7 @@ const consumables = [
     displayName: "Large Potion",
     type: "heal",
     attr: "currentHP",
-    boost: 100,
+    boost: 200,
     desc: "heal by 100",
   },
   {
@@ -20,7 +20,7 @@ const consumables = [
     displayName: "Gallon Potion",
     type: "heal",
     attr: "currentHP",
-    boost: 250,
+    boost: 500,
     desc: "heal by 250",
   },
   {
