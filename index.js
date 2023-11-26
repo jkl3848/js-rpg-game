@@ -1,8 +1,10 @@
 function start() {
   document.getElementById("startButton").disabled = true;
+  moveLock = false;
 
   createHero();
   updatePlayerHUD();
+  updateBackpack();
 }
 
 //Functions to run after winning combat
@@ -59,11 +61,6 @@ function levelUp() {
     speed: player.speed,
     critChance: player.critChance,
   };
-  // player.maxHP += statScale[0];
-  // player.attack += statScale[1];
-  // player.defense += statScale[2];
-  // player.speed += statScale[3];
-  // player.critChance += statScale[4];
 
   //Opens level up ui for point allocation
   document.getElementById("overlay").style.display = "flex";
@@ -83,8 +80,20 @@ function levelUp() {
 
 function closePointAll() {
   document.getElementById("overlay").style.display = "none";
-  document.getElementById("point-allocator").style = "display:none;";
+  document.getElementById("point-allocator").style.display = "none";
   moveLock = false;
+}
+
+function closeBackpack() {
+  document.getElementById("overlay").style.display = "none";
+  document.getElementById("backpack-overlay").style.display = "none";
+  moveLock = false;
+}
+
+function openBackpack() {
+  document.getElementById("overlay").style.display = "flex";
+  document.getElementById("backpack-overlay").style.display = "block";
+  moveLock = true;
 }
 
 function addAttrValue(prop) {
@@ -136,12 +145,6 @@ function updatePlayerHUD() {
 
   const playerMoney = document.getElementById("player-money");
   playerMoney.innerHTML = `${player.money}C`;
-
-  const playerItems = document.getElementById("player-items");
-  playerItems.innerHTML = "";
-  player.items.forEach((el) => {
-    playerItems.innerHTML += `<div class='tooltip'><span class='item-${el.type}'>${el.displayName}:</span> ${el.stack} <span class='tooltip-text'>${el.detailedDesc}</span></div>`;
-  });
 
   const playerStats = document.getElementById("player-stats");
   playerStats.innerHTML = `ATK: ${player.attack} DEF: ${player.defense} SPD: ${player.speed} CRT: ${player.critChance}%`;

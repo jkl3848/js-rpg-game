@@ -98,6 +98,18 @@ const commonItems = [
     desc: "Shaken not stirred",
     detailedDesc: "Gain 10% (+10% per stack) chance to inflict BURN on enemy",
   },
+  {
+    name: "magnifyingGlass",
+    displayName: "magnifyingGlass",
+    boost: 5,
+    stackBoost: 5,
+    boostType: "",
+    target: "enemy",
+    attr: "effect",
+    desc: "",
+    detailedDesc:
+      "Gain 5% (+5% per stack) chance of gaining a consumable after defeating an enemy",
+  },
 ];
 
 const uncommonItems = [
@@ -300,13 +312,15 @@ const legendaryItems = [
   },
 ];
 
-const consumables = [
+const bossItems = [
   {
-    name: "potion",
-    type: "heal",
-    attr: "currentHP",
-    boost: 50,
-    desc: "heal by 50",
+    name: "stoneHelmet",
+    displayName: "Stone Helmet",
+    ability: {
+      name: "Earthquake",
+      desc: "Deal damage to all enemies equal to 20% of their Max HP",
+      cooldown: 5,
+    },
   },
 ];
 
@@ -323,41 +337,41 @@ const weapons = [
 
 let itemChance = [50, 35, 12, 3];
 //Gives player a random item
-function gainItem() {
-  let item = null;
+function gainItem(item) {
   let type;
+  if (!item) {
+    const itemPoolNumber = random100();
 
-  const itemPoolNumber = random100();
+    let itemPool;
 
-  let itemPool;
+    if (itemPoolNumber <= itemChance[0]) {
+      itemPool = commonItems;
+      type = "common";
+    } else if (
+      itemPoolNumber > itemChance[0] &&
+      itemPoolNumber <= itemChance[0] + itemChance[1]
+    ) {
+      itemPool = uncommonItems;
+      type = "uncommon";
+    } else if (
+      itemPoolNumber > itemChance[0] + itemChance[1] &&
+      itemPoolNumber <= itemChance[0] + itemChance[1] + itemChance[2]
+    ) {
+      itemPool = rareItems;
+      type = "rare";
+    } else if (
+      itemPoolNumber > itemChance[0] + itemChance[1] + itemChance[2] &&
+      itemPoolNumber <=
+        itemChance[0] + itemChance[1] + itemChance[2] + itemChance[3]
+    ) {
+      itemPool = legendaryItems;
+      type = "legendary";
+    }
 
-  if (itemPoolNumber <= itemChance[0]) {
-    itemPool = commonItems;
-    type = "common";
-  } else if (
-    itemPoolNumber > itemChance[0] &&
-    itemPoolNumber <= itemChance[0] + itemChance[1]
-  ) {
-    itemPool = uncommonItems;
-    type = "uncommon";
-  } else if (
-    itemPoolNumber > itemChance[0] + itemChance[1] &&
-    itemPoolNumber <= itemChance[0] + itemChance[1] + itemChance[2]
-  ) {
-    itemPool = rareItems;
-    type = "rare";
-  } else if (
-    itemPoolNumber > itemChance[0] + itemChance[1] + itemChance[2] &&
-    itemPoolNumber <=
-      itemChance[0] + itemChance[1] + itemChance[2] + itemChance[3]
-  ) {
-    itemPool = legendaryItems;
-    type = "legendary";
+    const itemNumber = Math.floor(Math.random() * itemPool.length);
+
+    item = itemPool[itemNumber];
   }
-
-  const itemNumber = Math.floor(Math.random() * itemPool.length);
-
-  item = itemPool[itemNumber];
   let itemObj;
   //If the item already exists, then stack it
   if (player.items.find((obj) => obj.name === item.name)) {
@@ -375,6 +389,12 @@ function gainItem() {
   addMessage("You gained " + item.name);
 
   applyItemEffect(itemObj);
+
+  const playerItems = document.getElementById("player-items");
+  playerItems.innerHTML = "";
+  player.items.forEach((el) => {
+    playerItems.innerHTML += `<div class='tooltip'><span class='item-${el.type}'>${el.displayName}:</span> ${el.stack} <span class='tooltip-text'>${el.detailedDesc}</span></div>`;
+  });
 }
 
 //Applies item stat to hero

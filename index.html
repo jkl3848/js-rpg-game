@@ -45,7 +45,8 @@
             ><span class="tooltip-text">Flee from combat</span>
           </div>
           <div class="tooltip">
-            <button id="backpackButton" disabled>Backpack</button
+            <button id="backpackButton" onclick="openBackpack()">
+              Backpack</button
             ><span class="tooltip-text">Work In Progress</span>
           </div>
         </div>
@@ -103,6 +104,27 @@
         </div>
       </div>
       <!-- Backpack -->
+      <div id="backpack-overlay">
+        <button onclick="closeBackpack()" id="close-overlay-button">X</button>
+        <table id="backpack">
+          <tr class="pack-row">
+            <td
+              class="pack-item"
+              onclick='useConsumable("smallPotion")'
+              id="smallPotion"
+            ></td>
+            <td class="pack-item" onclick='useConsumable("smallPotion")'></td>
+            <td class="pack-item" onclick='useConsumable("smallPotion")'></td>
+            <td class="pack-item" onclick='useConsumable("smallPotion")'></td>
+          </tr>
+          <tr class="pack-row">
+            <td class="pack-item" onclick='useConsumable("smallPotion")'></td>
+            <td class="pack-item" onclick='useConsumable("smallPotion")'></td>
+            <td class="pack-item" onclick='useConsumable("smallPotion")'></td>
+            <td class="pack-item" onclick='useConsumable("smallPotion")'></td>
+          </tr>
+        </table>
+      </div>
     </div>
 
     <script src="index.js"></script>
@@ -113,5 +135,6 @@
     <script src="js/movement.js"></script>
     <script src="js/enemies.js"></script>
     <script src="js/items.js"></script>
+    <script src="js/consumable.js"></script>
   </body>
 </html>

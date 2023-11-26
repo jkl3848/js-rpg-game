@@ -14,7 +14,8 @@ let player = {
   effects: [],
   backpack: [
     {
-      name: "potion",
+      name: "smallPotion",
+      displayName: "Small Potion",
       type: "heal",
       attr: "currentHP",
       boost: 50,

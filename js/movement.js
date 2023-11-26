@@ -1,7 +1,7 @@
 const mapContainer = document.getElementById("map-container");
 const gameMap = document.getElementById("game-map");
 
-let moveLock = false;
+let moveLock = true;
 
 let offsetX = 0;
 let offsetY = 0;
