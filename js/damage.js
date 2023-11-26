@@ -37,7 +37,7 @@ function calcDamage(attacker, target, mult) {
 
 //Resolves applied status effect to character
 function resolveStatusEffects(target) {
-  const effects = target.effects;
+  let effects = target.effects;
 
   if (effects.length > 0) {
     const poison = effects?.find((item) => item.type === "poison");
@@ -77,7 +77,7 @@ function resolveStatusEffects(target) {
       if (broken.stack > 1) {
         broken.stack--;
       } else {
-        effects = effects.filter((item) => item.type !== "stun");
+        effects = effects.filter((item) => item.type !== "broken");
       }
       target.armor += target.level;
     }
