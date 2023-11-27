@@ -39,23 +39,38 @@ body {
   z-index: 0;
 }
 
-#overlay {
+.overlay {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
   position: fixed;
-  z-index: 100;
-  top: 0;
-  left: 0;
+  left: 5;
+  width: 595px;
 
   padding: 4px;
-  width: 600px;
-  height: 740px;
 
   background-color: rgba(0, 0, 0, 0.9);
   color: white;
+}
+
+#menu-overlay {
+  top: 0;
+  height: 740px;
+  z-index: 102;
+}
+
+#player-overlay {
+  top: 90;
+  height: 595px;
+  z-index: 101;
+}
+
+#combat-overlay {
+  top: 90;
+  height: 595px;
+  z-index: 100;
 }
 
 #point-allocator {

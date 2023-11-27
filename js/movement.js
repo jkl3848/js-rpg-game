@@ -16,7 +16,7 @@ document.addEventListener("keydown", handleKeyDown);
 function handleKeyDown(event) {
   const step = 5; // Adjust as needed
 
-  if (moveLock) {
+  if (moveLock || inCombat) {
     return;
   }
 

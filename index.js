@@ -117,13 +117,20 @@ function levelUp() {
 }
 
 function closePointAll() {
-  document.getElementById("overlay").style.display = "none";
+  document.getElementById("player-overlay").style.display = "none";
   document.getElementById("point-allocator").style.display = "none";
   moveLock = false;
 }
 
+function closePlayerMenu() {
+  document.getElementById("player-overlay").style.display = "none";
+  document.getElementById("backpack-overlay").style.display = "none";
+  document.getElementById("player-menu").style.display = "none";
+  moveLock = false;
+}
+
 function openCombat() {
-  const overlay = document.getElementById("overlay");
+  const overlay = document.getElementById("combat-overlay");
   document.getElementById("combat-space").style.display = "block";
   moveLock = true;
 
@@ -133,20 +140,25 @@ function openCombat() {
 }
 
 function openBackpack() {
-  document.getElementById("overlay").style.display = "flex";
+  document.getElementById("player-overlay").style.display = "none";
+  document.getElementById("player-overlay").style.display = "flex";
   document.getElementById("backpack-overlay").style.display = "block";
   moveLock = true;
 }
 
 function openPlayerMenu() {
-  document.getElementById("overlay").style.display = "flex";
+  document.getElementById("backpack-overlay").style.display = "none";
+  document.getElementById("player-overlay").style.display = "flex";
   document.getElementById("player-menu").style.display = "block";
   moveLock = true;
 }
 
 function clearAllOverlays() {
   moveLock = false;
-  document.getElementById("overlay").style.display = "none";
+  document.getElementById("menu-overlay").style.display = "none";
+  document.getElementById("player-overlay").style.display = "none";
+  document.getElementById("combat-overlay").style.display = "none";
+
   document.getElementById("backpack-overlay").style.display = "none";
   document.getElementById("point-allocator").style.display = "none";
   document.getElementById("game-over").style.display = "none";
@@ -156,7 +168,7 @@ function clearAllOverlays() {
 
 function openClassSelector() {
   document.getElementById("start-screen").style.display = "none";
-  document.getElementById("overlay").style.display = "flex";
+  document.getElementById("menu-overlay").style.display = "flex";
   document.getElementById("class-picker-container").style.display = "block";
   document.getElementById("class-info-0").style.display = "block";
 
@@ -164,7 +176,7 @@ function openClassSelector() {
 }
 
 function chooseClass() {
-  document.getElementById("overlay").style.display = "none";
+  document.getElementById("menu-overlay").style.display = "none";
   document.getElementById("class-picker-container").style.display = "none";
   moveLock = false;
 

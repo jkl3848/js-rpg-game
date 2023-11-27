@@ -7,8 +7,10 @@ let thiefStartSpeed;
 let guardianStartDefense;
 let berserkerStartAttack;
 
+let inCombat;
+
 async function combatInit(combatVal) {
-  moveLock = true;
+  inCombat = true;
   openCombat();
 
   enemies = generateEnemies(combatVal);
@@ -137,6 +139,8 @@ async function combatInit(combatVal) {
 
   const container = document.getElementById("characters");
   container.innerHTML = "";
+
+  inCombat = false;
 
   if (player.currentHP > 0) {
     addMessage("You Win!");
