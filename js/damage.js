@@ -10,13 +10,33 @@ function calcDamage(attacker, target, mult) {
 
   damage = Math.round(damage + randomValue);
 
+  //Item- Final Fight
+  if (attacker.player) {
+    const finalFight = player.items.find((item) => item.name === "finalFight");
+
+    if (finalFight) {
+      damage += damage * (0.01 * ((player.currentHP / player.maxHP) * 100));
+    }
+  }
+
   const isCrit = isCriticalHit(attacker.critChance);
 
   //Determines if hit is crit (double damage)
   function isCriticalHit(critChance) {
-    const randomValue = random100();
+    let critVal = random100();
 
-    return randomValue <= critChance;
+    // Item- Padded Armor
+    if (target.player) {
+      const paddedArmor = player.items.find(
+        (item) => item.name === "paddedArmor"
+      );
+
+      if (paddedArmor) {
+        critVal -= paddedArmor.stack * 5;
+      }
+    }
+
+    return critVal <= critChance;
   }
 
   if (isCrit) {
@@ -111,6 +131,9 @@ function applyStatusEffect(attacker, target, effect, effectStack) {
     const molotov = attacker.items.find((item) => item.name === "molotov");
     const moonshine = attacker.items.find((item) => item.name === "moonshine");
     const rock = attacker.items.find((item) => item.name === "pointyRock");
+    const ballAndChain = attacker.items.find(
+      (item) => item.name === "ballAndChain"
+    );
 
     const poison = effects?.find((item) => item.type === "poison");
     const burn = effects?.find((item) => item.type === "burn");
@@ -149,6 +172,9 @@ function applyStatusEffect(attacker, target, effect, effectStack) {
         }
         target.armor -= target.level;
       }
+    }
+    if (ballAndChain) {
+      target.speed -= ballAndChain.stack;
     }
   }
 }

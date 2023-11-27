@@ -190,32 +190,32 @@ const uncommonItems = [
     desc: "",
     detailedDesc: "Gain 10% (+10% per stack) chance to inflict BROKEN on enemy",
   },
-  // {
-  //   name: "paddedArmor",
-  //   displayName: "Padded Armor",
-  //   boost: 5,
-  //   stackBoost: 5,
-  //   boostType: "add",
-  //   target: "enemy",
-  //   attr: "critChance",
-  //   desc: "",
-  //   detailedDesc: "Reduce enemy crit chance by 5% (5% per stack)",
-  // },
+  {
+    name: "paddedArmor",
+    displayName: "Padded Armor",
+    boost: 5,
+    stackBoost: 5,
+    boostType: "add",
+    target: "enemy",
+    attr: "critChance",
+    desc: "",
+    detailedDesc: "Reduce enemy crit chance by 5% (5% per stack)",
+  },
 ];
 
 const rareItems = [
-  // {
-  //   name: "finalFight",
-  //   displayName: "Final Fight",
-  //   boost: 1,
-  //   stackBoost: 1,
-  //   boostType: "mult",
-  //   target: "self",
-  //   attr: "damage",
-  //   desc: "Do not go quietly into the night",
-  //   detailedDesc:
-  //     "Deals an additional 1% damage (+1% per stack) for each 1% of missing health",
-  // },
+  {
+    name: "finalFight",
+    displayName: "Final Fight",
+    boost: 1,
+    stackBoost: 1,
+    boostType: "mult",
+    target: "self",
+    attr: "damage",
+    desc: "Do not go quietly into the night",
+    detailedDesc:
+      "Deals an additional 1% damage (+1% per stack) for each 1% of missing health",
+  },
   // {
   //   name: "shinobiMask",
   //   displayName: "Shinobi Mask",
@@ -239,17 +239,17 @@ const rareItems = [
   //   desc: "Faster than fast",
   //   detailedDesc: "Reroll for an item once per chest",
   // },
-  // {
-  //   name: "ballAndChain",
-  //   displayName: "Ball & Chain",
-  //   boost: 1,
-  //   stackBoost: 1,
-  //   boostType: "add",
-  //   target: "enemy",
-  //   attr: "speed",
-  //   desc: "Faster than fast",
-  //   detailedDesc: "Reduce enemy speed by 1 (+1 per stack) each attack",
-  // },
+  {
+    name: "ballAndChain",
+    displayName: "Ball & Chain",
+    boost: 1,
+    stackBoost: 1,
+    boostType: "add",
+    target: "enemy",
+    attr: "speed",
+    desc: "Faster than fast",
+    detailedDesc: "Reduce enemy speed by 1 (+1 per stack) each attack",
+  },
   // {
   //   name: "giantLeech",
   //   displayName: "Giant Leech",
@@ -262,17 +262,17 @@ const rareItems = [
   //   detailedDesc:
   //     "10% chance (+5% per stack) to recover 5% health (+5% per stack) after attacking",
   // },
-  // {
-  //   name: "energyDrink",
-  //   displayName: "Energy Drink",
-  //   boost: 1,
-  //   stackBoost: 1,
-  //   boostType: "add",
-  //   target: "self",
-  //   attr: "cooldown",
-  //   desc: "",
-  //   detailedDesc: "Reduce 2nd ability cooldown by 1 turn (+1 per stack)",
-  // },
+  {
+    name: "energyDrink",
+    displayName: "Energy Drink",
+    boost: 1,
+    stackBoost: 1,
+    boostType: "add",
+    target: "self",
+    attr: "cooldown",
+    desc: "",
+    detailedDesc: "Reduce 2nd ability cooldown by 1 turn (+1 per stack)",
+  },
 ];
 
 const legendaryItems = [
