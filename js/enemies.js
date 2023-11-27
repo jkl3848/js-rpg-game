@@ -33,7 +33,7 @@ const mobs = [
     scale: {
       xp: 5,
       maxHP: 15,
-      attack: 2,
+      attack: 1.5,
       defense: 1,
       speed: 1,
       critChance: 0.2,
@@ -53,9 +53,9 @@ const mobs = [
     threatLevel: 16,
     scale: {
       xp: 8,
-      maxHP: 30,
+      maxHP: 20,
       attack: 1,
-      defense: 2,
+      defense: 1.5,
       speed: 1,
       critChance: 0.1,
       threatLevel: 2,
@@ -86,7 +86,7 @@ const mobs = [
     spawnLoc: [1],
   },
   {
-    name: "baby lizard",
+    name: "baby turtle",
     level: 1,
     xp: 12,
     maxHP: 95,
@@ -108,7 +108,7 @@ const mobs = [
     spawnLoc: [1],
   },
   {
-    name: "lizard",
+    name: "turtle",
     level: 1,
     xp: 25,
     maxHP: 350,
@@ -119,9 +119,9 @@ const mobs = [
     threatLevel: 28,
     scale: {
       xp: 13,
-      maxHP: 35,
-      attack: 2,
-      defense: 2,
+      maxHP: 20,
+      attack: 1.5,
+      defense: 1.5,
       speed: 1,
       critChance: 0.4,
       threatLevel: 2.5,
@@ -130,7 +130,7 @@ const mobs = [
     spawnLoc: [1],
   },
   {
-    name: "big lizard",
+    name: "big turtle",
     level: 1,
     xp: 45,
     maxHP: 600,
@@ -141,9 +141,9 @@ const mobs = [
     threatLevel: 40,
     scale: {
       xp: 20,
-      maxHP: 55,
-      attack: 3,
-      defense: 2,
+      maxHP: 20,
+      attack: 2,
+      defense: 1.5,
       speed: 1,
       critChance: 0.4,
       threatLevel: 3,
