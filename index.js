@@ -124,16 +124,25 @@ function openClassPicker() {
 function openCombat() {
   clearAllOverlays();
   document.getElementById("combat-overlay").style.display = "block";
-
   document.getElementById("combat-space").style.display = "block";
-  moveLock = true;
 }
 
-function openBackpack() {
+let packOpen = false;
+function toggleBackpack() {
+  const packState = packOpen;
   clearAllOverlays();
-  document.getElementById("backpack-overlay").style.display = "block";
 
-  moveLock = true;
+  const pack = document.getElementById("backpack-overlay");
+
+  if (packState) {
+    pack.style.display = "none";
+    packOpen = false;
+    moveLock = false;
+  } else {
+    pack.style.display = "block";
+    packOpen = true;
+    moveLock = true;
+  }
 }
 
 function openPlayerMenu() {
@@ -145,6 +154,7 @@ function openPlayerMenu() {
 
 function clearAllOverlays() {
   moveLock = false;
+  packOpen = false;
   document.getElementById("start-screen").style.display = "none";
   document.getElementById("class-picker-container").style.display = "none";
   document.getElementById("game-over").style.display = "none";
@@ -154,6 +164,7 @@ function clearAllOverlays() {
 }
 
 function clearCombatOverlay() {
+  inCombat = false;
   document.getElementById("combat-overlay").style.display = "none";
 }
 
