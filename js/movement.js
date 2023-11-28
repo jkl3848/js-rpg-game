@@ -11,6 +11,13 @@ let areaEncounterVal = 1;
 let encounterVal = 6;
 let areaCombatVal = 0;
 
+const heroSprites = [
+  "./assets/characters/player_down.png",
+  "./assets/characters/player_left.png",
+  "./assets/characters/player_up.png",
+  "./assets/characters/player_right.png",
+];
+
 document.addEventListener("keydown", handleKeyDown);
 
 function handleKeyDown(event) {
@@ -23,27 +30,35 @@ function handleKeyDown(event) {
   switch (event.key) {
     case "ArrowLeft":
       offsetX += step;
+      changeSprite(heroSprites[1]);
       break;
     case "a":
       offsetX += step;
+      changeSprite(heroSprites[1]);
       break;
     case "ArrowRight":
       offsetX -= step;
+      changeSprite(heroSprites[3]);
       break;
     case "d":
       offsetX -= step;
+      changeSprite(heroSprites[3]);
       break;
     case "ArrowUp":
       offsetY += step;
+      changeSprite(heroSprites[2]);
       break;
     case "w":
       offsetY += step;
+      changeSprite(heroSprites[2]);
       break;
     case "ArrowDown":
       offsetY -= step;
+      changeSprite(heroSprites[0]);
       break;
     case "s":
       offsetY -= step;
+      changeSprite(heroSprites[0]);
       break;
     default:
       return;
@@ -78,4 +93,8 @@ function handleKeyDown(event) {
 
 function updateMapTransform() {
   gameMap.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+}
+
+function changeSprite(sprite) {
+  document.getElementById("player-character").src = sprite;
 }
