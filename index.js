@@ -145,16 +145,29 @@ function toggleBackpack() {
   }
 }
 
-function openPlayerMenu() {
+let pMenuOpen;
+function togglePlayerMenu() {
+  const menuState = pMenuOpen;
   clearAllOverlays();
-  document.getElementById("player-menu").style.display = "block";
 
-  moveLock = true;
+  const menu = document.getElementById("player-menu");
+
+  if (menuState) {
+    menu.style.display = "none";
+    pMenuOpen = false;
+    moveLock = false;
+  } else {
+    menu.style.display = "block";
+    pMenuOpen = true;
+    moveLock = true;
+  }
 }
 
 function clearAllOverlays() {
   moveLock = false;
   packOpen = false;
+  pMenuOpen = false;
+
   document.getElementById("start-screen").style.display = "none";
   document.getElementById("class-picker-container").style.display = "none";
   document.getElementById("game-over").style.display = "none";
