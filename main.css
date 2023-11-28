@@ -40,19 +40,6 @@ body {
 }
 
 .overlay {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  position: fixed;
-  left: 5;
-  width: 595px;
-
-  padding: 4px;
-
-  background-color: rgba(0, 0, 0, 0.9);
-  color: white;
 }
 
 #menu-overlay {
@@ -172,18 +159,19 @@ body {
 }
 
 #class-picker-container {
-  display: none;
   position: relative;
-  width: 400px;
+  width: 500px;
   margin: 20px auto;
 }
 
 .class-picker {
   overflow: hidden;
+  display: flex;
+  justify-content: center;
 }
 
 .class-info {
-  width: 100%;
+  width: 90%;
   border-collapse: collapse;
   margin-bottom: 20px;
   display: none;
@@ -204,11 +192,10 @@ body {
   border: none;
   padding: 10px;
   cursor: pointer;
-  margin: 0 -45px;
 }
 
 .prev-button {
-  left: -20;
+  left: 0;
 }
 
 .next-button {

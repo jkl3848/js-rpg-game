@@ -72,21 +72,19 @@
       </div>
     </div>
 
-    <!-- Overlay for general game menus -->
-    <div class="overlay" id="menu-overlay">
       <!-- Start Screen -->
-      <div id="start-screen">
+      <dialog class="overlay" id="start-screen">
         <button
           id="startButton"
-          onclick="openClassSelector()"
+          onclick="startGame()"
           class="primary-button"
         >
           Start Game
         </button>
-      </div>
+      </dialog>
 
       <!-- Class Selection -->
-      <div id="class-picker-container">
+      <dialog class="overlay" id="class-picker-container">
         <input
           type="text"
           id="character-name-input"
@@ -360,26 +358,23 @@
         <button class="next-button" onclick="scrollHeroes(1)">&gt;</button>
 
         <button onclick="chooseClass()" class="primary-button">Start</button>
-      </div>
+      </dialog>
 
       <!-- Game Over -->
-      <div id="game-over">
+      <dialog class="overlay" id="game-over">
         GAME OVER
         <div>
           <button
             class="primary-button"
-            onclick=" clearAllOverlays(); openClassSelector()"
+            onclick="startGame()"
           >
             New Game
           </button>
         </div>
-      </div>
-    </div>
+      </dialog>
 
-    <!-- Overlay for player during the game -->
-    <div class="overlay" id="player-overlay">
       <!-- Level up point allocator -->
-      <div id="point-allocator">
+      <dialog class="overlay" id="point-allocator">
         <div id="point-allocator-header">
           <h2 id="point-name"></h2>
           <h2 id="point-level"></h2>
@@ -425,10 +420,10 @@
         <div>
           <button onclick="clearAllOverlays()">Level Up</button>
         </div>
-      </div>
+      </dialog>
       <!-- Backpack -->
-      <div id="backpack-overlay">
-        <button onclick="closePlayerMenu()" id="close-overlay-button">X</button>
+      <dialog class="overlay" id="backpack-overlay">
+        <button onclick="clearAllOverlays()" id="close-overlay-button">X</button>
         <table id="backpack">
           <tr class="pack-row">
             <td
@@ -490,11 +485,11 @@
             ></td>
           </tr>
         </table>
-      </div>
+      </dialog>
 
       <!-- Player Menu -->
-      <div id="player-menu">
-        <button onclick="closePlayerMenu()" id="close-overlay-button">X</button>
+      <dialog class="overlay" id="player-menu">
+        <button onclick="clearAllOverlays()" id="close-overlay-button">X</button>
         <!-- <div class="player-info">
           <div id="player-name" class="hud-item">Player Name</div>
           <div id="player-class" class="hud-item">Class: Warrior</div>
@@ -507,15 +502,15 @@
 
         <div id="player-stats"></div>
         <div id="player-items"></div>
-      </div>
+      </dialog>
     </div>
 
     <!-- Exclusive combat overlay -->
-    <div class="overlay" id="combat-overlay">
+    <dialog class="overlay" id="combat-overlay">
       <div id="combat-space">
         <div id="characters"></div>
       </div>
-    </div>
+    </dialog>
 
     <script src="index.js"></script>
     <script src="js/hero.js"></script>

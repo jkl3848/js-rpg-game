@@ -1,5 +1,7 @@
 const gameVersion = "0.1.2";
 
+document.getElementById("start-screen").showModal();
+
 function start() {
   clearAllOverlays();
   moveLock = false;
@@ -9,8 +11,17 @@ function start() {
   updateBackpack();
 }
 
+function startGame() {
+  clearAllOverlays();
+  document.getElementById("class-picker-container").showModal();
+  document.getElementById("class-info-0").style.display = "block";
+}
+
+function clearDataForNewGame() {}
+
 function gameOver() {
   clearAllOverlays();
+  clearCombatOverlay();
   addMessage("You Lose!");
   document.getElementById("startButton").disabled = false;
   moveLock = true;
@@ -33,6 +44,7 @@ function scrollHeroes(value) {
 //Functions to run after winning combat
 function postCombat(xp) {
   clearAllOverlays();
+  clearCombatOverlay();
   //Reset overlay style
   const overlay = document.getElementById("overlay");
   overlay.style.height = "740px";
@@ -116,68 +128,44 @@ function levelUp() {
   updatePlayerHealth();
 }
 
-function closePointAll() {
-  document.getElementById("player-overlay").style.display = "none";
-  document.getElementById("point-allocator").style.display = "none";
-  moveLock = false;
-}
-
-function closePlayerMenu() {
-  document.getElementById("player-overlay").style.display = "none";
-  document.getElementById("backpack-overlay").style.display = "none";
-  document.getElementById("player-menu").style.display = "none";
-  moveLock = false;
-}
-
 function openCombat() {
-  const overlay = document.getElementById("combat-overlay");
+  clearAllOverlays();
+  document.getElementById("combat-overlay").showModal();
+
   document.getElementById("combat-space").style.display = "block";
   moveLock = true;
-
-  overlay.style.display = "flex";
-  overlay.style.height = "595px";
-  overlay.style.top = "90px";
 }
 
 function openBackpack() {
-  document.getElementById("player-overlay").style.display = "none";
-  document.getElementById("player-overlay").style.display = "flex";
-  document.getElementById("backpack-overlay").style.display = "block";
+  clearAllOverlays();
+  document.getElementById("backpack-overlay").showModal();
+
   moveLock = true;
 }
 
 function openPlayerMenu() {
-  document.getElementById("backpack-overlay").style.display = "none";
-  document.getElementById("player-overlay").style.display = "flex";
-  document.getElementById("player-menu").style.display = "block";
+  clearAllOverlays();
+  document.getElementById("player-menu").showModal();
+
   moveLock = true;
 }
 
 function clearAllOverlays() {
   moveLock = false;
-  document.getElementById("menu-overlay").style.display = "none";
-  document.getElementById("player-overlay").style.display = "none";
-  document.getElementById("combat-overlay").style.display = "none";
-
-  document.getElementById("backpack-overlay").style.display = "none";
-  document.getElementById("point-allocator").style.display = "none";
-  document.getElementById("game-over").style.display = "none";
-  document.getElementById("player-menu").style.display = "none";
-  document.getElementById("combat-space").style.display = "none";
+  document.getElementById("start-screen").close();
+  document.getElementById("class-picker-container").close();
+  document.getElementById("game-over").close();
+  document.getElementById("point-allocator").close();
+  document.getElementById("backpack-overlay").close();
+  document.getElementById("player-menu").close();
 }
 
-function openClassSelector() {
-  document.getElementById("start-screen").style.display = "none";
-  document.getElementById("menu-overlay").style.display = "flex";
-  document.getElementById("class-picker-container").style.display = "block";
-  document.getElementById("class-info-0").style.display = "block";
-
-  moveLock = true;
+function clearCombatOverlay() {
+  document.getElementById("combat-overlay").close();
 }
 
 function chooseClass() {
-  document.getElementById("menu-overlay").style.display = "none";
-  document.getElementById("class-picker-container").style.display = "none";
+  document.getElementById("class-picker-container").close();
   moveLock = false;
 
   selectedClass = classes[heroIndex];
