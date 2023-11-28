@@ -1,7 +1,5 @@
 const gameVersion = "0.1.2";
 
-document.getElementById("start-screen").showModal();
-
 function start() {
   clearAllOverlays();
   moveLock = false;
@@ -9,12 +7,6 @@ function start() {
   createHero();
   updatePlayerHUD();
   updateBackpack();
-}
-
-function startGame() {
-  clearAllOverlays();
-  document.getElementById("class-picker-container").showModal();
-  document.getElementById("class-info-0").style.display = "block";
 }
 
 function clearDataForNewGame() {}
@@ -26,8 +18,7 @@ function gameOver() {
   document.getElementById("startButton").disabled = false;
   moveLock = true;
 
-  document.getElementById("overlay").style.display = "flex";
-  document.getElementById("game-over").style.display = "block";
+  document.getElementById("game-over").style.display = "flex";
 }
 
 function scrollHeroes(value) {
@@ -45,10 +36,6 @@ function scrollHeroes(value) {
 function postCombat(xp) {
   clearAllOverlays();
   clearCombatOverlay();
-  //Reset overlay style
-  const overlay = document.getElementById("overlay");
-  overlay.style.height = "740px";
-  overlay.style.top = "0";
 
   postCombatHeal();
   gainXP(xp);
@@ -111,7 +98,6 @@ function levelUp() {
   };
 
   //Opens level up ui for point allocation
-  document.getElementById("overlay").style.display = "flex";
   document.getElementById("point-allocator").style.display = "block";
   document.getElementById("point-name").innerHTML = player.name;
   document.getElementById("point-level").innerHTML = "Level " + player.level;
@@ -128,9 +114,16 @@ function levelUp() {
   updatePlayerHealth();
 }
 
+function openClassPicker() {
+  clearAllOverlays();
+  moveLock = true;
+  document.getElementById("class-picker-container").style.display = "flex";
+  document.getElementById("class-info-0").style.display = "block";
+}
+
 function openCombat() {
   clearAllOverlays();
-  document.getElementById("combat-overlay").showModal();
+  document.getElementById("combat-overlay").style.display = "block";
 
   document.getElementById("combat-space").style.display = "block";
   moveLock = true;
@@ -138,34 +131,34 @@ function openCombat() {
 
 function openBackpack() {
   clearAllOverlays();
-  document.getElementById("backpack-overlay").showModal();
+  document.getElementById("backpack-overlay").style.display = "block";
 
   moveLock = true;
 }
 
 function openPlayerMenu() {
   clearAllOverlays();
-  document.getElementById("player-menu").showModal();
+  document.getElementById("player-menu").style.display = "block";
 
   moveLock = true;
 }
 
 function clearAllOverlays() {
   moveLock = false;
-  document.getElementById("start-screen").close();
-  document.getElementById("class-picker-container").close();
-  document.getElementById("game-over").close();
-  document.getElementById("point-allocator").close();
-  document.getElementById("backpack-overlay").close();
-  document.getElementById("player-menu").close();
+  document.getElementById("start-screen").style.display = "none";
+  document.getElementById("class-picker-container").style.display = "none";
+  document.getElementById("game-over").style.display = "none";
+  document.getElementById("point-allocator").style.display = "none";
+  document.getElementById("backpack-overlay").style.display = "none";
+  document.getElementById("player-menu").style.display = "none";
 }
 
 function clearCombatOverlay() {
-  document.getElementById("combat-overlay").close();
+  document.getElementById("combat-overlay").style.display = "none";
 }
 
 function chooseClass() {
-  document.getElementById("class-picker-container").close();
+  document.getElementById("class-picker-container").style.display = "none";
   moveLock = false;
 
   selectedClass = classes[heroIndex];

@@ -1,6 +1,8 @@
 body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  width: 600px;
+
+  display: flex;
+  justify-content: center;
 }
 
 #game-space {
@@ -9,22 +11,9 @@ body {
   flex-direction: row;
 }
 
-#characters {
-  margin-left: 8px;
-}
-
-#char-0 {
-  margin-bottom: 4px;
-}
-
-.combat-el {
-  padding: 4px;
-  border: black 1px solid;
-}
-
 #map-container {
   overflow: hidden;
-  width: 600px;
+  width: 610px;
   height: 600px;
 }
 
@@ -39,40 +28,78 @@ body {
   z-index: 0;
 }
 
+/* Overlays and dialogs */
 .overlay {
-}
-
-#menu-overlay {
-  top: 0;
-  height: 740px;
-  z-index: 102;
-}
-
-#player-overlay {
-  top: 90;
-  height: 595px;
-  z-index: 101;
-}
-
-#combat-overlay {
-  top: 90;
-  height: 595px;
+  position: fixed;
   z-index: 100;
+  top: 0;
+  width: 610px;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
+.half-overlay {
+  height: 600px;
+  margin-top: 90px !important;
+}
+
+.full-overlay {
+  margin-top: 9px !important;
+  height: 737px;
+}
+
+/* Level up dialog */
 #point-allocator {
   display: none;
+  color: white;
+}
+
+#point-holder {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#point-allocator-points {
+  margin: 0 auto 0 auto;
 }
 
 .point-section {
-  border: 8px solid rgb(167, 5, 5) !important;
-  border-radius: 4px;
+  font-size: 24px;
+}
+
+#point-allocator-header {
+  margin: 0 auto 0 auto;
 }
 
 #point-allocator-header > h2 {
   margin: 4px;
+  padding-bottom: 8px;
 }
 
+.point-attr {
+  padding-right: 30px;
+}
+
+.point-value {
+  text-align: center;
+  padding: 0 5px 0 5px;
+}
+
+.point-change-button {
+  height: 25px;
+  width: 25px;
+  border-radius: 25px;
+  border: 1px solid black;
+}
+
+#level-up-button {
+  width: 200px;
+  margin: 20px auto 0 auto;
+}
+
+/* Item styling */
 .item-common {
   color: grey;
 }
@@ -116,11 +143,33 @@ body {
   opacity: 1;
 }
 
+/* Start menu dialog */
+#start-screen {
+  margin-top: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#start-screen h2,
+h5 {
+  text-align: center;
+  margin: 10px;
+  color: white;
+}
+
+button#startButton {
+  width: 200px;
+  margin: 0 auto 0 auto;
+}
+
+/* Backpack dialog */
 #backpack-overlay {
   display: none;
 }
 
 #backpack {
+  margin-top: 80px;
   border-collapse: collapse;
   width: 100%;
 }
@@ -145,7 +194,7 @@ body {
 #close-overlay-button {
   background-color: transparent;
   border: none;
-  color: #777;
+  color: #d2d2d2;
   font-size: 20px;
   font-weight: bold;
   cursor: pointer;
@@ -158,10 +207,12 @@ body {
   color: #555;
 }
 
+/* Class dialog */
 #class-picker-container {
-  position: relative;
-  width: 500px;
-  margin: 20px auto;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
 }
 
 .class-picker {
@@ -171,15 +222,56 @@ body {
 }
 
 .class-info {
-  width: 90%;
   border-collapse: collapse;
   margin-bottom: 20px;
   display: none;
 }
 
+.class-info .class-image {
+  width: 60px;
+  height: 60px;
+}
+
 .class-info td {
+  width: 200px;
   padding: 8px;
   border-bottom: 1px solid #ddd;
+  box-sizing: border-box;
+}
+
+.class-info .class-name {
+  text-align: center !important;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.class-info .class-skills {
+  text-align: left !important;
+  font-size: 12px;
+}
+
+.class-info td:last-child {
+  text-align: right;
+}
+
+#character-name-input {
+  width: 80%;
+  padding: 10px;
+  margin-left: 60px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+#character-name-input::placeholder {
+  color: #999;
+}
+
+#select-class-button {
+  width: 200px;
+  margin: 0 auto 0 auto;
 }
 
 .prev-button,
@@ -210,7 +302,6 @@ body {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  margin: 20px 20px 20px auto;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -222,20 +313,43 @@ body {
 
 #game-over {
   display: none;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
 }
 
-#character-name-input {
-  width: 100%;
-  padding: 10px;
-  box-sizing: border-box;
-  margin-bottom: 20px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+#game-over h1 {
+  margin: 0 auto 20px auto;
 }
 
-#character-name-input::placeholder {
-  color: #999;
+#newgame-button {
+  width: 200px;
+  margin: 0 auto 0 auto;
+}
+
+/* Combat dialog */
+#combat-overlay {
+  z-index: 99 !important;
+  display: none;
+}
+
+#characters {
+  margin-left: 8px;
+}
+
+#combat-space {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.combat-el {
+  margin: auto;
+  padding: 4px;
+  border: black 1px solid;
+  width: 80px;
+  background-color: white;
 }
 
 /* Player HUD */
@@ -260,7 +374,7 @@ body {
 #hp-bar {
   width: 100%;
   height: 20px;
-  border: 1px solid #ccc;
+  border: 0px;
   background-color: #eee;
   position: relative;
 }
@@ -274,7 +388,7 @@ body {
 #xp-bar {
   width: 100%;
   height: 20px;
-  border: 1px solid #ccc;
+  border: 0px;
   background-color: #eee;
   position: relative;
 }
@@ -319,6 +433,24 @@ body {
 
 #player-menu {
   display: none;
+}
+
+#player-stats {
+  margin: auto;
+  color: white;
+  font-size: 24px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+#player-items {
+  margin: auto;
+  width: 90%;
+  background-color: #999;
+  border: 2px solid black;
+  border-radius: 8px;
+  min-height: 120px;
+  padding: 8px;
 }
 
 #info-button {
