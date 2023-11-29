@@ -119,9 +119,10 @@ async function combatInit(combatVal) {
       updateHealth(turnQueue);
 
       if (target.currentHP === 0 && !target.player) {
-        turnQueue = turnQueue.filter((obj) => obj.combatId !== target.combatId);
-        console.log(turnQueue);
-        addMessage(`${target.name} defeated!`);
+        //If multiple enemies, remove defeated enemy
+        if (enemies.length > 1) {
+          defeatedEnemy(target);
+        }
 
         if (player.class === "berserker") {
           player.currentHP += Math.ceil(player.maxHP * 0.05);
@@ -141,6 +142,8 @@ async function combatInit(combatVal) {
   container.innerHTML = "";
 
   inCombat = false;
+  turnQueue = [];
+  enemies = [];
 
   if (player.currentHP > 0) {
     addMessage("You Win!");
@@ -148,6 +151,18 @@ async function combatInit(combatVal) {
   } else {
     gameOver();
   }
+}
+
+function defeatedEnemy(enemy) {
+  addMessage(`${enemy.name} defeated!`);
+  turnQueue = turnQueue.filter((char) => char.combatId !== enemy.combatId);
+  enemies = enemies.filter((char) => char.combatId !== enemy.combatId);
+
+  //Regenerate enemies dom elements
+  createCombatElements(enemies);
+
+  //Sets the first enemy as the default target for the user
+  setTarget(enemies[0].combatId);
 }
 
 function resetStats(end) {

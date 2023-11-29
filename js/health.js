@@ -41,7 +41,7 @@ function postCombatHeal() {
     if (bark.stack > 1) {
       heal += bark.stackBoost * bark.stack - 1;
     }
-    healTotal += barkBoos;
+    healTotal += heal;
   }
 
   if (gauntlet) {

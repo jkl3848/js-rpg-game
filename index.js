@@ -1,4 +1,4 @@
-const gameVersion = "0.2.0";
+const gameVersion = "0.2.1";
 
 function start() {
   clearAllOverlays();
@@ -91,7 +91,6 @@ function gainMoney(money) {
 function levelUp() {
   moveLock = true;
   addMessage("You leveled up!");
-  // const statScale = player.scale;
 
   gainItem();
 
@@ -117,6 +116,7 @@ function levelUp() {
   document.getElementById("point-speed-value").innerHTML = player.speed;
   document.getElementById("point-critChance-value").innerHTML =
     player.critChance;
+  document.getElementById("level-up-button");
 
   player.currentHP = player.maxHP;
   addMessage("You are now level " + player.level);
@@ -215,8 +215,13 @@ function addAttrValue(prop) {
   document.getElementById("point-" + prop + "-value").innerHTML = player[prop];
   levelPoints--;
   document.getElementById("point-total").innerHTML = "Points: " + levelPoints;
+
+  if (levelPoints == 0) {
+    document.getElementById("level-up-button").disabled = false;
+  }
 }
 function subAttrValue(prop) {
+  document.getElementById("level-up-button").disabled = true;
   if (levelPoints == 4) {
     return;
   }

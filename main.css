@@ -109,6 +109,10 @@ body {
   margin: 20px auto 0 auto;
 }
 
+#level-up-button:disabled {
+  background-color: #3f5b6d !important;
+}
+
 /* Item styling */
 .item-common {
   color: grey;
