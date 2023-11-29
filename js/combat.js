@@ -390,7 +390,9 @@ function evadeAttack(target) {
 
   if (target.player) {
     const sunglasses = player.items.find((item) => item.name === "sunglasses");
-    evasionChance += sunglasses.stack * 5;
+    if (sunglasses) {
+      evasionChance += sunglasses.stack * 5;
+    }
   }
 
   if (randomNum <= evasionChance) {
