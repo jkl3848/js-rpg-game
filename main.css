@@ -3,6 +3,8 @@ body {
 
   display: flex;
   justify-content: center;
+  overflow: hidden;
+  image-rendering: pixelated;
 }
 
 #game-space {
@@ -11,17 +13,21 @@ body {
   flex-direction: row;
 }
 
-#map-container {
+/* #map-container {
   overflow: hidden;
   width: 610px;
   height: 600px;
-}
+} */
 
-#game-map {
+/* #game-map {
   width: 100%;
   height: 100%;
   transition: transform 0.2s ease-in-out;
   scale: 3;
+} */
+
+#game-canvas {
+  width: 100%;
 }
 
 #game-space {

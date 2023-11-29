@@ -33,10 +33,12 @@
     </div>
 
     <!-- Main Map -->
-    <div id="map-container">
-      <img id="game-map" src="./assets/maps/test_map.jpg" />
-      <img id="player-character" src="./assets/characters/player_down.png" />
-    </div>
+    <!-- <div id="map-container"> -->
+      <!-- <img id="game-map" src="./assets/maps/test_map.jpg" />
+      <img id="player-character" src="./assets/characters/player_down.png" /> -->
+
+      <canvas id="game-canvas" width="320" height="180"></canvas>
+    <!-- </div> -->
 
     <!-- Bottom HUD -->
     <div class="hud" id="action-buttons">
@@ -527,6 +529,7 @@
     </div>
   </div>
     <script src="index.js"></script>
+    <script src="js/vector2.js"></script>
     <script src="js/hero.js"></script>
     <script src="js/combat.js"></script>
     <script src="js/damage.js"></script>
@@ -535,6 +538,9 @@
     <script src="js/enemies.js"></script>
     <script src="js/items.js"></script>
     <script src="js/consumable.js"></script>
+    <script src="js/sprite.js"></script>
+    <script src="js/resource.js"></script>
+    <script src="js/canvas.js"></script>
     <script src="js/stats.js"></script>
   </body>
 </html>
