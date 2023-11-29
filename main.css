@@ -115,7 +115,7 @@ body {
 
 /* Item styling */
 .item-common {
-  color: grey;
+  color: rgb(210, 210, 210);
 }
 
 .item-uncommon {
