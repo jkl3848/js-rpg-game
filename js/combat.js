@@ -166,6 +166,10 @@ function resetStats(end) {
 
 //Attacks a target
 function attack(attacker, target, damage) {
+  if (evadeAttack(target)) {
+    return;
+  }
+
   if (!damage) {
     damage = calcDamage(attacker, target);
   }
@@ -357,7 +361,25 @@ function secondAction(currentCharacter, target) {
     }
   }
 
-  secondCooldown = player.secondAbility.cooldown + 1;
+  const energyDrink = player.items.find((item) => item.name === "energyDrink");
+  secondCooldown = player.secondAbility.cooldown + 1 - energyDrink.stack;
+
   const btn = document.getElementById("2ndActionButton");
   btn.disabled = true;
+}
+
+function evadeAttack(target) {
+  const randomNum = random100();
+
+  let evasionChance = target.evasion;
+
+  if (target.player) {
+    const sunglasses = player.items.find((item) => item.name === "sunglasses");
+    evasionChance += sunglasses.stack * 5;
+  }
+
+  if (randomNum <= evasionChance) {
+    return true;
+  }
+  return false;
 }

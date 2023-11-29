@@ -10,13 +10,45 @@ function calcDamage(attacker, target, mult) {
 
   damage = Math.round(damage + randomValue);
 
+  //Damage boosting items
+  if (attacker.player) {
+    const championBelt = player.items.find(
+      (item) => item.name === "championBelt"
+    );
+    const wallet = player.items.find((item) => item.name === "wallet");
+
+    if (championBelt) {
+      damage += Math.ceil(
+        damage *
+          (0.01 *
+            championBelt.stack *
+            ((player.currentHP / player.maxHP) * 100))
+      );
+    }
+    if (wallet) {
+      const walletBoost = (wallet.stack - 1) * 0.01;
+      damage += Math.ceil(player.money * (0.02 + walletBoost));
+    }
+  }
+
   const isCrit = isCriticalHit(attacker.critChance);
 
   //Determines if hit is crit (double damage)
   function isCriticalHit(critChance) {
-    const randomValue = random100();
+    let critVal = random100();
 
-    return randomValue <= critChance;
+    // Item- Padded Armor
+    if (target.player) {
+      const paddedArmor = player.items.find(
+        (item) => item.name === "paddedArmor"
+      );
+
+      if (paddedArmor) {
+        critVal -= paddedArmor.stack * 5;
+      }
+    }
+
+    return critVal <= critChance;
   }
 
   if (isCrit) {
@@ -111,6 +143,9 @@ function applyStatusEffect(attacker, target, effect, effectStack) {
     const molotov = attacker.items.find((item) => item.name === "molotov");
     const moonshine = attacker.items.find((item) => item.name === "moonshine");
     const rock = attacker.items.find((item) => item.name === "pointyRock");
+    const ballAndChain = attacker.items.find(
+      (item) => item.name === "ballAndChain"
+    );
 
     const poison = effects?.find((item) => item.type === "poison");
     const burn = effects?.find((item) => item.type === "burn");
@@ -149,6 +184,9 @@ function applyStatusEffect(attacker, target, effect, effectStack) {
         }
         target.armor -= target.level;
       }
+    }
+    if (ballAndChain) {
+      target.speed -= ballAndChain.stack;
     }
   }
 }
