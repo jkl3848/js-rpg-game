@@ -337,7 +337,8 @@ const weapons = [
 
 let itemChance = [50, 35, 12, 3];
 //Gives player a random item
-function gainItem(item) {
+function gainItem(specItem) {
+  let item = specItem;
   let type;
   if (!item) {
     const itemPoolNumber = random100();
@@ -413,5 +414,4 @@ function applyItemEffect(item) {
       //   player[item.attr] = player[item.attr] * boost;
     }
   }
-  console.log(player);
 }
