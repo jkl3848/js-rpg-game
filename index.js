@@ -41,7 +41,14 @@ function postCombat(xp) {
 
   postCombatHeal();
   gainXP(xp);
-  gainMoney(xp);
+
+  let coin = xp;
+  const check = player.items.find((item) => item.name === "blankCheck");
+  if (check) {
+    coin += coin * (check.stack * 0.1);
+  }
+
+  gainMoney(coin);
 
   updatePlayerHUD();
 }
