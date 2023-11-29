@@ -10,12 +10,24 @@ function calcDamage(attacker, target, mult) {
 
   damage = Math.round(damage + randomValue);
 
-  //Item- Final Fight
+  //Damage boosting items
   if (attacker.player) {
-    const finalFight = player.items.find((item) => item.name === "finalFight");
+    const championBelt = player.items.find(
+      (item) => item.name === "championBelt"
+    );
+    const wallet = player.items.find((item) => item.name === "wallet");
 
-    if (finalFight) {
-      damage += damage * (0.01 * ((player.currentHP / player.maxHP) * 100));
+    if (championBelt) {
+      damage += Math.ceil(
+        damage *
+          (0.01 *
+            championBelt.stack *
+            ((player.currentHP / player.maxHP) * 100))
+      );
+    }
+    if (wallet) {
+      const walletBoost = (wallet.stack - 1) * 0.01;
+      damage += Math.ceil(player.money * (0.02 + walletBoost));
     }
   }
 

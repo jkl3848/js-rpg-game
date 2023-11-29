@@ -205,14 +205,14 @@ const uncommonItems = [
 
 const rareItems = [
   {
-    name: "finalFight",
-    displayName: "Final Fight",
+    name: "championBelt",
+    displayName: "Champion Belt",
     boost: 1,
     stackBoost: 1,
     boostType: "mult",
     target: "self",
     attr: "damage",
-    desc: "Do not go quietly into the night",
+    desc: "",
     detailedDesc:
       "Deals an additional 1% damage (+1% per stack) for each 1% of missing health",
   },
