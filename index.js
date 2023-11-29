@@ -1,22 +1,26 @@
-const gameVersion = "0.1.2";
+const gameVersion = "0.2.0";
 
 function start() {
   clearAllOverlays();
   moveLock = false;
+
+  document.getElementById("player-character").style.display = "block";
 
   createHero();
   updatePlayerHUD();
   updateBackpack();
 }
 
+function clearDataForNewGame() {}
+
 function gameOver() {
   clearAllOverlays();
+  clearCombatOverlay();
   addMessage("You Lose!");
   document.getElementById("startButton").disabled = false;
   moveLock = true;
 
-  document.getElementById("overlay").style.display = "flex";
-  document.getElementById("game-over").style.display = "block";
+  document.getElementById("game-over").style.display = "flex";
 }
 
 function scrollHeroes(value) {
@@ -33,10 +37,7 @@ function scrollHeroes(value) {
 //Functions to run after winning combat
 function postCombat(xp) {
   clearAllOverlays();
-  //Reset overlay style
-  const overlay = document.getElementById("overlay");
-  overlay.style.height = "740px";
-  overlay.style.top = "0";
+  clearCombatOverlay();
 
   postCombatHeal();
   gainXP(xp);
@@ -99,7 +100,6 @@ function levelUp() {
   };
 
   //Opens level up ui for point allocation
-  document.getElementById("overlay").style.display = "flex";
   document.getElementById("point-allocator").style.display = "block";
   document.getElementById("point-name").innerHTML = player.name;
   document.getElementById("point-level").innerHTML = "Level " + player.level;
@@ -116,55 +116,74 @@ function levelUp() {
   updatePlayerHealth();
 }
 
-function closePointAll() {
-  document.getElementById("overlay").style.display = "none";
-  document.getElementById("point-allocator").style.display = "none";
-  moveLock = false;
+function openClassPicker() {
+  clearAllOverlays();
+  moveLock = true;
+  document.getElementById("class-picker-container").style.display = "flex";
+  document.getElementById("class-info-0").style.display = "block";
 }
 
 function openCombat() {
-  const overlay = document.getElementById("overlay");
+  clearAllOverlays();
+  document.getElementById("combat-overlay").style.display = "block";
   document.getElementById("combat-space").style.display = "block";
-  moveLock = true;
-
-  overlay.style.display = "flex";
-  overlay.style.height = "595px";
-  overlay.style.top = "90px";
 }
 
-function openBackpack() {
-  document.getElementById("overlay").style.display = "flex";
-  document.getElementById("backpack-overlay").style.display = "block";
-  moveLock = true;
+let packOpen = false;
+function toggleBackpack() {
+  const packState = packOpen;
+  clearAllOverlays();
+
+  const pack = document.getElementById("backpack-overlay");
+
+  if (packState) {
+    pack.style.display = "none";
+    packOpen = false;
+    moveLock = false;
+  } else {
+    pack.style.display = "block";
+    packOpen = true;
+    moveLock = true;
+  }
 }
 
-function openPlayerMenu() {
-  document.getElementById("overlay").style.display = "flex";
-  document.getElementById("player-menu").style.display = "block";
-  moveLock = true;
+let pMenuOpen;
+function togglePlayerMenu() {
+  const menuState = pMenuOpen;
+  clearAllOverlays();
+
+  const menu = document.getElementById("player-menu");
+
+  if (menuState) {
+    menu.style.display = "none";
+    pMenuOpen = false;
+    moveLock = false;
+  } else {
+    menu.style.display = "block";
+    pMenuOpen = true;
+    moveLock = true;
+  }
 }
 
 function clearAllOverlays() {
   moveLock = false;
-  document.getElementById("overlay").style.display = "none";
-  document.getElementById("backpack-overlay").style.display = "none";
-  document.getElementById("point-allocator").style.display = "none";
+  packOpen = false;
+  pMenuOpen = false;
+
+  document.getElementById("start-screen").style.display = "none";
+  document.getElementById("class-picker-container").style.display = "none";
   document.getElementById("game-over").style.display = "none";
+  document.getElementById("point-allocator").style.display = "none";
+  document.getElementById("backpack-overlay").style.display = "none";
   document.getElementById("player-menu").style.display = "none";
-  document.getElementById("combat-space").style.display = "none";
 }
 
-function openClassSelector() {
-  document.getElementById("start-screen").style.display = "none";
-  document.getElementById("overlay").style.display = "flex";
-  document.getElementById("class-picker-container").style.display = "block";
-  document.getElementById("class-info-0").style.display = "block";
-
-  moveLock = true;
+function clearCombatOverlay() {
+  inCombat = false;
+  document.getElementById("combat-overlay").style.display = "none";
 }
 
 function chooseClass() {
-  document.getElementById("overlay").style.display = "none";
   document.getElementById("class-picker-container").style.display = "none";
   moveLock = false;
 

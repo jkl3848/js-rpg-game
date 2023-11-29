@@ -18,6 +18,9 @@ function updatePlayerHealth() {
   document.getElementById("current-hp").style.width = `${
     (player.currentHP / player.maxHP) * 100
   }%`;
+  document.getElementById(
+    "player-hp"
+  ).innerHTML = `${player.currentHP}/${player.maxHP} HP`;
 }
 
 //Heals hero after combat

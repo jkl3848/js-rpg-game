@@ -7,8 +7,10 @@ let thiefStartSpeed;
 let guardianStartDefense;
 let berserkerStartAttack;
 
+let inCombat;
+
 async function combatInit(combatVal) {
-  moveLock = true;
+  inCombat = true;
   openCombat();
 
   enemies = generateEnemies(combatVal);
@@ -104,9 +106,9 @@ async function combatInit(combatVal) {
           addMessage("You successfully fled");
           const container = document.getElementById("characters");
           container.innerHTML = "";
-          moveLock = false;
 
           resetStats(true);
+          clearCombatOverlay();
           return;
         }
 
@@ -137,6 +139,8 @@ async function combatInit(combatVal) {
 
   const container = document.getElementById("characters");
   container.innerHTML = "";
+
+  inCombat = false;
 
   if (player.currentHP > 0) {
     addMessage("You Win!");
@@ -220,24 +224,46 @@ function addMessage(message) {
 function waitForUserAttack() {
   return new Promise((resolve) => {
     const attack = document.getElementById("attackButton");
-    attack.addEventListener("click", () => {
+    const onAttackClick = () => {
       resolve("attack");
-    });
+      removeListeners();
+    };
+    attack.addEventListener("click", onAttackClick);
 
     const second = document.getElementById("2ndActionButton");
-    second.addEventListener("click", () => {
+    const onSecondClick = () => {
       resolve("second");
-    });
+      removeListeners();
+    };
+    second.addEventListener("click", onSecondClick);
 
     const flee = document.getElementById("fleeButton");
-    flee.addEventListener("click", () => {
+    const onFleeClick = () => {
       resolve("flee");
+      removeListeners();
+    };
+    flee.addEventListener("click", onFleeClick);
+
+    const packItems = document.querySelectorAll(".pack-item");
+    const onPackItemClick = () => {
+      resolve("backpack");
+      removeListeners();
+    };
+
+    // Add an event listener to each backpack item
+    packItems.forEach(function (element) {
+      element.addEventListener("click", onPackItemClick);
     });
 
-    const backpack = document.getElementById("backpackButton");
-    backpack.addEventListener("click", () => {
-      resolve("backpack");
-    });
+    // Function to remove all event listeners
+    function removeListeners() {
+      attack.removeEventListener("click", onAttackClick);
+      second.removeEventListener("click", onSecondClick);
+      flee.removeEventListener("click", onFleeClick);
+      packItems.forEach(function (element) {
+        element.removeEventListener("click", onPackItemClick);
+      });
+    }
   });
 }
 
