@@ -1,0 +1,15 @@
+# UNTITLED RPG
+
+## VanillaJS Rogue-lite Turn-based RPG
+
+Welcome to my practice project, a rogue-lite turn-based RPG implemented in vanilla JavaScript. This project is designed for me to learn and experiment with game development using basic web technologies.
+
+## Overview
+
+The goal of the project is to create a rogue-lite turn-based RPG entirely in JavaScript, HTML and CSS. It serves as a hands-on practice ground for understanding game mechanics, logic, and interactions. The goal is to build a simple yet engaging RPG that showcases the capabilities of JavaScript in the context of game development.
+
+## Features
+
+- **Turn-based Combat:** Engage in strategic turn-based combat with enemies.
+- **Rogue-lite Elements:** Experience procedural generation, permadeath, and other rogue-lite features.
+- **Character Progression:** Level up your character, acquire new equipment, and powerful items.
