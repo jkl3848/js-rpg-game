@@ -155,7 +155,7 @@ function createHero() {
       player[prop] = val;
     }
   }
-  player.currentHP = player.maxHP;
+  setHealthToMax(player);
   document.getElementById("2ndActionTooltip").innerHTML =
     heroClass.secondAbility.desc;
   secondAtk = document.getElementById("2ndActionButton");

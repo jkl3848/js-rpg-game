@@ -118,7 +118,7 @@ function levelUp() {
     player.critChance;
   document.getElementById("level-up-button");
 
-  player.currentHP = player.maxHP;
+  setHealthToMax(player);
   addMessage("You are now level " + player.level);
   updatePlayerHealth();
 }
@@ -204,6 +204,8 @@ function addAttrValue(prop) {
   }
   if (prop == "maxHP") {
     player[prop] += 10;
+    setHealthToMax(player);
+    updatePlayerHealth();
   } else {
     player[prop]++;
     if (prop == "critChance" && player[prop] > 100) {
@@ -227,6 +229,8 @@ function subAttrValue(prop) {
   }
   if (prop == "maxHP") {
     player[prop] -= 10;
+    setHealthToMax(player);
+    updatePlayerHealth();
   } else {
     if (player[prop] === oldStats[prop]) {
       return;

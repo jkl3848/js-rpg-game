@@ -197,7 +197,7 @@ function generateEnemies(combatVal) {
 
     //Create mobs combat element
     if (randomEnemy.threatLevel + enemyCombatVal <= combatVal * 1.2) {
-      randomEnemy.currentHP = randomEnemy.maxHP;
+      setHealthToMax(randomEnemy);
       randomEnemy.combatId = combatId;
       randomEnemy.effects = [];
       randomEnemy.turnCounter = randomEnemy.speed;
@@ -233,7 +233,7 @@ function levelUpEnemies(enemies, enemyCombatVal, combatVal) {
       enemies[i].level++;
       for (let attr in scale) {
         enemies[i][attr] += scale[attr];
-        enemies[i].currentHP = enemies[i].maxHP;
+        setHealthToMax(enemies[i]);
       }
       enemyCombatVal += scale["threatLevel"];
     }
