@@ -154,6 +154,7 @@ async function combatInit(combatVal) {
 }
 
 function defeatedEnemy(enemy) {
+  enemiesDefeated++;
   addMessage(`${enemy.name} defeated!`);
   turnQueue = turnQueue.filter((char) => char.combatId !== enemy.combatId);
   enemies = enemies.filter((char) => char.combatId !== enemy.combatId);
@@ -220,16 +221,16 @@ function attack(attacker, target, damage) {
 //Sets a new target for the player
 function setTarget(id) {
   //Reset target selection and color
-  const targetEl = document.querySelectorAll(".combat-el");
+  const targetEl = document.querySelectorAll(".target-enemy");
 
   targetEl.forEach((el) => {
-    el.style.borderColor = "black";
+    el.classList.remove("target-enemy");
   });
 
   playerTarget = enemies.find((enemy) => enemy.combatId === id);
 
   const target = document.getElementById("char-" + id);
-  target.style.borderColor = "red";
+  target.classList.add("target-enemy");
 }
 
 //Adds message to textfield
@@ -263,7 +264,7 @@ function waitForUserAttack() {
     };
     flee.addEventListener("click", onFleeClick);
 
-    const packItems = document.querySelectorAll(".pack-item");
+    const packItems = player.backpack;
     const onPackItemClick = () => {
       resolve("backpack");
       removeListeners();
@@ -271,7 +272,8 @@ function waitForUserAttack() {
 
     // Add an event listener to each backpack item
     packItems.forEach(function (element) {
-      element.addEventListener("click", onPackItemClick);
+      const packEl = document.getElementById(element.name);
+      packEl.addEventListener("click", onPackItemClick);
     });
 
     // Function to remove all event listeners
@@ -280,7 +282,8 @@ function waitForUserAttack() {
       second.removeEventListener("click", onSecondClick);
       flee.removeEventListener("click", onFleeClick);
       packItems.forEach(function (element) {
-        element.removeEventListener("click", onPackItemClick);
+        const packEl = document.getElementById(element.name);
+        packEl.removeEventListener("click", onPackItemClick);
       });
     }
   });

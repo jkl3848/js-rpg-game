@@ -76,6 +76,10 @@ function healthSteal(damage) {
 
 function balanceHealth() {
   if (player.currentHP > player.maxHP) {
-    player.currentHP = player.maxHP;
+    setHealthToMax(player);
   }
+}
+
+function setHealthToMax(target) {
+  target.currentHP = target.maxHP;
 }

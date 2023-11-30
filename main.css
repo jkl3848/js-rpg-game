@@ -40,7 +40,7 @@ body {
 
 /* Overlays and dialogs */
 .overlay {
-  position: fixed;
+  position: absolute;
   z-index: 100;
   top: 0;
   width: 610px;
@@ -365,6 +365,11 @@ button#startButton {
   border: black 1px solid;
   width: 80px;
   background-color: white;
+}
+
+.target-enemy {
+  border-color: red;
+  background-color: rgb(181, 69, 69);
 }
 
 /* Player HUD */
