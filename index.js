@@ -36,6 +36,7 @@ function scrollHeroes(value) {
 
 //Functions to run after winning combat
 function postCombat(xp) {
+  enemiesDefeated++;
   clearAllOverlays();
   clearCombatOverlay();
 

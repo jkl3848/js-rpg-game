@@ -154,6 +154,7 @@ async function combatInit(combatVal) {
 }
 
 function defeatedEnemy(enemy) {
+  enemiesDefeated++;
   addMessage(`${enemy.name} defeated!`);
   turnQueue = turnQueue.filter((char) => char.combatId !== enemy.combatId);
   enemies = enemies.filter((char) => char.combatId !== enemy.combatId);
