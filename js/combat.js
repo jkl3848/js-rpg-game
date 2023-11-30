@@ -263,7 +263,7 @@ function waitForUserAttack() {
     };
     flee.addEventListener("click", onFleeClick);
 
-    const packItems = document.querySelectorAll(".pack-item");
+    const packItems = player.backpack;
     const onPackItemClick = () => {
       resolve("backpack");
       removeListeners();
@@ -271,7 +271,8 @@ function waitForUserAttack() {
 
     // Add an event listener to each backpack item
     packItems.forEach(function (element) {
-      element.addEventListener("click", onPackItemClick);
+      const packEl = document.getElementById(element.name);
+      packEl.addEventListener("click", onPackItemClick);
     });
 
     // Function to remove all event listeners
@@ -280,7 +281,8 @@ function waitForUserAttack() {
       second.removeEventListener("click", onSecondClick);
       flee.removeEventListener("click", onFleeClick);
       packItems.forEach(function (element) {
-        element.removeEventListener("click", onPackItemClick);
+        const packEl = document.getElementById(element.name);
+        packEl.removeEventListener("click", onPackItemClick);
       });
     }
   });
