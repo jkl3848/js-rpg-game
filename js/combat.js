@@ -220,16 +220,16 @@ function attack(attacker, target, damage) {
 //Sets a new target for the player
 function setTarget(id) {
   //Reset target selection and color
-  const targetEl = document.querySelectorAll(".combat-el");
+  const targetEl = document.querySelectorAll(".target-enemy");
 
   targetEl.forEach((el) => {
-    el.style.borderColor = "black";
+    el.classList.remove("target-enemy");
   });
 
   playerTarget = enemies.find((enemy) => enemy.combatId === id);
 
   const target = document.getElementById("char-" + id);
-  target.style.borderColor = "red";
+  target.classList.add("target-enemy");
 }
 
 //Adds message to textfield

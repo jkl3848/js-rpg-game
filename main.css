@@ -367,6 +367,11 @@ button#startButton {
   background-color: white;
 }
 
+.target-enemy {
+  border-color: red;
+  background-color: rgb(181, 69, 69);
+}
+
 /* Player HUD */
 .hud {
   display: flex;
