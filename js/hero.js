@@ -133,6 +133,37 @@ const classes = [
   },
 ];
 
+const subclasses = {
+  knight: [
+    {
+      name: "tbd",
+      level10: {
+        ability: "tbd",
+        desc: "+50 HP, -3 SPD",
+        cooldown: null,
+      },
+      level20: {
+        ability: "tbd",
+        desc: "Heal for 15%",
+        cooldown: 4,
+      },
+    },
+    {
+      name: "tbd",
+      level10: {
+        ability: "tbd",
+        desc: "Attacks deal +10% damage",
+        cooldown: null,
+      },
+      level20: {
+        ability: "tbd",
+        desc: "Stuns target for 3 turns",
+        cooldown: 3,
+      },
+    },
+  ],
+};
+
 let heroIndex = 0;
 let selectedClass;
 let levelPoints = 4;
