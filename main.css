@@ -40,7 +40,7 @@ body {
 
 /* Overlays and dialogs */
 .overlay {
-  position: fixed;
+  position: absolute;
   z-index: 100;
   top: 0;
   width: 610px;
