@@ -43,12 +43,12 @@ const mobs = [
   },
   {
     name: "evil moose",
-    level: 1,
+    level: 2,
     xp: 15,
     maxHP: 400,
     attack: 8,
     defense: 14,
-    speed: 6,
+    speed: 7,
     critChance: 1,
     threatLevel: 16,
     scale: {
@@ -109,14 +109,14 @@ const mobs = [
   },
   {
     name: "turtle",
-    level: 1,
+    level: 4,
     xp: 25,
     maxHP: 350,
     attack: 17,
     defense: 15,
     speed: 13,
     critChance: 4,
-    threatLevel: 28,
+    threatLevel: 35,
     scale: {
       xp: 13,
       maxHP: 20,
@@ -131,14 +131,14 @@ const mobs = [
   },
   {
     name: "big turtle",
-    level: 1,
+    level: 8,
     xp: 45,
     maxHP: 600,
     attack: 25,
     defense: 22,
     speed: 18,
     critChance: 4,
-    threatLevel: 40,
+    threatLevel: 60,
     scale: {
       xp: 20,
       maxHP: 20,
@@ -223,9 +223,8 @@ function generateEnemies(combatVal) {
 
 //Levels up enemy units to meet combat value
 function levelUpEnemies(enemies, enemyCombatVal, combatVal) {
-  console.log("leveling up enemies");
   //Levels up one unit at a time until combat val is met
-  //TODO: This might just level up one level each
+  //TODO: This might just level up one level each; Maybe put the whole thing in a while
   for (let i = 0; i < enemies.length; i++) {
     if (enemyCombatVal < combatVal) {
       let scale = enemies[i].scale;
