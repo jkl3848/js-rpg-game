@@ -63,7 +63,7 @@ function gainXP(xp) {
   }
   let textbook = player.items.find((item) => item.name === "textbook");
   if (textbook) {
-    xp += (xp * (textbook.boost * textbook.stack)) / 100;
+    xp += Math.floor((xp * (textbook.boost * textbook.stack)) / 100);
   }
   player.xp += xp;
 

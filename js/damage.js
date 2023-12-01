@@ -64,7 +64,7 @@ function calcDamage(attacker, target, mult) {
 
   healthSteal(damage);
 
-  return damage;
+  return Math.round(damage);
 }
 
 //Resolves applied status effect to character
