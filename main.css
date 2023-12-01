@@ -449,6 +449,7 @@ button#startButton {
 
 .action-button:disabled {
   background-color: #c03a2b75;
+  color: #a2a2a2;
 }
 
 #player-menu {
