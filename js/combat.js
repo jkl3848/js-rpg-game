@@ -380,7 +380,16 @@ function secondAction(currentCharacter, target) {
   }
 
   const energyDrink = player.items.find((item) => item.name === "energyDrink");
-  secondCooldown = player.secondAbility.cooldown + 1 - energyDrink.stack;
+
+  secondCooldown = player.secondAbility.cooldown + 1;
+
+  if (energyDrink) {
+    secondCooldown - energyDrink.stack;
+  }
+
+  if (secondCooldown < 0) {
+    secondCooldown = 0;
+  }
 
   const btn = document.getElementById("2ndActionButton");
   btn.disabled = true;
