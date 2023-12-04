@@ -14,6 +14,7 @@ async function combatInit(combatVal) {
   openCombat();
 
   enemies = generateEnemies(combatVal);
+  const numberOfEnemies = enemies.length;
   if (player.class === "thief") {
     thiefStartSpeed = player.speed;
   } else if (player.class === "guardian") {
@@ -147,7 +148,7 @@ async function combatInit(combatVal) {
 
   if (player.currentHP > 0) {
     addMessage("You Win!");
-    postCombat(xpToGain);
+    postCombat(xpToGain, numberOfEnemies);
   } else {
     gameOver();
   }

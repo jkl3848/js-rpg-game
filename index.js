@@ -35,13 +35,19 @@ function scrollHeroes(value) {
 }
 
 //Functions to run after winning combat
-function postCombat(xp) {
+function postCombat(xp, numberOfEnemies) {
   enemiesDefeated++;
   clearAllOverlays();
   clearCombatOverlay();
 
   postCombatHeal();
   gainXP(xp);
+
+  for (let i = 0; i < numberOfEnemies; i++) {
+    if (random100() <= 10) {
+      gainConsumable();
+    }
+  }
 
   let coin = xp;
   const check = player.items.find((item) => item.name === "blankCheck");

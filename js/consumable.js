@@ -86,18 +86,19 @@ function gainConsumable(item) {
     const itemNumber = Math.floor(Math.random() * consumables.length);
 
     item = consumables[itemNumber];
-  } else {
-    if (player.backpack.find((obj) => obj.name === item.name)) {
-      itemObj = player.backpack.find((obj) => obj.name === item.name);
-      itemObj.stack++;
-    }
-    //otherwise add it
-    else {
-      itemObj = structuredClone(item);
-      itemObj.stack = 1;
-      player.backpack.push(itemObj);
-    }
   }
+  if (player.backpack.find((obj) => obj.name === item.name)) {
+    itemObj = player.backpack.find((obj) => obj.name === item.name);
+    itemObj.stack++;
+  }
+  //otherwise add it
+  else {
+    itemObj = structuredClone(item);
+    itemObj.stack = 1;
+    player.backpack.push(itemObj);
+  }
+
+  addMessage("Gained " + item.name);
 
   updateBackpack();
 }
