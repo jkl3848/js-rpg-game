@@ -37,7 +37,7 @@ async function combatInit(combatVal) {
   //Sets the first enemy as the default target for the user
   setTarget(1);
 
-  //Set turn counter euqal to highest speed in group
+  //Set turn counter equal to highest speed in group
   const maxTurnCount = turnQueue.reduce(
     (max, obj) => (obj.speed > max.speed ? obj : max),
     turnQueue[0]
@@ -412,4 +412,24 @@ function evadeAttack(target) {
     return true;
   }
   return false;
+}
+
+function setVisibleTurnOrder() {
+  let nextFiveTurns = [];
+
+  const maxTurnCount = turnQueue.reduce(
+    (max, obj) => (obj.speed > max.speed ? obj : max),
+    turnQueue[0]
+  ).speed;
+
+  for (let i = 0; i < turnQueue.length; i++) {
+    let char = structuredClone(turnQueue[i]);
+    const stunned = char.effects?.find((item) => item.type === "stun");
+    if (stunned) {
+      for (let j = 0; j < stunned.stack; j++) {
+        char.turnCounter -= maxTurnCount;
+      }
+    }
+    char.distanceFromTurn = (maxTurnCount - char.turnCounter) / char.speed;
+  }
 }
