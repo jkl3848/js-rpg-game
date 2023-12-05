@@ -157,6 +157,10 @@ body {
   opacity: 1;
 }
 
+.tooltip-text.item-tooltip{
+  left:33%
+}
+
 /* Start menu dialog */
 #start-screen {
   margin-top: 360px;
