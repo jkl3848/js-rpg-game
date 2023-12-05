@@ -241,13 +241,6 @@ function setTarget(id) {
   });
 }
 
-//Adds message to textfield
-function addMessage(message) {
-  const messageField = document.getElementById("messageField");
-  messageField.value += message + "\n";
-  messageField.scrollTop = messageField.scrollHeight; // Auto-scroll to the bottom
-}
-
 //Waits for user to click one of the action buttons
 function waitForUserAttack() {
   return new Promise((resolve) => {

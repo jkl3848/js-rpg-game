@@ -14,6 +14,7 @@ function start() {
 function clearDataForNewGame() {}
 
 function gameOver() {
+  clearMessage()
   clearAllOverlays();
   clearCombatOverlay();
   addMessage("You Lose!");
@@ -36,6 +37,7 @@ function scrollHeroes(value) {
 
 //Functions to run after winning combat
 function postCombat(xp, numberOfEnemies) {
+  clearMessage()
   enemiesDefeated++;
   clearAllOverlays();
   clearCombatOverlay();
@@ -277,4 +279,15 @@ function updatePlayerHUD() {
 
   const playerStats = document.getElementById("player-stats");
   playerStats.innerHTML = `ATK: ${player.attack} DEF: ${player.defense} SPD: ${player.speed} CRT: ${player.critChance}%`;
+}
+
+//Adds message to textfield
+function addMessage(message) {
+  const messageField = document.getElementById("messageField");
+  messageField.value += message + "\n";
+  messageField.scrollTop = messageField.scrollHeight; // Auto-scroll to the bottom
+}
+
+function clearMessage(){
+  document.getElementById("messageField").value = "";
 }
