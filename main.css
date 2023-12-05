@@ -132,7 +132,7 @@ body {
 
 .tooltip {
   position: relative;
-  display: inline-block;
+  /* display: inline-block; */
   cursor: pointer;
 }
 
@@ -144,7 +144,7 @@ body {
   border-radius: 5px;
   padding: 5px;
   position: absolute;
-  z-index: 1;
+  z-index: 200;
   bottom: 125%;
   left: 50%;
   margin-left: -45px;
@@ -155,6 +155,10 @@ body {
 .tooltip:hover .tooltip-text {
   visibility: visible;
   opacity: 1;
+}
+
+.tooltip-text.item-tooltip{
+  left:33%
 }
 
 /* Start menu dialog */
@@ -203,6 +207,12 @@ button#startButton {
 
 .pack-item:hover {
   background-color: #999;
+}
+
+.pack-item .tooltip-text{
+  width: 80px;
+  bottom: 110%;
+  left: 50%;
 }
 
 #close-overlay-button {
@@ -349,7 +359,7 @@ button#startButton {
 }
 
 #characters {
-  margin-left: 8px;
+  margin: auto;
 }
 
 #combat-space {
@@ -368,8 +378,35 @@ button#startButton {
 }
 
 .target-enemy {
-  border-color: red;
-  background-color: rgb(181, 69, 69);
+  border-color: red !important;
+  background-color: rgb(181, 69, 69) !important;
+}
+
+/* Turn queue */
+#turn-queue {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.turn-queue-char {
+  padding: 4px;
+  border: black 2px solid;
+  width: 70px;
+  height: 50px;
+  background-color: white;
+
+  text-align: center;
+}
+
+.next-turn {
+  background-color: #3498db !important;
+  border-color: white;
+}
+
+.highlighted-enemy {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  transform: scale(1.1);
 }
 
 /* Player HUD */
@@ -432,7 +469,7 @@ button#startButton {
 }
 
 .action-button {
-  background-color: #e74c3c; /* Adjusted to match the HP bar color */
+  background-color: #e74c3c;
   color: #fff;
   padding: 10px 20px;
   border: none;
@@ -444,7 +481,7 @@ button#startButton {
 }
 
 .action-button:hover:enabled {
-  background-color: #c0392b; /* Darker red on hover */
+  background-color: #c0392b;
 }
 
 .action-button:disabled {

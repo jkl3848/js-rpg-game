@@ -14,6 +14,7 @@ async function combatInit(combatVal) {
   openCombat();
 
   enemies = generateEnemies(combatVal);
+  const numberOfEnemies = enemies.length;
   if (player.class === "thief") {
     thiefStartSpeed = player.speed;
   } else if (player.class === "guardian") {
@@ -22,7 +23,7 @@ async function combatInit(combatVal) {
     berserkerStartAttack = player.attack;
   }
 
-  const xpToGain = enemies.reduce((sum, obj) => sum + obj.xp, 0);
+  const xpToGain = enemies.reduce((sum, obj) => sum + obj.threatLevel, 0);
 
   //Sort the initial combat queue by speed
   turnQueue = [player].concat(enemies);
@@ -36,7 +37,7 @@ async function combatInit(combatVal) {
   //Sets the first enemy as the default target for the user
   setTarget(1);
 
-  //Set turn counter euqal to highest speed in group
+  //Set turn counter equal to highest speed in group
   const maxTurnCount = turnQueue.reduce(
     (max, obj) => (obj.speed > max.speed ? obj : max),
     turnQueue[0]
@@ -47,6 +48,7 @@ async function combatInit(combatVal) {
 
   //While the hero and at least 1 enemy has health
   while (player.currentHP > 0 && enemies.some((obj) => obj.currentHP > 0)) {
+    setVisibleTurnOrder();
     const currentCharacter = turnQueue.shift();
     let target = null;
     let action;
@@ -147,7 +149,7 @@ async function combatInit(combatVal) {
 
   if (player.currentHP > 0) {
     addMessage("You Win!");
-    postCombat(xpToGain);
+    postCombat(xpToGain, numberOfEnemies);
   } else {
     gameOver();
   }
@@ -231,13 +233,12 @@ function setTarget(id) {
 
   const target = document.getElementById("char-" + id);
   target.classList.add("target-enemy");
-}
 
-//Adds message to textfield
-function addMessage(message) {
-  const messageField = document.getElementById("messageField");
-  messageField.value += message + "\n";
-  messageField.scrollTop = messageField.scrollHeight; // Auto-scroll to the bottom
+  const turnEls = document.querySelectorAll(`#turn-char-${id}`);
+
+  turnEls.forEach((el) => {
+    el.classList.add("target-enemy");
+  });
 }
 
 //Waits for user to click one of the action buttons
@@ -362,7 +363,7 @@ function secondAction(currentCharacter, target) {
   else if (player.secondAbility.name === "Toxin") {
     let enemyList = turnQueue.filter((item) => !item.player);
 
-    for (let i = 0; i < enemyList; i++) {
+    for (let i = 0; i < enemyList.length; i++) {
       let target = enemyList[i];
       const damage = calcDamage(currentCharacter, target, 0.25);
       attack(currentCharacter, target, damage);
@@ -373,7 +374,7 @@ function secondAction(currentCharacter, target) {
   else if (player.secondAbility.name === "Advantage") {
     let enemyList = turnQueue.filter((item) => !item.player);
 
-    for (let i = 0; i < enemyList; i++) {
+    for (let i = 0; i < enemyList.length; i++) {
       let target = enemyList[i];
       applyStatusEffect(currentCharacter, target, "stun", 1);
     }
@@ -411,4 +412,88 @@ function evadeAttack(target) {
     return true;
   }
   return false;
+}
+
+function setVisibleTurnOrder() {
+  let nextFiveTurns = [];
+  let tempQueue = structuredClone(turnQueue);
+
+  const maxTurnCount = turnQueue.reduce(
+    (max, obj) => (obj.speed > max.speed ? obj : max),
+    turnQueue[0]
+  ).speed;
+
+  while (nextFiveTurns.length < 5) {
+    const currentCharacter = tempQueue.shift();
+
+    tempQueue.push(currentCharacter);
+
+    currentCharacter.turnCounter += currentCharacter.speed;
+
+    const stunned = currentCharacter.effects?.find(
+      (item) => item.type === "stun"
+    );
+    //If the turn counter reaches the max, take an action
+    if (currentCharacter.turnCounter >= maxTurnCount && !stunned) {
+      currentCharacter.turnCounter -= maxTurnCount;
+      nextFiveTurns.push(currentCharacter);
+    } else if (stunned) {
+      currentCharacter.turnCounter -= maxTurnCount;
+      resolveStatusEffects(currentCharacter);
+    }
+  }
+
+  const hud = document.getElementById("turn-queue");
+  hud.innerHTML = "";
+
+  let counter = 0;
+
+  nextFiveTurns.forEach((el) => {
+    const turnElement = document.createElement("div");
+    turnElement.className = "turn-queue-char";
+    turnElement.id = `turn-char-${el.combatId}`;
+    turnElement.textContent = el.name;
+
+    if (playerTarget.combatId === el.combatId) {
+      turnElement.classList.add("target-enemy");
+    }
+
+    if(el.combatId !== 0){
+      turnElement.addEventListener("click", () => {
+        setTarget(el.combatId);
+      });
+    }
+
+    // Add 'next-turn' class to the first element
+    if (counter === 0) {
+      turnElement.classList.add("next-turn");
+    }
+
+    turnElement.addEventListener("mouseover", () => {
+      highlightEnemy(el.combatId);
+    });
+    turnElement.addEventListener("mouseleave", () => {
+      unHighlightEnemy(el.combatId);
+    });
+
+    hud.appendChild(turnElement);
+    counter++;
+  });
+}
+
+function highlightEnemy(id) {
+  const turnEls = document.querySelectorAll(`#turn-char-${id}`);
+  turnEls.forEach((el) => {
+    el.classList.add("highlighted-enemy");
+  });
+  document.getElementById(`char-${id}`)?.classList.add("highlighted-enemy");
+}
+
+function unHighlightEnemy(id) {
+  const turnEls = document.querySelectorAll(`#turn-char-${id}`);
+
+  turnEls.forEach((el) => {
+    el.classList.remove("highlighted-enemy");
+  });
+  document.getElementById(`char-${id}`)?.classList.remove("highlighted-enemy");
 }

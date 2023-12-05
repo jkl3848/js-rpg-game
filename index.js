@@ -1,4 +1,4 @@
-const gameVersion = "0.2.3";
+const gameVersion = "0.3.0";
 
 function start() {
   clearAllOverlays();
@@ -14,6 +14,7 @@ function start() {
 function clearDataForNewGame() {}
 
 function gameOver() {
+  clearMessage()
   clearAllOverlays();
   clearCombatOverlay();
   addMessage("You Lose!");
@@ -35,13 +36,20 @@ function scrollHeroes(value) {
 }
 
 //Functions to run after winning combat
-function postCombat(xp) {
+function postCombat(xp, numberOfEnemies) {
+  clearMessage()
   enemiesDefeated++;
   clearAllOverlays();
   clearCombatOverlay();
 
   postCombatHeal();
   gainXP(xp);
+
+  for (let i = 0; i < numberOfEnemies; i++) {
+    if (random100() <= 10) {
+      gainConsumable();
+    }
+  }
 
   let coin = xp;
   const check = player.items.find((item) => item.name === "blankCheck");
@@ -76,7 +84,7 @@ function gainXP(xp) {
   }
 
   document.getElementById("current-xp").style.width = `${
-    player.xp - lastXPLevel / nextXPLevel - lastXPLevel
+    ((player.xp - lastXPLevel) / (nextXPLevel - lastXPLevel)) *100
   }%`;
 }
 
@@ -271,4 +279,15 @@ function updatePlayerHUD() {
 
   const playerStats = document.getElementById("player-stats");
   playerStats.innerHTML = `ATK: ${player.attack} DEF: ${player.defense} SPD: ${player.speed} CRT: ${player.critChance}%`;
+}
+
+//Adds message to textfield
+function addMessage(message) {
+  const messageField = document.getElementById("messageField");
+  messageField.value += message + "\n";
+  messageField.scrollTop = messageField.scrollHeight; // Auto-scroll to the bottom
+}
+
+function clearMessage(){
+  document.getElementById("messageField").value = "";
 }

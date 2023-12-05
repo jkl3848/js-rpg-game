@@ -394,7 +394,7 @@ function gainItem(specItem) {
   const playerItems = document.getElementById("player-items");
   playerItems.innerHTML = "";
   player.items.forEach((el) => {
-    playerItems.innerHTML += `<div class='tooltip'><span class='item-${el.type}'>${el.displayName}:</span> ${el.stack} <span class='tooltip-text'>${el.detailedDesc}</span></div>`;
+    playerItems.innerHTML += `<div class='tooltip'><span class='item-${el.type}'>${el.displayName}:</span> ${el.stack} <span class='tooltip-text item-tooltip'>${el.detailedDesc}</span></div>`;
   });
 }
 

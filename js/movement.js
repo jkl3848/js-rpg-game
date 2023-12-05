@@ -83,7 +83,7 @@ function handleKeyDown(event) {
     randomEncounter = Math.floor(Math.random() * 40) + areaEncounterVal;
 
     encounterVal =
-      encounterVal + player.level + areaCombatVal + enemiesDefeated;
+      encounterVal + player.level + areaCombatVal;
 
     // const combatVal = Math.floor(Math.random() * (encounterVal - 5) + 5);
 

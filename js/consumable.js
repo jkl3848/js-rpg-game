@@ -5,7 +5,7 @@ const consumables = [
     type: "heal",
     attr: "currentHP",
     boost: 75,
-    desc: "heal by 50",
+    desc: "heal for 75",
   },
   {
     name: "largePotion",
@@ -13,7 +13,7 @@ const consumables = [
     type: "heal",
     attr: "currentHP",
     boost: 200,
-    desc: "heal by 100",
+    desc: "heal for 200",
   },
   {
     name: "gallonPotion",
@@ -21,7 +21,7 @@ const consumables = [
     type: "heal",
     attr: "currentHP",
     boost: 500,
-    desc: "heal by 250",
+    desc: "heal for 500",
   },
   {
     name: "adrenaline",
@@ -61,7 +61,7 @@ const consumables = [
     type: "effect",
     attr: "",
     boost: 0,
-    desc: "applies BURN",
+    desc: "applies 3 BURN",
   },
   {
     name: "rawChicken",
@@ -69,7 +69,7 @@ const consumables = [
     type: "effect",
     attr: "",
     boost: 0,
-    desc: "applies POISON",
+    desc: "applies 3 POISON",
   },
   {
     name: "bomb",
@@ -86,18 +86,19 @@ function gainConsumable(item) {
     const itemNumber = Math.floor(Math.random() * consumables.length);
 
     item = consumables[itemNumber];
-  } else {
-    if (player.backpack.find((obj) => obj.name === item.name)) {
-      itemObj = player.backpack.find((obj) => obj.name === item.name);
-      itemObj.stack++;
-    }
-    //otherwise add it
-    else {
-      itemObj = structuredClone(item);
-      itemObj.stack = 1;
-      player.backpack.push(itemObj);
-    }
   }
+  if (player.backpack.find((obj) => obj.name === item.name)) {
+    itemObj = player.backpack.find((obj) => obj.name === item.name);
+    itemObj.stack++;
+  }
+  //otherwise add it
+  else {
+    itemObj = structuredClone(item);
+    itemObj.stack = 1;
+    player.backpack.push(itemObj);
+  }
+
+  addMessage("Gained " + item.name);
 
   updateBackpack();
 }
@@ -123,27 +124,48 @@ function useConsumable(itemName) {
     } else {
       return;
     }
-  } else if (item.name === "adrenaline") {
+  }else if(inCombat){
+    if (item.name === "adrenaline") {
     secondCooldown = 0;
   } else if (item.name === "gingerRoot") {
+    if(!poison){return}
     if (poison.stack > 1) {
-      poison.stack--;
+      poison.stack--; 
     } else {
       player.effects = player.effects.filter((item) => item.type !== "poison");
     }
   } else if (item.name === "fireExtinguisher") {
+    if(!burn){return}
+
     if (burn.stack > 1) {
       burn.stack--;
     } else {
       player.effects = player.effects.filter((item) => item.type !== "burn");
     }
   } else if (item.name === "ductTape") {
+    if(!broken){return}
+
     if (broken.stack > 1) {
       broken.stack--;
     } else {
       player.effects = player.effects.filter((item) => item.type !== "broken");
     }
   }
+  else if (item.name === "fireCracker") {
+    applyStatusEffect(player, playerTarget, "burn", 3);
+  }
+  else if (item.name === "rawChicken") {
+    applyStatusEffect(player, playerTarget, "poison", 3);
+  }
+  else if (item.name === "bomb") {
+    let enemyList = turnQueue.filter((item) => !item.player);
+    for (let i = 0; i < enemyList.length; i++) {
+      let target = enemyList[i];
+
+      target.currentHP -= Math.floor(target.maxHP * .1)
+    }
+  }}else{return}
+
 
   if (item.stack > 1) {
     item.stack--;
@@ -165,6 +187,6 @@ function updateBackpack() {
       stack = packItem.stack;
     }
 
-    itemSlot.innerHTML = `${item.displayName}: ${stack}`;
+    itemSlot.innerHTML = `<span class='consum-stack'>${item.displayName}: ${stack}</span><span class='tooltip-text'>${item.desc}</span>`;
   }
 }
