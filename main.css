@@ -349,7 +349,7 @@ button#startButton {
 }
 
 #characters {
-  margin-left: 8px;
+  margin: auto;
 }
 
 #combat-space {
@@ -370,6 +370,22 @@ button#startButton {
 .target-enemy {
   border-color: red;
   background-color: rgb(181, 69, 69);
+}
+
+/* Turn queue */
+#turn-queue {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.turn-queue-char {
+  padding: 4px;
+  border: black 1px solid;
+  width: 80px;
+  background-color: white;
+
+  text-align: center;
 }
 
 /* Player HUD */
@@ -432,7 +448,7 @@ button#startButton {
 }
 
 .action-button {
-  background-color: #e74c3c; /* Adjusted to match the HP bar color */
+  background-color: #e74c3c;
   color: #fff;
   padding: 10px 20px;
   border: none;
@@ -444,7 +460,7 @@ button#startButton {
 }
 
 .action-button:hover:enabled {
-  background-color: #c0392b; /* Darker red on hover */
+  background-color: #c0392b;
 }
 
 .action-button:disabled {

@@ -48,6 +48,7 @@ async function combatInit(combatVal) {
 
   //While the hero and at least 1 enemy has health
   while (player.currentHP > 0 && enemies.some((obj) => obj.currentHP > 0)) {
+    setVisibleTurnOrder();
     const currentCharacter = turnQueue.shift();
     let target = null;
     let action;
@@ -416,20 +417,37 @@ function evadeAttack(target) {
 
 function setVisibleTurnOrder() {
   let nextFiveTurns = [];
+  let tempQueue = structuredClone(turnQueue);
 
   const maxTurnCount = turnQueue.reduce(
     (max, obj) => (obj.speed > max.speed ? obj : max),
     turnQueue[0]
   ).speed;
 
-  for (let i = 0; i < turnQueue.length; i++) {
-    let char = structuredClone(turnQueue[i]);
-    const stunned = char.effects?.find((item) => item.type === "stun");
-    if (stunned) {
-      for (let j = 0; j < stunned.stack; j++) {
-        char.turnCounter -= maxTurnCount;
-      }
+  while (nextFiveTurns.length < 5) {
+    const currentCharacter = tempQueue.shift();
+
+    tempQueue.push(currentCharacter);
+
+    currentCharacter.turnCounter += currentCharacter.speed;
+
+    const stunned = currentCharacter.effects?.find(
+      (item) => item.type === "stun"
+    );
+    //If the turn counter reaches the max, take an action
+    if (currentCharacter.turnCounter >= maxTurnCount && !stunned) {
+      currentCharacter.turnCounter -= maxTurnCount;
+      nextFiveTurns.push(currentCharacter);
+    } else if (stunned) {
+      currentCharacter.turnCounter -= maxTurnCount;
+      resolveStatusEffects(currentCharacter);
     }
-    char.distanceFromTurn = (maxTurnCount - char.turnCounter) / char.speed;
   }
+
+  const hud = document.getElementById("turn-queue");
+  hud.innerHTML = "";
+
+  nextFiveTurns.forEach((el) => {
+    hud.innerHTML += `<div class='turn-queue-char' id='turn-char-${el.combatId}'> ${el.name} </div>`;
+  });
 }
