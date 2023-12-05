@@ -233,6 +233,12 @@ function setTarget(id) {
 
   const target = document.getElementById("char-" + id);
   target.classList.add("target-enemy");
+
+  const turnEls = document.querySelectorAll(`#turn-char-${id}`);
+
+  turnEls.forEach((el) => {
+    el.classList.add("target-enemy");
+  });
 }
 
 //Adds message to textfield
@@ -447,7 +453,48 @@ function setVisibleTurnOrder() {
   const hud = document.getElementById("turn-queue");
   hud.innerHTML = "";
 
+  let counter = 0;
+
   nextFiveTurns.forEach((el) => {
-    hud.innerHTML += `<div class='turn-queue-char' id='turn-char-${el.combatId}'> ${el.name} </div>`;
+    const turnElement = document.createElement("div");
+    turnElement.className = "turn-queue-char";
+    turnElement.id = `turn-char-${el.combatId}`;
+    turnElement.textContent = el.name;
+
+    if (playerTarget.combatId === el.combatId) {
+      turnElement.classList.add("target-enemy");
+    }
+
+    // Add 'next-turn' class to the first element
+    if (counter === 0) {
+      turnElement.classList.add("next-turn");
+    }
+
+    turnElement.addEventListener("mouseover", () => {
+      highlightEnemy(el.combatId);
+    });
+    turnElement.addEventListener("mouseleave", () => {
+      unHighlightEnemy(el.combatId);
+    });
+
+    hud.appendChild(turnElement);
+    counter++;
   });
+}
+
+function highlightEnemy(id) {
+  const turnEls = document.querySelectorAll(`#turn-char-${id}`);
+  turnEls.forEach((el) => {
+    el.classList.add("highlighted-enemy");
+  });
+  document.getElementById(`char-${id}`)?.classList.add("highlighted-enemy");
+}
+
+function unHighlightEnemy(id) {
+  const turnEls = document.querySelectorAll(`#turn-char-${id}`);
+
+  turnEls.forEach((el) => {
+    el.classList.remove("highlighted-enemy");
+  });
+  document.getElementById(`char-${id}`)?.classList.remove("highlighted-enemy");
 }

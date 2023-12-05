@@ -368,8 +368,8 @@ button#startButton {
 }
 
 .target-enemy {
-  border-color: red;
-  background-color: rgb(181, 69, 69);
+  border-color: red !important;
+  background-color: rgb(181, 69, 69) !important;
 }
 
 /* Turn queue */
@@ -381,11 +381,22 @@ button#startButton {
 
 .turn-queue-char {
   padding: 4px;
-  border: black 1px solid;
-  width: 80px;
+  border: black 2px solid;
+  width: 70px;
+  height: 50px;
   background-color: white;
 
   text-align: center;
+}
+
+.next-turn {
+  background-color: #3498db !important;
+  border-color: white;
+}
+
+.highlighted-enemy {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  transform: scale(1.1);
 }
 
 /* Player HUD */
