@@ -23,7 +23,7 @@ async function combatInit(combatVal) {
     berserkerStartAttack = player.attack;
   }
 
-  const xpToGain = enemies.reduce((sum, obj) => sum + obj.xp, 0);
+  const xpToGain = enemies.reduce((sum, obj) => sum + obj.threatLevel, 0);
 
   //Sort the initial combat queue by speed
   turnQueue = [player].concat(enemies);

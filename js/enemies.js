@@ -1,64 +1,64 @@
+/*Enemy threat level is set as follows:
++1 per 20 hp over 100
++1 per stat over 6
++1 per crit chance
+*/
+
 const mobs = [
   {
     name: "slime",
     level: 1,
-    xp: 10,
     maxHP: 200,
     attack: 6,
     defense: 6,
     speed: 8,
     critChance: 0,
-    threatLevel: 5,
+    threatLevel: 7,
     scale: {
-      xp: 5,
       maxHP: 20,
       attack: 1.25,
       defense: 1,
       speed: 0.5,
       critChance: 0.1,
-      threatLevel: 1,
+      threatLevel: 4,
     },
     spawnLoc: [1],
   },
   {
     name: "rat",
     level: 1,
-    xp: 10,
     maxHP: 150,
     attack: 7,
     defense: 4,
     speed: 10,
     critChance: 0,
-    threatLevel: 7,
+    threatLevel: 6,
     scale: {
-      xp: 5,
       maxHP: 15,
       attack: 1.5,
       defense: 1,
       speed: 1,
       critChance: 0.2,
-      threatLevel: 1,
+      threatLevel: 4,
     },
     spawnLoc: [1],
   },
   {
     name: "evil moose",
-    level: 2,
-    xp: 15,
+    level: 1,
     maxHP: 400,
     attack: 8,
     defense: 14,
-    speed: 7,
+    speed: 8,
     critChance: 1,
-    threatLevel: 16,
+    threatLevel: 27,
     scale: {
-      xp: 8,
       maxHP: 20,
       attack: 1,
       defense: 1.5,
       speed: 1,
       critChance: 0.1,
-      threatLevel: 2,
+      threatLevel: 4,
     },
 
     spawnLoc: [1],
@@ -66,21 +66,19 @@ const mobs = [
   {
     name: "bat",
     level: 1,
-    xp: 8,
     maxHP: 80,
     attack: 12,
     defense: 2,
     speed: 13,
     critChance: 4,
-    threatLevel: 10,
+    threatLevel: 12,
     scale: {
-      xp: 4,
-      maxHP: 5,
+      maxHP: 10,
       attack: 2,
       defense: 0.5,
       speed: 1,
-      critChance: 0.5,
-      threatLevel: 1,
+      critChance: 0.2,
+      threatLevel: 5,
     },
 
     spawnLoc: [1],
@@ -88,7 +86,6 @@ const mobs = [
   {
     name: "baby turtle",
     level: 1,
-    xp: 12,
     maxHP: 95,
     attack: 8,
     defense: 8,
@@ -96,57 +93,52 @@ const mobs = [
     critChance: 2,
     threatLevel: 8,
     scale: {
-      xp: 6,
       maxHP: 10,
       attack: 1,
       defense: 1,
       speed: 1,
       critChance: 0.2,
-      threatLevel: 1,
+      threatLevel: 4,
     },
 
     spawnLoc: [1],
   },
   {
     name: "turtle",
-    level: 4,
-    xp: 25,
+    level: 1,
     maxHP: 350,
     attack: 17,
     defense: 15,
     speed: 13,
-    critChance: 4,
-    threatLevel: 35,
+    critChance: 2,
+    threatLevel: 41,
     scale: {
-      xp: 13,
       maxHP: 20,
       attack: 1.5,
       defense: 1.5,
       speed: 1,
-      critChance: 0.4,
-      threatLevel: 2.5,
+      critChance: 0.2,
+      threatLevel: 6,
     },
 
     spawnLoc: [1],
   },
   {
     name: "big turtle",
-    level: 8,
-    xp: 45,
+    level: 1,
     maxHP: 600,
     attack: 25,
     defense: 22,
     speed: 18,
-    critChance: 4,
-    threatLevel: 60,
+    critChance: 2,
+    threatLevel: 74,
     scale: {
-      xp: 20,
-      maxHP: 20,
+      maxHP: 40,
       attack: 2,
       defense: 1.5,
       speed: 1,
-      critChance: 0.4,
-      threatLevel: 3,
+      critChance: 0.2,
+      threatLevel: 7,
     },
 
     spawnLoc: [1],
@@ -158,7 +150,6 @@ const bosses = [
     name: "stoneKnight",
     level: 1,
     maxHP: 5000,
-    xp: 250,
     attack: 20,
     defense: 25,
     speed: 14,
@@ -223,8 +214,8 @@ function generateEnemies(combatVal) {
 
 //Levels up enemy units to meet combat value
 function levelUpEnemies(enemies, enemyCombatVal, combatVal) {
-  //Levels up one unit at a time until combat val is met
-  //TODO: This might just level up one level each; Maybe put the whole thing in a while
+  //Levels up one unit at a time until combat val is metw
+  while(enemyCombatVal < combatVal){
   for (let i = 0; i < enemies.length; i++) {
     if (enemyCombatVal < combatVal) {
       let scale = enemies[i].scale;
@@ -236,6 +227,7 @@ function levelUpEnemies(enemies, enemyCombatVal, combatVal) {
       }
       enemyCombatVal += scale["threatLevel"];
     }
-  }
+  }}
+
   return enemies;
 }
