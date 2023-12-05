@@ -465,6 +465,12 @@ function setVisibleTurnOrder() {
       turnElement.classList.add("target-enemy");
     }
 
+    if(el.combatId !== 0){
+      turnElement.addEventListener("click", () => {
+        setTarget(el.combatId);
+      });
+    }
+
     // Add 'next-turn' class to the first element
     if (counter === 0) {
       turnElement.classList.add("next-turn");
