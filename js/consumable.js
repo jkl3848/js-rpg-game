@@ -5,7 +5,7 @@ const consumables = [
     type: "heal",
     attr: "currentHP",
     boost: 75,
-    desc: "heal by 50",
+    desc: "heal for 75",
   },
   {
     name: "largePotion",
@@ -13,7 +13,7 @@ const consumables = [
     type: "heal",
     attr: "currentHP",
     boost: 200,
-    desc: "heal by 100",
+    desc: "heal for 200",
   },
   {
     name: "gallonPotion",
@@ -21,7 +21,7 @@ const consumables = [
     type: "heal",
     attr: "currentHP",
     boost: 500,
-    desc: "heal by 250",
+    desc: "heal for 500",
   },
   {
     name: "adrenaline",
@@ -166,6 +166,6 @@ function updateBackpack() {
       stack = packItem.stack;
     }
 
-    itemSlot.innerHTML = `${item.displayName}: ${stack}`;
+    itemSlot.innerHTML = `<span class='consum-stack'>${item.displayName}: ${stack}</span><span class='tooltip-text'>${item.desc}</span>`;
   }
 }

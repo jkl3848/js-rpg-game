@@ -81,10 +81,6 @@ function gainXP(xp) {
     nextXPLevel += newXPGap;
   }
 
-  console.log(player.xp)
-  console.log(lastXPLevel)
-  console.log(nextXPLevel)
-
   document.getElementById("current-xp").style.width = `${
     ((player.xp - lastXPLevel) / (nextXPLevel - lastXPLevel)) *100
   }%`;

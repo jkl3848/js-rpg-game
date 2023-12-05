@@ -132,7 +132,7 @@ body {
 
 .tooltip {
   position: relative;
-  display: inline-block;
+  /* display: inline-block; */
   cursor: pointer;
 }
 
@@ -144,7 +144,7 @@ body {
   border-radius: 5px;
   padding: 5px;
   position: absolute;
-  z-index: 1;
+  z-index: 200;
   bottom: 125%;
   left: 50%;
   margin-left: -45px;
@@ -203,6 +203,12 @@ button#startButton {
 
 .pack-item:hover {
   background-color: #999;
+}
+
+.pack-item .tooltip-text{
+  width: 80px;
+  bottom: 110%;
+  left: 50%;
 }
 
 #close-overlay-button {
