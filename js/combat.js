@@ -370,7 +370,7 @@ function secondAction(currentCharacter, target) {
   else if (player.secondAbility.name === "Toxin") {
     let enemyList = turnQueue.filter((item) => !item.player);
 
-    for (let i = 0; i < enemyList; i++) {
+    for (let i = 0; i < enemyList.length; i++) {
       let target = enemyList[i];
       const damage = calcDamage(currentCharacter, target, 0.25);
       attack(currentCharacter, target, damage);
@@ -381,7 +381,7 @@ function secondAction(currentCharacter, target) {
   else if (player.secondAbility.name === "Advantage") {
     let enemyList = turnQueue.filter((item) => !item.player);
 
-    for (let i = 0; i < enemyList; i++) {
+    for (let i = 0; i < enemyList.length; i++) {
       let target = enemyList[i];
       applyStatusEffect(currentCharacter, target, "stun", 1);
     }
