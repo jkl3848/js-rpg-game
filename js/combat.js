@@ -305,9 +305,14 @@ function createCombatElements(list) {
   });
 }
 
-//Decides if user can flee. Starts at 50% chance
+//Decides if user can flee. Starts at 25% chance, increase based on player health
 function fleeCombat() {
-  let fleeChance = 50;
+  let fleeChance = 25;
+
+  fleeChance += Math.max(
+    75 - Math.round(((player.currentHP / player.maxHP) * 100) / 10) * 10,
+    0
+  );
 
   let oil = player.items.find((item) => item.name === "oil");
 
