@@ -3,7 +3,7 @@ function calcDamage(attacker, target, mult) {
   if (!mult) {
     mult = 1;
   }
-  let damage = attacker.attack * 3 * mult;
+  let damage = (attacker.attack / ((target.defense + 100) / 100)) * mult;
 
   const range = damage * 0.1;
   const randomValue = Math.random() * (2 * range) - range;
@@ -55,8 +55,6 @@ function calcDamage(attacker, target, mult) {
     addMessage("Critical Hit!");
     damage = damage * 2;
   }
-
-  damage -= target.defense;
 
   if (damage < 0) {
     damage = 0;
@@ -186,7 +184,9 @@ function applyStatusEffect(attacker, target, effect, effectStack) {
       }
     }
     if (ballAndChain) {
-      target.speed -= ballAndChain.stack;
+      if (random100() <= 20 + (ballAndChain?.stack - 1) * 10) {
+        target.speed -= 1;
+      }
     }
   }
 }

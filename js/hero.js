@@ -156,6 +156,8 @@ function createHero() {
     }
   }
   setHealthToMax(player);
+  updatePlayerHealth();
+
   document.getElementById("2ndActionTooltip").innerHTML =
     heroClass.secondAbility.desc;
   secondAtk = document.getElementById("2ndActionButton");

@@ -1,4 +1,4 @@
-const gameVersion = "0.3.0";
+const gameVersion = "0.3.1";
 
 function start() {
   clearAllOverlays();
@@ -12,12 +12,19 @@ function start() {
 }
 
 function clearDataForNewGame() {
-  encounterVal = 6
+  encounterVal = 6;
+  heroIndex = 0;
+  levelPoints = 4;
+  nextXPLevel = 10;
+  lastXPLevel = 0;
+  secondCooldown = 0;
+
+  document.getElementById("current-xp").style.width = `0%`;
 }
 
 function gameOver() {
-  clearDataForNewGame()
-  clearMessage()
+  clearDataForNewGame();
+  clearMessage();
   clearAllOverlays();
   clearCombatOverlay();
   addMessage("You Lose!");
@@ -40,7 +47,7 @@ function scrollHeroes(value) {
 
 //Functions to run after winning combat
 function postCombat(xp, numberOfEnemies) {
-  clearMessage()
+  clearMessage();
   enemiesDefeated++;
   clearAllOverlays();
   clearCombatOverlay();
@@ -87,7 +94,7 @@ function gainXP(xp) {
   }
 
   document.getElementById("current-xp").style.width = `${
-    ((player.xp - lastXPLevel) / (nextXPLevel - lastXPLevel)) *100
+    ((player.xp - lastXPLevel) / (nextXPLevel - lastXPLevel)) * 100
   }%`;
 }
 
@@ -108,6 +115,7 @@ function levelUp() {
 
   levelPoints = 4;
   player.level++;
+  player.maxHP += 10;
 
   oldStats = {
     maxHP: player.maxHP,
@@ -204,6 +212,8 @@ function clearCombatOverlay() {
 
 function chooseClass() {
   document.getElementById("class-picker-container").style.display = "none";
+  document.getElementById("class-info-" + heroIndex).style.display = "none";
+
   moveLock = false;
 
   selectedClass = classes[heroIndex];
@@ -291,6 +301,6 @@ function addMessage(message) {
   messageField.scrollTop = messageField.scrollHeight; // Auto-scroll to the bottom
 }
 
-function clearMessage(){
+function clearMessage() {
   document.getElementById("messageField").value = "";
 }
