@@ -13,6 +13,13 @@ function start() {
 
 function clearDataForNewGame() {
   encounterVal = 6;
+  heroIndex = 0;
+  levelPoints = 4;
+  nextXPLevel = 10;
+  lastXPLevel = 0;
+  secondCooldown = 0;
+
+  document.getElementById("current-xp").style.width = `0%`;
 }
 
 function gameOver() {
@@ -205,6 +212,8 @@ function clearCombatOverlay() {
 
 function chooseClass() {
   document.getElementById("class-picker-container").style.display = "none";
+  document.getElementById("class-info-" + heroIndex).style.display = "none";
+
   moveLock = false;
 
   selectedClass = classes[heroIndex];
