@@ -167,13 +167,14 @@ function generateEnemies(combatVal) {
   let enemyCombatVal = 0;
   let combatId = 1;
   let levelUp = false;
+  const mobSize = Math.floor(Math.random() * (4 - 1 + 1) + 1);
 
   let bannedEnemies = [];
 
   while (enemyCombatVal < combatVal) {
     //Dont allow more than 4 enemy units. If still a big combat gap, then level them up
     if (
-      enemies.length === 4 ||
+      enemies.length === mobSize ||
       enemies.length + bannedEnemies.length >= mobs.length
     ) {
       levelUp = true;
@@ -205,30 +206,28 @@ function generateEnemies(combatVal) {
     }
   }
 
-  //Levels up enemies if below combat threshold
-  if (levelUp) {
-    enemies = levelUpEnemies(enemies, enemyCombatVal, combatVal);
-  }
+  enemies = levelUpEnemies(enemies, enemyCombatVal, combatVal);
 
   return enemies;
 }
 
 //Levels up enemy units to meet combat value
 function levelUpEnemies(enemies, enemyCombatVal, combatVal) {
-  //Levels up one unit at a time until combat val is metw
-  while(enemyCombatVal < combatVal){
-  for (let i = 0; i < enemies.length; i++) {
-    if (enemyCombatVal < combatVal) {
-      let scale = enemies[i].scale;
+  //Levels up one unit at a time until combat val is met
+  while (enemyCombatVal < combatVal) {
+    for (let i = 0; i < enemies.length; i++) {
+      if (enemyCombatVal < combatVal) {
+        let scale = enemies[i].scale;
 
-      enemies[i].level++;
-      for (let attr in scale) {
-        enemies[i][attr] += scale[attr];
-        setHealthToMax(enemies[i]);
+        enemies[i].level++;
+        for (let attr in scale) {
+          enemies[i][attr] += scale[attr];
+          setHealthToMax(enemies[i]);
+        }
+        enemyCombatVal += scale["threatLevel"];
       }
-      enemyCombatVal += scale["threatLevel"];
     }
-  }}
+  }
 
   return enemies;
 }
