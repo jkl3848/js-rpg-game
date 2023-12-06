@@ -407,9 +407,9 @@ function evadeAttack(target) {
   let evasionChance = target.evasion;
 
   if (target.player) {
-    const sunglasses = player.items.find((item) => item.name === "sunglasses");
-    if (sunglasses) {
-      evasionChance += sunglasses.stack * 5;
+    const shades = player.items.find((item) => item.name === "shades");
+    if (shades) {
+      evasionChance += shades.stack * 5;
     }
   }
 
@@ -463,7 +463,7 @@ function setVisibleTurnOrder() {
       turnElement.classList.add("target-enemy");
     }
 
-    if(el.combatId !== 0){
+    if (el.combatId !== 0) {
       turnElement.addEventListener("click", () => {
         setTarget(el.combatId);
       });

@@ -12,12 +12,12 @@ function start() {
 }
 
 function clearDataForNewGame() {
-  encounterVal = 6
+  encounterVal = 6;
 }
 
 function gameOver() {
-  clearDataForNewGame()
-  clearMessage()
+  clearDataForNewGame();
+  clearMessage();
   clearAllOverlays();
   clearCombatOverlay();
   addMessage("You Lose!");
@@ -40,7 +40,7 @@ function scrollHeroes(value) {
 
 //Functions to run after winning combat
 function postCombat(xp, numberOfEnemies) {
-  clearMessage()
+  clearMessage();
   enemiesDefeated++;
   clearAllOverlays();
   clearCombatOverlay();
@@ -87,7 +87,7 @@ function gainXP(xp) {
   }
 
   document.getElementById("current-xp").style.width = `${
-    ((player.xp - lastXPLevel) / (nextXPLevel - lastXPLevel)) *100
+    ((player.xp - lastXPLevel) / (nextXPLevel - lastXPLevel)) * 100
   }%`;
 }
 
@@ -108,6 +108,7 @@ function levelUp() {
 
   levelPoints = 4;
   player.level++;
+  player.maxHP += 10;
 
   oldStats = {
     maxHP: player.maxHP,
@@ -291,6 +292,6 @@ function addMessage(message) {
   messageField.scrollTop = messageField.scrollHeight; // Auto-scroll to the bottom
 }
 
-function clearMessage(){
+function clearMessage() {
   document.getElementById("messageField").value = "";
 }

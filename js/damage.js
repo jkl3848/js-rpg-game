@@ -184,7 +184,9 @@ function applyStatusEffect(attacker, target, effect, effectStack) {
       }
     }
     if (ballAndChain) {
-      target.speed -= ballAndChain.stack;
+      if (random100() <= 20 + (ballAndChain?.stack - 1) * 10) {
+        target.speed -= 1;
+      }
     }
   }
 }

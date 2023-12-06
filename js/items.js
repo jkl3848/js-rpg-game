@@ -57,13 +57,13 @@ const commonItems = [
   {
     name: "siphon",
     displayName: "Siphon",
-    boost: 0.5,
-    stackBoost: 0.5,
+    boost: 5,
+    stackBoost: 5,
     boostType: "mult",
     target: "heal",
     attr: "health",
     desc: "",
-    detailedDesc: "Heal for 0.5% (+0.5% per stack) health per damage dealt",
+    detailedDesc: "Heal for 5% (+5% per stack) health per damage dealt",
   },
   {
     name: "oil",
@@ -114,8 +114,8 @@ const commonItems = [
 
 const uncommonItems = [
   {
-    name: "sunglasses",
-    displayName: "Mirrored Sunglasses",
+    name: "shades",
+    displayName: "Mirrored Shades",
     boost: 5,
     stackBoost: 5,
     boostType: "mult",
@@ -248,7 +248,8 @@ const rareItems = [
     target: "enemy",
     attr: "speed",
     desc: "Faster than fast",
-    detailedDesc: "Reduce enemy speed by 1 (+1 per stack) each attack",
+    detailedDesc:
+      "20% chance (+10% per stack) to reduce enemy speed by 1 each attack",
   },
   // {
   //   name: "giantLeech",
