@@ -66,8 +66,9 @@ function healthSteal(damage) {
   if (player.items.length > 0) {
     let siphon = player.items?.find((item) => item.name === "siphon");
     if (siphon) {
-      player.currentHP += Math.ceil(damage * (siphon.stack / 100));
-      addMessage("Healed for " + siphon);
+      const healAmount = Math.ceil(damage * (siphon.stack / 100));
+      player.currentHP += healAmount
+      addMessage("Healed for " + healAmount);
     }
   }
   balanceHealth();
