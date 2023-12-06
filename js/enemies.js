@@ -1,6 +1,7 @@
 /*Enemy threat level is set as follows:
-+1 per 20 hp over 100
++1 per 20 hp
 +1 per stat over 6
+-1 per stat under 6
 +1 per crit chance
 */
 
@@ -8,7 +9,7 @@ const mobs = [
   {
     name: "slime",
     level: 1,
-    maxHP: 200,
+    maxHP: 100,
     attack: 6,
     defense: 6,
     speed: 8,
@@ -27,7 +28,7 @@ const mobs = [
   {
     name: "rat",
     level: 1,
-    maxHP: 150,
+    maxHP: 50,
     attack: 7,
     defense: 4,
     speed: 10,
@@ -46,7 +47,7 @@ const mobs = [
   {
     name: "evil moose",
     level: 1,
-    maxHP: 400,
+    maxHP: 300,
     attack: 8,
     defense: 14,
     speed: 8,
@@ -66,12 +67,12 @@ const mobs = [
   {
     name: "bat",
     level: 1,
-    maxHP: 80,
+    maxHP: 40,
     attack: 12,
     defense: 2,
     speed: 13,
     critChance: 4,
-    threatLevel: 12,
+    threatLevel: 10,
     scale: {
       maxHP: 10,
       attack: 2,
@@ -91,7 +92,7 @@ const mobs = [
     defense: 8,
     speed: 10,
     critChance: 2,
-    threatLevel: 10,
+    threatLevel: 8,
     scale: {
       maxHP: 10,
       attack: 1,
@@ -106,7 +107,7 @@ const mobs = [
   {
     name: "turtle",
     level: 1,
-    maxHP: 350,
+    maxHP: 250,
     attack: 17,
     defense: 15,
     speed: 10,
@@ -126,7 +127,7 @@ const mobs = [
   {
     name: "big turtle",
     level: 1,
-    maxHP: 600,
+    maxHP: 500,
     attack: 25,
     defense: 22,
     speed: 10,
