@@ -11,9 +11,12 @@ function start() {
   updateBackpack();
 }
 
-function clearDataForNewGame() {}
+function clearDataForNewGame() {
+  encounterVal = 6
+}
 
 function gameOver() {
+  clearDataForNewGame()
   clearMessage()
   clearAllOverlays();
   clearCombatOverlay();
