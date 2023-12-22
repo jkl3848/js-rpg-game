@@ -390,7 +390,7 @@ function secondAction(currentCharacter, target) {
   secondCooldown = player.secondAbility.cooldown + 1;
 
   if (energyDrink) {
-    secondCooldown - energyDrink.stack;
+    secondCooldown -= energyDrink.stack;
   }
 
   if (secondCooldown < 0) {
