@@ -145,6 +145,7 @@ function levelUp() {
   setHealthToMax(player);
   addMessage("You are now level " + player.level);
   updatePlayerHealth();
+  updatePlayerHUD()
 }
 
 function openClassPicker() {
