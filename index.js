@@ -1,14 +1,14 @@
-const gameVersion = "0.3.1";
+const gameVersion = "0.4.0";
 
 function start() {
   clearAllOverlays();
   moveLock = false;
 
-  document.getElementById("player-character").style.display = "block";
-
   createHero();
   updatePlayerHUD();
   updateBackpack();
+
+  startCanvas()
 }
 
 function clearDataForNewGame() {
@@ -67,14 +67,15 @@ function postCombat(xp, numberOfEnemies) {
     coin += coin * (check.stack * 0.1);
   }
 
-  gainMoney(coin);
+  gainMoney(Math.floor(coin));
 
   updatePlayerHUD();
 }
 
 //Gain xp for user
-function gainXP(xp) {
+function gainXP(xp, loop) {
   let newXPGap;
+  if(!loop){
   addMessage("You gained " + xp + " XP!");
   if (player.class === "professor") {
     xp += Math.ceil(xp * 0.1);
@@ -84,13 +85,16 @@ function gainXP(xp) {
     xp += Math.floor((xp * (textbook.boost * textbook.stack)) / 100);
   }
   player.xp += xp;
-
+  }
   if (player.xp >= nextXPLevel) {
     levelUp();
 
     newXPGap = Math.floor((player.level * 10 + player.level) * 1.2);
     lastXPLevel = nextXPLevel;
     nextXPLevel += newXPGap;
+
+    //Loop until no more levels need to be gained
+    gainXP(0, true)
   }
 
   document.getElementById("current-xp").style.width = `${
@@ -141,6 +145,7 @@ function levelUp() {
   setHealthToMax(player);
   addMessage("You are now level " + player.level);
   updatePlayerHealth();
+  updatePlayerHUD()
 }
 
 function openClassPicker() {

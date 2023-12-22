@@ -132,6 +132,9 @@ async function combatInit(combatVal) {
           updatePlayerHealth();
         }
       }
+
+      //Update hud to reflect any status changes
+      updatePlayerHUD()
     } else if (stunned) {
       currentCharacter.turnCounter -= maxTurnCount;
       resolveStatusEffects(currentCharacter);
@@ -390,7 +393,7 @@ function secondAction(currentCharacter, target) {
   secondCooldown = player.secondAbility.cooldown + 1;
 
   if (energyDrink) {
-    secondCooldown - energyDrink.stack;
+    secondCooldown -= energyDrink.stack;
   }
 
   if (secondCooldown < 0) {
