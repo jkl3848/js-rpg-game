@@ -76,7 +76,7 @@ function resolveStatusEffects(target) {
     const broken = effects?.find((item) => item.type === "broken");
 
     if (burn) {
-      target.currentHP -= target.maxHP * 0.1;
+      target.currentHP -= Math.ceil(target.maxHP * 0.1);
     }
 
     if (burn) {
