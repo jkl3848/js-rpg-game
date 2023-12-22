@@ -67,7 +67,7 @@ function postCombat(xp, numberOfEnemies) {
     coin += coin * (check.stack * 0.1);
   }
 
-  gainMoney(coin);
+  gainMoney(Math.floor(coin));
 
   updatePlayerHUD();
 }
