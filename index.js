@@ -73,8 +73,9 @@ function postCombat(xp, numberOfEnemies) {
 }
 
 //Gain xp for user
-function gainXP(xp) {
+function gainXP(xp, loop) {
   let newXPGap;
+  if(!loop){
   addMessage("You gained " + xp + " XP!");
   if (player.class === "professor") {
     xp += Math.ceil(xp * 0.1);
@@ -84,13 +85,16 @@ function gainXP(xp) {
     xp += Math.floor((xp * (textbook.boost * textbook.stack)) / 100);
   }
   player.xp += xp;
-
+  }
   if (player.xp >= nextXPLevel) {
     levelUp();
 
     newXPGap = Math.floor((player.level * 10 + player.level) * 1.2);
     lastXPLevel = nextXPLevel;
     nextXPLevel += newXPGap;
+
+    //Loop until no more levels need to be gained
+    gainXP(0, true)
   }
 
   document.getElementById("current-xp").style.width = `${
