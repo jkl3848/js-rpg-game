@@ -162,4 +162,6 @@ function createHero() {
     heroClass.secondAbility.desc;
   secondAtk = document.getElementById("2ndActionButton");
   secondAtk.innerHTML = player.secondAbility.name;
+
+  heroSpritePath = resources.images.hero
 }

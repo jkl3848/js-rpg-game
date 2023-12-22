@@ -4,11 +4,13 @@ function start() {
   clearAllOverlays();
   moveLock = false;
 
-  document.getElementById("player-character").style.display = "block";
+  // document.getElementById("player-character").style.display = "block";
 
   createHero();
   updatePlayerHUD();
   updateBackpack();
+
+  startCanvas()
 }
 
 function clearDataForNewGame() {
