@@ -28,7 +28,7 @@ const heroAnims = {
 const heroPos = new Vector2(16 * 12, 16 * 2);
 const mapPos = new Vector2(0, 0)
 //The center pos in the screen to determine if the maps needs to move
-const centerScreenPos = new Vector2(16 * 16.5, 16 * 8.25)
+const centerScreenPos = new Vector2(16 * 16, 16 * 8)
 
 const input = new Input()
 
@@ -60,11 +60,11 @@ function updateGraphics(){
       framePos++
       adjustEncounterVal()
 
-      if(heroPos.x + 80 > centerScreenPos.x && mapPos.x > (mapSprite.frameSize.x - 528) * -1){
+      if(heroPos.x + 80 > centerScreenPos.x && mapPos.x > (mapSprite.frameSize.x - 512) * -1){
           mapPos.x-=2
       }else {
         
-        if(heroPos.x < 528 - 2 - 48){
+        if(heroPos.x < 512 - 2 - 48){
           heroPos.x += 2
         }
       }
@@ -87,10 +87,10 @@ function updateGraphics(){
       framePos++
       adjustEncounterVal()
 
-      if(heroPos.y + 80 > centerScreenPos.y && mapPos.y > (mapSprite.frameSize.y - 264) * -1){
+      if(heroPos.y + 80 > centerScreenPos.y && mapPos.y > (mapSprite.frameSize.y - 256) * -1){
           mapPos.y-=2
       }else{
-        if(heroPos.y < 264 - 2 - 48){
+        if(heroPos.y < 256 - 2 - 48){
           heroPos.y += 2
         }
       }

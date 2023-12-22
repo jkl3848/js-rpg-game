@@ -34,16 +34,6 @@ body {
   z-index: 0;
 }
 
-#player-character {
-  display: none;
-  position: absolute;
-  top: 300px;
-  left: 50%;
-  z-index: 10;
-  width: 45px;
-  height: 45px;
-}
-
 /* Overlays and dialogs */
 .overlay {
   position: absolute;
@@ -54,13 +44,13 @@ body {
 }
 
 .half-overlay {
-  height: 600px;
+  height: 305px;
   margin-top: 90px !important;
 }
 
 .full-overlay {
   margin-top: 9px !important;
-  height: 737px;
+  height: 650px;
 }
 
 /* Level up dialog */

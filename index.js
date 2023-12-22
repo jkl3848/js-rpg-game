@@ -4,8 +4,6 @@ function start() {
   clearAllOverlays();
   moveLock = false;
 
-  // document.getElementById("player-character").style.display = "block";
-
   createHero();
   updatePlayerHUD();
   updateBackpack();
