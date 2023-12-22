@@ -1,4 +1,4 @@
-const gameVersion = "0.3.1";
+const gameVersion = "0.4.0";
 
 function start() {
   clearAllOverlays();
