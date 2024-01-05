@@ -1,16 +1,5 @@
 const gameVersion = "0.4.0";
 
-function start() {
-  clearAllOverlays();
-  moveLock = false;
-
-  createHero();
-  updatePlayerHUD();
-  updateBackpack();
-
-  startCanvas()
-}
-
 function clearDataForNewGame() {
   encounterVal = 6;
   heroIndex = 0;
@@ -75,16 +64,16 @@ function postCombat(xp, numberOfEnemies) {
 //Gain xp for user
 function gainXP(xp, loop) {
   let newXPGap;
-  if(!loop){
-  addMessage("You gained " + xp + " XP!");
-  if (player.class === "professor") {
-    xp += Math.ceil(xp * 0.1);
-  }
-  let textbook = player.items.find((item) => item.name === "textbook");
-  if (textbook) {
-    xp += Math.floor((xp * (textbook.boost * textbook.stack)) / 100);
-  }
-  player.xp += xp;
+  if (!loop) {
+    addMessage("You gained " + xp + " XP!");
+    if (player.class === "professor") {
+      xp += Math.ceil(xp * 0.1);
+    }
+    let textbook = player.items.find((item) => item.name === "textbook");
+    if (textbook) {
+      xp += Math.floor((xp * (textbook.boost * textbook.stack)) / 100);
+    }
+    player.xp += xp;
   }
   if (player.xp >= nextXPLevel) {
     levelUp();
@@ -94,7 +83,7 @@ function gainXP(xp, loop) {
     nextXPLevel += newXPGap;
 
     //Loop until no more levels need to be gained
-    gainXP(0, true)
+    gainXP(0, true);
   }
 
   document.getElementById("current-xp").style.width = `${
@@ -145,20 +134,7 @@ function levelUp() {
   setHealthToMax(player);
   addMessage("You are now level " + player.level);
   updatePlayerHealth();
-  updatePlayerHUD()
-}
-
-function openClassPicker() {
-  clearAllOverlays();
-  moveLock = true;
-  document.getElementById("class-picker-container").style.display = "flex";
-  document.getElementById("class-info-0").style.display = "block";
-}
-
-function openCombat() {
-  clearAllOverlays();
-  document.getElementById("combat-overlay").style.display = "block";
-  document.getElementById("combat-space").style.display = "block";
+  updatePlayerHUD();
 }
 
 let packOpen = false;
@@ -177,52 +153,6 @@ function toggleBackpack() {
     packOpen = true;
     moveLock = true;
   }
-}
-
-let pMenuOpen;
-function togglePlayerMenu() {
-  const menuState = pMenuOpen;
-  clearAllOverlays();
-
-  const menu = document.getElementById("player-menu");
-
-  if (menuState) {
-    menu.style.display = "none";
-    pMenuOpen = false;
-    moveLock = false;
-  } else {
-    menu.style.display = "block";
-    pMenuOpen = true;
-    moveLock = true;
-  }
-}
-
-function clearAllOverlays() {
-  moveLock = false;
-  packOpen = false;
-  pMenuOpen = false;
-
-  document.getElementById("start-screen").style.display = "none";
-  document.getElementById("class-picker-container").style.display = "none";
-  document.getElementById("game-over").style.display = "none";
-  document.getElementById("point-allocator").style.display = "none";
-  document.getElementById("backpack-overlay").style.display = "none";
-  document.getElementById("player-menu").style.display = "none";
-}
-
-function clearCombatOverlay() {
-  inCombat = false;
-  document.getElementById("combat-overlay").style.display = "none";
-}
-
-function chooseClass() {
-  document.getElementById("class-picker-container").style.display = "none";
-  document.getElementById("class-info-" + heroIndex).style.display = "none";
-
-  moveLock = false;
-
-  selectedClass = classes[heroIndex];
-  start();
 }
 
 function addAttrValue(prop) {
@@ -272,31 +202,6 @@ function subAttrValue(prop) {
   document.getElementById("point-" + prop + "-value").innerHTML = player[prop];
   levelPoints++;
   document.getElementById("point-total").innerHTML = "Points: " + levelPoints;
-}
-
-function updatePlayerHUD() {
-  const playerClass = document.getElementById("player-class");
-  playerClass.innerHTML = `${
-    player.class.charAt(0).toUpperCase() + player.class.slice(1)
-  } `;
-
-  const playerName = document.getElementById("player-name");
-  playerName.innerHTML = `${player.name}`;
-
-  const playerLevel = document.getElementById("player-level");
-  playerLevel.innerHTML = `Level ${player.level}`;
-
-  const playerHP = document.getElementById("player-hp");
-  playerHP.innerHTML = `${player.currentHP} / ${player.maxHP} HP`;
-
-  const playerXP = document.getElementById("player-xp");
-  playerXP.innerHTML = `${player.xp} / ${nextXPLevel} XP`;
-
-  const playerMoney = document.getElementById("player-money");
-  playerMoney.innerHTML = `${player.money}C`;
-
-  const playerStats = document.getElementById("player-stats");
-  playerStats.innerHTML = `ATK: ${player.attack} DEF: ${player.defense} SPD: ${player.speed} CRT: ${player.critChance}%`;
 }
 
 //Adds message to textfield
