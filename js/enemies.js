@@ -4,8 +4,9 @@
 -1 per stat under 6
 +1 per crit chance
 */
+import { useMainStore } from "../stores/mainStore";
 
-export const enemies = () => {
+export const enemyData = () => {
   const store = useMainStore();
   const mobs = [
     {
@@ -242,4 +243,4 @@ export const enemies = () => {
   };
 };
 
-export default enemies;
+export default enemyData;

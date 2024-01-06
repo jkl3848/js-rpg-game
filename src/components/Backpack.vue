@@ -1,65 +1,39 @@
+<script setup>
+import { useMainStore } from "../../stores/mainStore";
+import consumableFuncs from "../../js/consumables";
+
+const store = useMainStore();
+const consumables = consumableFuncs();
+
+function groupedItems(inputArray) {
+  const groupSize = 4;
+  const result = [];
+  for (let i = 0; i < inputArray.length; i += groupSize) {
+    result.push(inputArray.slice(i, i + groupSize));
+  }
+  return result;
+}
+</script>
+
 <template>
   <!-- Backpack -->
-  <div class="overlay half-overlay" id="backpack-overlay">
-    <button onclick="clearAllOverlays()" id="close-overlay-button">X</button>
+  <div id="backpack-overlay">
+    <button
+      id="close-overlay-button"
+      @click="store.elementStates.backpackOpen = false"
+    >
+      X
+    </button>
     <table id="backpack">
-      <tr class="pack-row">
+      <tr
+        class="pack-row"
+        v-for="(row, index) in groupedItems(consumables.consumables)"
+      >
         <td
+          v-for="(item, cellIndex) in row"
           class="pack-item tooltip"
-          onclick='useConsumable("smallPotion")'
-          id="smallPotion"
-        ></td>
-        <td
-          class="pack-item tooltip"
-          onclick='useConsumable("largePotion")'
-          id="largePotion"
-        ></td>
-        <td
-          class="pack-item tooltip"
-          onclick='useConsumable("gallonPotion")'
-          id="gallonPotion"
-        ></td>
-        <td
-          class="pack-item tooltip"
-          onclick='useConsumable("adrenaline")'
-          id="adrenaline"
-        ></td>
-      </tr>
-      <tr class="pack-row">
-        <td
-          class="pack-item tooltip"
-          onclick='useConsumable("gingerRoot")'
-          id="gingerRoot"
-        ></td>
-        <td
-          class="pack-item tooltip"
-          onclick='useConsumable("fireExtinguisher")'
-          id="fireExtinguisher"
-        ></td>
-        <td
-          class="pack-item tooltip"
-          onclick='useConsumable("ductTape")'
-          id="ductTape"
-        ></td>
-        <td class="pack-item tooltip" onclick='useConsumable("")'>TBD</td>
-      </tr>
-
-      <tr class="pack-row">
-        <td
-          class="pack-item tooltip"
-          onclick='useConsumable("fireCracker")'
-          id="fireCracker"
-        ></td>
-        <td
-          class="pack-item tooltip"
-          onclick='useConsumable("rawChicken")'
-          id="rawChicken"
-        ></td>
-        <td class="pack-item tooltip" onclick='useConsumable("")'>TBD</td>
-        <td
-          class="pack-item tooltip"
-          onclick='useConsumable("bomb")'
-          id="bomb"
+          @click="consumables.useConsumable(item.name)"
+          :id="item.name"
         ></td>
       </tr>
     </table>

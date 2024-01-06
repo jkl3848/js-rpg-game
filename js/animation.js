@@ -7,8 +7,9 @@ export const animation = () => {
     constructor() {
       //Downloads images for use
       this.toLoad = {
-        map: "assets/maps/test_map.jpg",
-        hero: "assets/characters/hero-walking/knight.png",
+        overworldMap1: "public/assets/maps/test_map.jpg",
+        combatMap1: "public/assets/maps/test_combat.png",
+        heroWalking: "public/assets/characters/hero-walking/knight.png",
       };
 
       //Holds all images

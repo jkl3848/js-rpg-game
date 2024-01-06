@@ -2,6 +2,8 @@ import { defineStore } from "pinia";
 import { useMainStore } from "./mainStore";
 import { useSpriteStore } from "./sprites";
 
+import enemyData from "../js/enemies";
+
 let thiefStartSpeed;
 let guardianStartDefense;
 let berserkerStartAttack;
@@ -14,7 +16,7 @@ export const useCombatStore = defineStore("combat", {
       combatVal: 0,
       inCombat: false,
       turnQueue: [],
-      enemies: [],
+      combatEnemies: [],
       secondCooldown: 0,
       randomEncounter: 200,
       areaEncounterVal: 1,
@@ -26,13 +28,14 @@ export const useCombatStore = defineStore("combat", {
     async combatInit() {
       const store = useMainStore();
       const sprite = useSpriteStore();
+      const enemies = enemyData();
 
       this.inCombat = true;
       sprite.canvasState.overworld = false;
       sprite.canvasState.combat = true;
 
-      this.enemies = generateEnemies(this.combatVal);
-      const numberOfEnemies = this.enemies.length;
+      this.combatEnemies = enemies.generateEnemies(this.combatVal);
+      const numberOfEnemies = this.combatEnemies.length;
 
       if (store.hero.class === "thief") {
         thiefStartSpeed = store.hero.speed;
@@ -42,22 +45,19 @@ export const useCombatStore = defineStore("combat", {
         berserkerStartAttack = store.hero.attack;
       }
 
-      const xpToGain = this.enemies.reduce(
+      const xpToGain = this.combatEnemies.reduce(
         (sum, obj) => sum + obj.threatLevel,
         0
       );
 
       //Sort the initial combat queue by speed
-      this.turnQueue = [store.hero].concat(this.enemies);
+      this.turnQueue = [store.hero].concat(this.combatEnemies);
       this.turnQueue.sort((a, b) => b.speed - a.speed);
 
       console.log(this.turnQueue);
 
-      //Generate enemies dom elements
-      createCombatElements(this.enemies);
-
       //Sets the first enemy as the default target for the user
-      setTarget(1);
+      this.setTarget(1);
 
       //Set turn counter equal to highest speed in group
       const maxTurnCount = this.turnQueue.reduce(
@@ -71,7 +71,7 @@ export const useCombatStore = defineStore("combat", {
       //While the hero and at least 1 enemy has health
       while (
         store.hero.currentHP > 0 &&
-        this.enemies.some((obj) => obj.currentHP > 0)
+        this.combatEnemies.some((obj) => obj.currentHP > 0)
       ) {
         setVisibleTurnOrder();
         const currentCharacter = this.turnQueue.shift();
@@ -147,7 +147,7 @@ export const useCombatStore = defineStore("combat", {
 
           if (target.currentHP === 0 && !target.player) {
             //If multiple enemies, remove defeated enemy
-            if (this.enemies.length > 1) {
+            if (this.combatEnemies.length > 1) {
               defeatedEnemy(target);
             }
 
@@ -173,7 +173,7 @@ export const useCombatStore = defineStore("combat", {
 
       this.inCombat = false;
       this.turnQueue = [];
-      this.enemies = [];
+      this.combatEnemies = [];
 
       if (store.hero.currentHP > 0) {
         addMessage("You Win!");
@@ -189,15 +189,12 @@ export const useCombatStore = defineStore("combat", {
       this.turnQueue = this.turnQueue.filter(
         (char) => char.combatId !== enemy.combatId
       );
-      this.enemies = this.enemies.filter(
+      this.combatEnemies = this.combatEnemies.filter(
         (char) => char.combatId !== enemy.combatId
       );
 
-      //Regenerate enemies dom elements
-      createCombatElements(this.enemies);
-
       //Sets the first enemy as the default target for the user
-      setTarget(this.enemies[0].combatId);
+      this.setTarget(this.combatEnemies[0].combatId);
     },
     resetStats(end) {
       const store = useMainStore();
@@ -259,7 +256,7 @@ export const useCombatStore = defineStore("combat", {
         el.classList.remove("target-enemy");
       });
 
-      playerTarget = enemies.find((enemy) => enemy.combatId === id);
+      playerTarget = this.combatEnemies.find((enemy) => enemy.combatId === id);
 
       const target = document.getElementById("char-" + id);
       target.classList.add("target-enemy");

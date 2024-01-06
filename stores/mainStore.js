@@ -15,7 +15,8 @@ export const useMainStore = defineStore("mainStore", {
         playerHud: false,
         gameCanvas: false,
         playerActions: false,
-        GameOverScreen: false,
+        gameOverScreen: false,
+        backpackOpen: false,
       },
       itemChance: [50, 35, 12, 3],
       moveLock: false,
@@ -29,8 +30,9 @@ export const useMainStore = defineStore("mainStore", {
       this.elementStates.startScreen = false;
       this.elementStates.gameCanvas = true;
 
+      sprite.keyInput();
       hero.createHero(classIndex);
-      sprite.startCanvas();
+      sprite.startOverworldCanvas();
     },
     //Generates a random number between 1 and 100
     random100() {

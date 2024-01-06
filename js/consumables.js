@@ -1,6 +1,6 @@
 import { useMainStore } from "../stores/mainStore";
 
-export const consumables = () => {
+export const consumableFuncs = () => {
   const store = useMainStore();
 
   const consumables = [
@@ -214,4 +214,4 @@ export const consumables = () => {
   };
 };
 
-export default consumables;
+export default consumableFuncs;
