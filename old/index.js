@@ -16,7 +16,7 @@ function gameOver() {
   clearMessage();
   clearAllOverlays();
   clearCombatOverlay();
-  addMessage("You Lose!");
+  store.gameMessage = ("You Lose!");
   document.getElementById("startButton").disabled = false;
   moveLock = true;
 
@@ -65,7 +65,7 @@ function postCombat(xp, numberOfEnemies) {
 function gainXP(xp, loop) {
   let newXPGap;
   if (!loop) {
-    addMessage("You gained " + xp + " XP!");
+    store.gameMessage = ("You gained " + xp + " XP!");
     if (player.class === "professor") {
       xp += Math.ceil(xp * 0.1);
     }
@@ -102,7 +102,7 @@ function gainMoney(money) {
 //If the hero has enough xp, level up
 function levelUp() {
   moveLock = true;
-  addMessage("You leveled up!");
+  store.gameMessage = ("You leveled up!");
 
   gainItem();
 
@@ -132,7 +132,7 @@ function levelUp() {
   document.getElementById("level-up-button");
 
   setHealthToMax(player);
-  addMessage("You are now level " + player.level);
+  store.gameMessage = ("You are now level " + player.level);
   updatePlayerHealth();
   updatePlayerHUD();
 }
@@ -205,7 +205,7 @@ function subAttrValue(prop) {
 }
 
 //Adds message to textfield
-function addMessage(message) {
+function store.gameMessage = (message) {
   const messageField = document.getElementById("messageField");
   messageField.value += message + "\n";
   messageField.scrollTop = messageField.scrollHeight; // Auto-scroll to the bottom

@@ -36,7 +36,7 @@ export const healthFuncs = () => {
 
     player.currentHP += healTotal;
 
-    addMessage("Healed for " + healTotal);
+    store.gameMessage = "Healed for " + healTotal;
     balanceHealth();
   }
 
@@ -47,7 +47,7 @@ export const healthFuncs = () => {
       if (siphon) {
         const healAmount = Math.ceil(damage * (siphon.stack / 100));
         player.currentHP += healAmount;
-        addMessage("Healed for " + healAmount);
+        store.gameMessage = "Healed for " + healAmount;
       }
     }
     balanceHealth();

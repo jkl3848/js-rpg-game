@@ -16,10 +16,12 @@ export const useMainStore = defineStore("mainStore", {
         gameCanvas: false,
         playerActions: false,
         gameOverScreen: false,
+        playerStats: false,
         backpackOpen: false,
       },
       itemChance: [50, 35, 12, 3],
       moveLock: false,
+      gameMessage: "",
     };
   },
   actions: {
@@ -29,6 +31,12 @@ export const useMainStore = defineStore("mainStore", {
 
       this.elementStates.startScreen = false;
       this.elementStates.gameCanvas = true;
+      this.elementStates.playerHud = true;
+      this.elementStates.playerActions = true;
+
+      //Gets the canvas element
+      const canvas = document.getElementById("game-canvas");
+      sprite.ctx = canvas.getContext("2d");
 
       sprite.keyInput();
       hero.createHero(classIndex);

@@ -9,7 +9,14 @@ export const animation = () => {
       this.toLoad = {
         overworldMap1: "public/assets/maps/test_map.jpg",
         combatMap1: "public/assets/maps/test_combat.png",
-        heroWalking: "public/assets/characters/hero-walking/knight.png",
+        knightWalking: "public/assets/characters/hero-walking/knight.png",
+        enemySlime: "public/assets/characters/enemies/slime_sprite.png",
+        enemyBabyTurtle:
+          "public/assets/characters/enemies/baby_turtle_sprite.png",
+        enemyBat: "public/assets/characters/enemies/bat_sprite.png",
+        iconArrowDown: "public/assets/icons/arrow_down_icon.png",
+        iconEffectPoison: "public/assets/icons/poison_icon.png",
+        iconEffectFire: "public/assets/icons/fire_icon.png",
       };
 
       //Holds all images

@@ -103,7 +103,7 @@ export const consumableFuncs = () => {
       player.backpack.push(itemObj);
     }
 
-    addMessage("Gained " + item.name);
+    store.gameMessage = "Gained " + item.name;
 
     updateBackpack();
   }

@@ -159,7 +159,7 @@ export const heroData = () => {
     }
     health.setHealthToMax(store.hero);
 
-    sprite.hero.spritePath = anim.resources.images.heroWalking;
+    sprite.hero.spritePath = anim.resources.images.knightWalking;
   }
 
   return {

@@ -3,17 +3,16 @@ import { useMainStore } from "./mainStore";
 import { useSpriteStore } from "./sprites";
 
 import enemyData from "../js/enemies";
+import damageFuncs from "../js/damage";
+import healthFuncs from "../js/health";
 
 let thiefStartSpeed;
 let guardianStartDefense;
 let berserkerStartAttack;
 
-let playerTarget;
-
 export const useCombatStore = defineStore("combat", {
   state: () => {
     return {
-      combatVal: 0,
       inCombat: false,
       turnQueue: [],
       combatEnemies: [],
@@ -22,6 +21,7 @@ export const useCombatStore = defineStore("combat", {
       areaEncounterVal: 1,
       encounterVal: 6,
       areaCombatVal: 0,
+      playerTarget: {},
     };
   },
   actions: {
@@ -29,13 +29,18 @@ export const useCombatStore = defineStore("combat", {
       const store = useMainStore();
       const sprite = useSpriteStore();
       const enemies = enemyData();
+      const damage = damageFuncs();
+      const health = healthFuncs();
+
+      this.combatEnemies = await enemies.generateEnemies(this.encounterVal);
+      const numberOfEnemies = this.combatEnemies.length;
+
+      sprite.stopOverworldLoop();
+      sprite.startCombatCanvas();
 
       this.inCombat = true;
       sprite.canvasState.overworld = false;
       sprite.canvasState.combat = true;
-
-      this.combatEnemies = enemies.generateEnemies(this.combatVal);
-      const numberOfEnemies = this.combatEnemies.length;
 
       if (store.hero.class === "thief") {
         thiefStartSpeed = store.hero.speed;
@@ -73,7 +78,6 @@ export const useCombatStore = defineStore("combat", {
         store.hero.currentHP > 0 &&
         this.combatEnemies.some((obj) => obj.currentHP > 0)
       ) {
-        setVisibleTurnOrder();
         const currentCharacter = this.turnQueue.shift();
         let target = null;
         let action;
@@ -81,7 +85,7 @@ export const useCombatStore = defineStore("combat", {
         this.turnQueue.push(currentCharacter);
         // Show the next two turns in the turn list
         // const nextTwoTurns = turnQueue.slice(0, 2);
-        // addMessage(
+        // store.gameMessage = (
         //   "Next two turns:",
         //   nextTwoTurns.map((char) => char.name)
         // );
@@ -94,79 +98,71 @@ export const useCombatStore = defineStore("combat", {
         //If the turn counter reaches the max, take an action
         if (currentCharacter.turnCounter >= maxTurnCount && !stunned) {
           currentCharacter.turnCounter -= maxTurnCount;
-          addMessage(`Turn: ${currentCharacter.name}`);
+          store.gameMessage = `Turn: ${currentCharacter.name}`;
 
           //First resolve any effects on the acting char
           //TODO: Need to bail if the effects kill the char
-          resolveStatusEffects(currentCharacter);
+          damage.resolveStatusEffects(currentCharacter);
 
           if (currentCharacter.player) {
             //2nd action cooldown
-            if (secondCooldown > 0) {
-              secondCooldown--;
-              if (secondCooldown == 0) {
+            if (this.secondCooldown > 0) {
+              this.secondCooldown--;
+              if (this.secondCooldown == 0) {
                 const btn = document.getElementById("2ndActionButton");
                 btn.disabled = false;
               }
             }
             //Wait for the user to pick an action before continuing
-            action = await waitForUserAttack();
-            target = playerTarget;
+            action = await this.waitForUserAttack();
+            target = this.playerTarget;
           } else {
             target = store.hero;
           }
 
           //Reset guardian defense for 2nd ability
           if (store.hero.class === "guardian") {
-            resetStats();
+            this.resetStats();
           }
 
           //Different action types
           if (action === "attack" || !currentCharacter.player) {
-            attack(currentCharacter, target);
+            this.attack(currentCharacter, target);
           } else if (action === "second") {
-            secondAction(currentCharacter, target);
+            this.secondAction(currentCharacter, target);
           } else if (action === "flee") {
             const flee = fleeCombat();
 
             if (flee) {
-              addMessage("You successfully fled");
+              store.gameMessage = "You successfully fled";
               const container = document.getElementById("characters");
               container.innerHTML = "";
 
-              resetStats(true);
-              clearCombatOverlay();
+              this.resetStats(true);
               return;
             }
 
-            addMessage("You failed to flee");
+            store.gameMessage = "You failed to flee";
           }
-
-          //Updates all chars health in ui
-          updateHealth(this.turnQueue);
 
           if (target.currentHP === 0 && !target.player) {
             //If multiple enemies, remove defeated enemy
             if (this.combatEnemies.length > 1) {
-              defeatedEnemy(target);
+              this.defeatedEnemy(target);
             }
 
             if (store.hero.class === "berserker") {
               store.hero.currentHP += Math.ceil(store.hero.maxHP * 0.05);
-              balanceHealth();
-              updatePlayerHealth();
+              health.balanceHealth();
             }
           }
-
-          //Update hud to reflect any status changes
-          updatePlayerHUD();
         } else if (stunned) {
           currentCharacter.turnCounter -= maxTurnCount;
-          resolveStatusEffects(currentCharacter);
+          damage.resolveStatusEffects(currentCharacter);
         }
       }
 
-      resetStats(true);
+      this.resetStats(true);
 
       const container = document.getElementById("characters");
       container.innerHTML = "";
@@ -176,7 +172,7 @@ export const useCombatStore = defineStore("combat", {
       this.combatEnemies = [];
 
       if (store.hero.currentHP > 0) {
-        addMessage("You Win!");
+        store.gameMessage = "You Win!";
         postCombat(xpToGain, numberOfEnemies);
       } else {
         gameOver();
@@ -185,7 +181,7 @@ export const useCombatStore = defineStore("combat", {
     defeatedEnemy(enemy) {
       const store = useMainStore();
       store.enemiesDefeated++;
-      addMessage(`${enemy.name} defeated!`);
+      store.gameMessage = `${enemy.name} defeated!`;
       this.turnQueue = this.turnQueue.filter(
         (char) => char.combatId !== enemy.combatId
       );
@@ -204,9 +200,9 @@ export const useCombatStore = defineStore("combat", {
 
       if (store.hero.class === "thief") {
         store.hero.speed = thiefStartSpeed;
-      } else if (player.class === "guardian") {
+      } else if (store.hero.class === "guardian") {
         store.hero.defense = guardianStartDefense;
-      } else if (player.class === "berserker") {
+      } else if (store.hero.class === "berserker") {
         store.hero.attack = berserkerStartAttack;
       }
     },
@@ -225,7 +221,7 @@ export const useCombatStore = defineStore("combat", {
         target.currentHP = 0;
       }
 
-      addMessage(target.name + " took " + damage + " damage");
+      store.gameMessage = target.name + " took " + damage + " damage";
       console.log(target.name + " took " + damage + " damage");
 
       applyStatusEffect(attacker, target);
@@ -250,22 +246,24 @@ export const useCombatStore = defineStore("combat", {
     //Sets a new target for the player
     setTarget(id) {
       //Reset target selection and color
-      const targetEl = document.querySelectorAll(".target-enemy");
+      // const targetEl = document.querySelectorAll(".target-enemy");
 
-      targetEl.forEach((el) => {
-        el.classList.remove("target-enemy");
-      });
+      // targetEl.forEach((el) => {
+      //   el.classList.remove("target-enemy");
+      // });
 
-      playerTarget = this.combatEnemies.find((enemy) => enemy.combatId === id);
+      this.playerTarget = this.combatEnemies.find(
+        (enemy) => enemy.combatId === id
+      );
 
-      const target = document.getElementById("char-" + id);
-      target.classList.add("target-enemy");
+      // const target = document.getElementById("char-" + id);
+      // target.classList.add("target-enemy");
 
-      const turnEls = document.querySelectorAll(`#turn-char-${id}`);
+      // const turnEls = document.querySelectorAll(`#turn-char-${id}`);
 
-      turnEls.forEach((el) => {
-        el.classList.add("target-enemy");
-      });
+      // turnEls.forEach((el) => {
+      //   el.classList.add("target-enemy");
+      // });
     },
     //Decides if user can flee. Starts at 25% chance, increase based on player health
     fleeCombat() {
@@ -353,14 +351,14 @@ export const useCombatStore = defineStore("combat", {
         (item) => item.name === "energyDrink"
       );
 
-      secondCooldown = store.hero.secondAbility.cooldown + 1;
+      this.secondCooldown = store.hero.secondAbility.cooldown + 1;
 
       if (energyDrink) {
-        secondCooldown -= energyDrink.stack;
+        this.secondCooldown -= energyDrink.stack;
       }
 
-      if (secondCooldown < 0) {
-        secondCooldown = 0;
+      if (this.secondCooldown < 0) {
+        this.secondCooldown = 0;
       }
 
       const btn = document.getElementById("2ndActionButton");
@@ -395,8 +393,6 @@ export const useCombatStore = defineStore("combat", {
 
         this.encounterVal =
           this.encounterVal + store.hero.level + this.areaCombatVal;
-
-        // const combatVal = Math.floor(Math.random() * (encounterVal - 5) + 5);
 
         console.log("Starting combat at value " + this.encounterVal);
         this.combatInit(this.encounterVal);

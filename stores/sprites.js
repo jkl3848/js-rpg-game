@@ -4,6 +4,7 @@ import { useCombatStore } from "./combat";
 
 import animation from "../js/animation";
 import gameLoop from "../js/gameLoop";
+import enemyData from "../js/enemies";
 
 export const useSpriteStore = defineStore("sprites", {
   state: () => {
@@ -20,6 +21,7 @@ export const useSpriteStore = defineStore("sprites", {
         position: null,
         centerScreen: null,
       },
+      enemies: [],
       canvasState: {
         overworld: true,
         combat: false,
@@ -37,9 +39,6 @@ export const useSpriteStore = defineStore("sprites", {
   actions: {
     startOverworldCanvas() {
       const anim = animation();
-
-      const canvas = document.getElementById("game-canvas");
-      this.ctx = canvas.getContext("2d");
 
       this.map.spritePath = anim.resources.images.overworldMap1;
 
@@ -82,19 +81,6 @@ export const useSpriteStore = defineStore("sprites", {
     stopOverworldLoop() {
       this.loop.stop();
     },
-    drawGraphics() {
-      this.map.sprite.drawImage(
-        this.ctx,
-        this.map.position.x,
-        this.map.position.y
-      );
-
-      this.hero.sprite.drawImage(
-        this.ctx,
-        this.hero.position.x,
-        this.hero.position.y
-      );
-    },
     updateOverworldGraphics() {
       const store = useMainStore();
       const combat = useCombatStore();
@@ -103,7 +89,7 @@ export const useSpriteStore = defineStore("sprites", {
         return;
       }
 
-      console.log(this.keyDirection[0]);
+      // console.log(this.keyDirection[0]);
 
       //Updates either the
       switch (this.keyDirection[0]) {
@@ -186,6 +172,129 @@ export const useSpriteStore = defineStore("sprites", {
         this.animData.lastUpdate = 0;
       } else {
         this.animData.lastUpdate++;
+      }
+    },
+    startCombatCanvas() {
+      const anim = animation();
+      const combat = useCombatStore();
+      const enData = enemyData();
+
+      this.enemies = [];
+
+      this.map.spritePath = anim.resources.images.combatMap1;
+
+      this.map.sprite = new anim.Sprite({
+        resource: this.map.spritePath,
+        frameSize: new anim.Vector2(1104, 621),
+      });
+
+      this.hero.sprite = new anim.Sprite({
+        resource: this.hero.spritePath,
+        frameSize: new anim.Vector2(48, 48),
+        hFrames: 3,
+        vFrames: 4,
+        frame: 1,
+      });
+
+      this.hero.animations = {
+        left: [3, 4, 5],
+        right: [6, 7, 8],
+        up: [9, 10, 11],
+        down: [0, 1, 2],
+        attack: [],
+      };
+
+      console.log(combat.combatEnemies);
+
+      for (let i = 0; i < combat.combatEnemies.length; i++) {
+        console.log("Generating enemy " + i);
+        const enemyEl = combat.combatEnemies[i];
+        let tempEn = {};
+
+        tempEn.sprite = new anim.Sprite({
+          resource: enData.mobRsrc.find((item) => item.name === enemyEl.name)
+            .imgResource,
+          frameSize: new anim.Vector2(48, 48),
+          hFrames: 3,
+          vFrames: 1,
+          frame: 0,
+        });
+
+        tempEn.position = new anim.Vector2(
+          16 * 55 + (i % 2 ? 32 : 0),
+          16 * 10 + i * (16 * 5)
+        );
+
+        console.log(tempEn);
+
+        this.enemies.push(tempEn);
+      }
+
+      console.log(this.enemies);
+
+      this.hero.position = new anim.Vector2(16 * 16, 16 * 8);
+      this.map.position = new anim.Vector2(0, 0);
+      //The center pos in the screen to determine if the maps needs to move
+      this.map.centerScreen = new anim.Vector2(16 * 16, 16 * 8);
+
+      this.animData.frameArr = this.hero.animations["right"];
+
+      this.startCombatLoop();
+    },
+    startCombatLoop() {
+      const gl = gameLoop();
+      this.loop = new gl.GameLoop(this.updateCombatGraphics, this.drawGraphics);
+      this.loop.start();
+    },
+    stopCombatLoop() {
+      this.loop.stop();
+    },
+    updateCombatGraphics() {
+      const store = useMainStore();
+      const combat = useCombatStore();
+
+      if (this.animData.lastUpdate >= 24) {
+        if (this.animData.framePosition >= 1) {
+          this.animData.framePosition = 0;
+        } else {
+          this.animData.framePosition = 1;
+        }
+
+        this.hero.sprite.frame =
+          this.animData.frameArr[this.animData.framePosition];
+
+        for (let i = 0; i < this.enemies.length; i++) {
+          this.enemies[i].sprite.frame = this.animData.framePosition;
+        }
+
+        this.animData.lastUpdate = 0;
+      } else {
+        this.animData.lastUpdate++;
+      }
+    },
+    drawGraphics() {
+      const combat = useCombatStore();
+
+      this.map.sprite.drawImage(
+        this.ctx,
+        this.map.position.x,
+        this.map.position.y
+      );
+
+      this.hero.sprite.drawImage(
+        this.ctx,
+        this.hero.position.x,
+        this.hero.position.y
+      );
+
+      if (combat.inCombat) {
+        for (let i = 0; i < this.enemies.length; i++) {
+          this.enemies[i].sprite.drawImage(
+            this.ctx,
+            this.enemies[i].position.x,
+            this.enemies[i].position.y
+          );
+        }
       }
     },
     keyInput() {

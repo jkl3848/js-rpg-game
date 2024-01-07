@@ -400,7 +400,7 @@ export const damage = () => {
       player.items.push(itemObj);
     }
 
-    addMessage("You gained " + item.name);
+    store.gameMessage = "You gained " + item.name;
 
     applyItemEffect(itemObj);
 

@@ -8,6 +8,7 @@ import StartScreen from "./components/StartScreen.vue";
 import PlayerHud from "./components/PlayerHud.vue";
 import PlayerActions from "./components/PlayerActions.vue";
 import Backpack from "./components/Backpack.vue";
+import GameMessages from "./components/GameMessages.vue";
 
 const store = useMainStore();
 
@@ -24,7 +25,14 @@ onMounted(() => {});
   <div id="main-game-section">
     <PlayerHud v-if="store.elementStates.playerHud"></PlayerHud>
 
-    <canvas v-show="store.elementStates.gameCanvas" id="game-canvas"></canvas>
+    <GameMessages></GameMessages>
+
+    <canvas
+      v-show="store.elementStates.gameCanvas"
+      id="game-canvas"
+      width="1024"
+      height="512"
+    ></canvas>
 
     <PlayerActions v-if="store.elementStates.playerActions"></PlayerActions>
   </div>
@@ -40,7 +48,7 @@ onMounted(() => {});
 
 <style scoped>
 #game-canvas {
-  width: 512px;
-  height: 256px;
+  width: 1024px;
+  height: 512px;
 }
 </style>

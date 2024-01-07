@@ -5,9 +5,24 @@
 +1 per crit chance
 */
 import { useMainStore } from "../stores/mainStore";
+import animation from "./animation";
+import healthFuncs from "./health";
 
 export const enemyData = () => {
   const store = useMainStore();
+  const anim = animation();
+  const health = healthFuncs();
+
+  const mobRsrc = [
+    { name: "slime", imgResource: anim.resources.images.enemySlime },
+    { name: "rat", imgResource: anim.resources.images.enemySlime },
+    { name: "evil moose", imgResource: anim.resources.images.enemySlime },
+    { name: "bat", imgResource: anim.resources.images.enemyBat },
+    { name: "baby turtle", imgResource: anim.resources.images.enemyBabyTurtle },
+    { name: "turtle", imgResource: anim.resources.images.enemyBabyTurtle },
+    { name: "big turtle", imgResource: anim.resources.images.enemyBabyTurtle },
+  ];
+
   const mobs = [
     {
       name: "slime",
@@ -172,6 +187,7 @@ export const enemyData = () => {
     let levelUp = false;
     const mobSize = Math.floor(Math.random() * (4 - 1 + 1) + 1);
 
+    let randomIndex = 0;
     let bannedEnemies = [];
 
     while (enemyCombatVal < combatVal) {
@@ -189,11 +205,13 @@ export const enemyData = () => {
         randomIndex = Math.floor(Math.random() * mobs.length);
       } while (bannedEnemies.includes(randomIndex));
 
+      console.log(mobs[randomIndex]);
+
       const randomEnemy = structuredClone(mobs[randomIndex]);
 
       //Create mobs combat element
       if (randomEnemy.threatLevel + enemyCombatVal <= combatVal * 1.2) {
-        setHealthToMax(randomEnemy);
+        health.setHealthToMax(randomEnemy);
         randomEnemy.combatId = combatId;
         randomEnemy.effects = [];
         randomEnemy.turnCounter = randomEnemy.speed;
@@ -225,7 +243,7 @@ export const enemyData = () => {
           enemies[i].level++;
           for (let attr in scale) {
             enemies[i][attr] += scale[attr];
-            setHealthToMax(enemies[i]);
+            health.setHealthToMax(enemies[i]);
           }
           enemyCombatVal += scale["threatLevel"];
         }
@@ -236,6 +254,7 @@ export const enemyData = () => {
   }
 
   return {
+    mobRsrc,
     mobs,
     bosses,
     generateEnemies,

@@ -1,7 +1,9 @@
 import { useMainStore } from "../stores/mainStore";
+import healthFuncs from "./health";
 
-export const damage = () => {
+export const damageFuncs = () => {
   const store = useMainStore();
+  const health = healthFuncs();
 
   //Calculates damage of an attack
   function calcDamage(attacker, target, mult) {
@@ -39,7 +41,7 @@ export const damage = () => {
     const isCrit = isCriticalHit(attacker.critChance);
 
     if (isCrit) {
-      addMessage("Critical Hit!");
+      store.gameMessage = "Critical Hit!";
       damage = damage * 2;
     }
 
@@ -47,7 +49,7 @@ export const damage = () => {
       damage = 0;
     }
 
-    healthSteal(damage);
+    health.healthSteal(damage);
 
     return Math.round(damage);
   }
@@ -99,7 +101,6 @@ export const damage = () => {
         target.armor += target.level;
       }
     }
-    updateHealth(turnQueue);
   }
 
   //Adds stack of a status to a char
@@ -206,4 +207,4 @@ export const damage = () => {
   };
 };
 
-export default damage;
+export default damageFuncs;
