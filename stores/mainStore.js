@@ -43,9 +43,9 @@ export const useMainStore = defineStore("mainStore", {
       hero.createHero(classIndex);
       sprite.startOverworldCanvas();
     },
-    //Generates a random number between 1 and 100
-    random100() {
-      return Math.floor(Math.random() * 100) + 1;
+    //Generates a random number between 1 and the input number
+    getRandomNum(maxNum) {
+      return Math.floor(Math.random() * maxNum) + 1;
     },
   },
 });

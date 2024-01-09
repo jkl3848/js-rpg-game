@@ -141,7 +141,7 @@ export const damageFuncs = () => {
       const broken = effects?.find((item) => item.type === "broken");
 
       if (molotov) {
-        const effectRoll = store.random100();
+        const effectRoll = store.getRandomNum(100);
         if (effectRoll <= molotov.stack * 10) {
           if (burn) {
             burn.stack++;
@@ -152,7 +152,7 @@ export const damageFuncs = () => {
       }
 
       if (moonshine) {
-        const effectRoll = store.random100();
+        const effectRoll = store.getRandomNum(100);
         if (effectRoll <= moonshine.stack * 10) {
           if (poison) {
             poison.stack++;
@@ -163,7 +163,7 @@ export const damageFuncs = () => {
         }
       }
       if (rock) {
-        const effectRoll = store.random100();
+        const effectRoll = store.getRandomNum(100);
         if (effectRoll <= rock.stack * 10) {
           if (broken) {
             broken.stack++;
@@ -174,7 +174,7 @@ export const damageFuncs = () => {
         }
       }
       if (ballAndChain) {
-        if (store.random100() <= 20 + (ballAndChain?.stack - 1) * 10) {
+        if (store.getRandomNum(100) <= 20 + (ballAndChain?.stack - 1) * 10) {
           target.speed -= 1;
         }
       }
@@ -183,7 +183,7 @@ export const damageFuncs = () => {
 
   //Determines if hit is crit (double damage)
   function isCriticalHit(critChance) {
-    let critVal = store.random100();
+    let critVal = store.getRandomNum(100);
 
     // Item- Padded Armor
     if (target.player) {

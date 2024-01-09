@@ -45,7 +45,7 @@ function postCombat(xp, numberOfEnemies) {
   gainXP(xp);
 
   for (let i = 0; i < numberOfEnemies; i++) {
-    if (random100() <= 10) {
+    if (getRandomNum() <= 10) {
       gainConsumable();
     }
   }

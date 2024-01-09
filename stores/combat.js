@@ -282,7 +282,7 @@ export const useCombatStore = defineStore("combat", {
         fleeChance += oil.stack * 10;
       }
 
-      const chance = random100();
+      const chance = getRandomNum(100);
 
       if (chance <= fleeChance) {
         return true;
@@ -366,7 +366,7 @@ export const useCombatStore = defineStore("combat", {
     },
     evadeAttack(target) {
       const store = useMainStore();
-      const randomNum = store.random100();
+      const randomNum = store.getRandomNum(100);
 
       let evasionChance = target.evasion;
 

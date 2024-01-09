@@ -349,7 +349,7 @@ export const damage = () => {
     let item = specItem;
     let type;
     if (!item) {
-      const itemPoolNumber = store.random100();
+      const itemPoolNumber = store.getRandomNum(100);
 
       let itemPool;
 
