@@ -15,6 +15,11 @@ export const useSpriteStore = defineStore("sprites", {
         position: null,
         animations: [],
       },
+      blurbi: {
+        spritePath: null,
+        sprite: null,
+        position: null,
+      },
       map: {
         spritePath: null,
         sprite: null,

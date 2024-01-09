@@ -16,7 +16,7 @@ function gameOver() {
   clearMessage();
   clearAllOverlays();
   clearCombatOverlay();
-  store.gameMessage = ("You Lose!");
+  store.gameMessage = "You Lose!";
   document.getElementById("startButton").disabled = false;
   moveLock = true;
 
@@ -65,7 +65,7 @@ function postCombat(xp, numberOfEnemies) {
 function gainXP(xp, loop) {
   let newXPGap;
   if (!loop) {
-    store.gameMessage = ("You gained " + xp + " XP!");
+    store.gameMessage = "You gained " + xp + " XP!";
     if (player.class === "professor") {
       xp += Math.ceil(xp * 0.1);
     }
@@ -102,7 +102,7 @@ function gainMoney(money) {
 //If the hero has enough xp, level up
 function levelUp() {
   moveLock = true;
-  store.gameMessage = ("You leveled up!");
+  store.gameMessage = "You leveled up!";
 
   gainItem();
 
@@ -132,27 +132,9 @@ function levelUp() {
   document.getElementById("level-up-button");
 
   setHealthToMax(player);
-  store.gameMessage = ("You are now level " + player.level);
+  store.gameMessage = "You are now level " + player.level;
   updatePlayerHealth();
   updatePlayerHUD();
-}
-
-let packOpen = false;
-function toggleBackpack() {
-  const packState = packOpen;
-  clearAllOverlays();
-
-  const pack = document.getElementById("backpack-overlay");
-
-  if (packState) {
-    pack.style.display = "none";
-    packOpen = false;
-    moveLock = false;
-  } else {
-    pack.style.display = "block";
-    packOpen = true;
-    moveLock = true;
-  }
 }
 
 function addAttrValue(prop) {
@@ -202,15 +184,4 @@ function subAttrValue(prop) {
   document.getElementById("point-" + prop + "-value").innerHTML = player[prop];
   levelPoints++;
   document.getElementById("point-total").innerHTML = "Points: " + levelPoints;
-}
-
-//Adds message to textfield
-function store.gameMessage = (message) {
-  const messageField = document.getElementById("messageField");
-  messageField.value += message + "\n";
-  messageField.scrollTop = messageField.scrollHeight; // Auto-scroll to the bottom
-}
-
-function clearMessage() {
-  document.getElementById("messageField").value = "";
 }

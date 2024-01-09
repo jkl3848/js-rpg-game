@@ -8,6 +8,7 @@ export const useMainStore = defineStore("mainStore", {
     return {
       heroName: "",
       hero: {},
+      blurbi: { level: 1, skills: [] },
       heroStats: { levelPoints: 4, nextXPLevel: 10, lastXPLevel: 0 },
       gameStats: { enemiesDefeated: 0 },
       elementStates: {

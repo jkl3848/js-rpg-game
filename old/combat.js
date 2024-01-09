@@ -46,20 +46,3 @@ function waitForUserAttack() {
     }
   });
 }
-
-function highlightEnemy(id) {
-  const turnEls = document.querySelectorAll(`#turn-char-${id}`);
-  turnEls.forEach((el) => {
-    el.classList.add("highlighted-enemy");
-  });
-  document.getElementById(`char-${id}`)?.classList.add("highlighted-enemy");
-}
-
-function unHighlightEnemy(id) {
-  const turnEls = document.querySelectorAll(`#turn-char-${id}`);
-
-  turnEls.forEach((el) => {
-    el.classList.remove("highlighted-enemy");
-  });
-  document.getElementById(`char-${id}`)?.classList.remove("highlighted-enemy");
-}
