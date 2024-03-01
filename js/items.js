@@ -1,6 +1,6 @@
 import { useMainStore } from "../stores/mainStore";
 
-export const damage = () => {
+export const itemFuncs = () => {
   const store = useMainStore();
 
   const commonItems = [
@@ -388,8 +388,8 @@ export const damage = () => {
     }
     let itemObj;
     //If the item already exists, then stack it
-    if (player.items.find((obj) => obj.name === item.name)) {
-      itemObj = player.items.find((obj) => obj.name === item.name);
+    if (store.hero.items.find((obj) => obj.name === item.name)) {
+      itemObj = store.hero.items.find((obj) => obj.name === item.name);
       itemObj.stack++;
     }
     //otherwise add it
@@ -397,18 +397,18 @@ export const damage = () => {
       itemObj = structuredClone(item);
       itemObj.stack = 1;
       itemObj.type = type;
-      player.items.push(itemObj);
+      store.hero.items.push(itemObj);
     }
 
     store.gameMessage = "You gained " + item.name;
 
     applyItemEffect(itemObj);
 
-    const playerItems = document.getElementById("player-items");
-    playerItems.innerHTML = "";
-    player.items.forEach((el) => {
-      playerItems.innerHTML += `<div class='tooltip'><span class='item-${el.type}'>${el.displayName}:</span> ${el.stack} <span class='tooltip-text item-tooltip'>${el.detailedDesc}</span></div>`;
-    });
+    // const playerItems = document.getElementById("player-items");
+    // playerItems.innerHTML = "";
+    // store.hero.items.forEach((el) => {
+    //   playerItems.innerHTML += `<div class='tooltip'><span class='item-${el.type}'>${el.displayName}:</span> ${el.stack} <span class='tooltip-text item-tooltip'>${el.detailedDesc}</span></div>`;
+    // });
   }
 
   //Applies item stat to hero
@@ -421,10 +421,10 @@ export const damage = () => {
         boost = item.stackBoost;
       }
       if (item.boostType == "add") {
-        player[item.attr] += boost;
+        store.hero[item.attr] += boost;
         //Figure out the multiplier
         // } else if (item.boostType == "mult") {
-        //   player[item.attr] = player[item.attr] * boost;
+        //   store.hero[item.attr] = store.hero[item.attr] * boost;
       }
     }
   }
@@ -441,4 +441,4 @@ export const damage = () => {
   };
 };
 
-export default damage;
+export default itemFuncs;

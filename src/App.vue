@@ -4,11 +4,11 @@ import { onMounted } from "vue";
 import { useMainStore } from "../stores/mainStore";
 
 import StartScreen from "./components/StartScreen.vue";
-
 import PlayerHud from "./components/PlayerHud.vue";
 import PlayerActions from "./components/PlayerActions.vue";
 import Backpack from "./components/Backpack.vue";
 import GameMessages from "./components/GameMessages.vue";
+import LevelUp from "./components/LevelUp.vue";
 
 const store = useMainStore();
 
@@ -17,9 +17,8 @@ onMounted(() => {});
 
 <template>
   <!-- This is for full screens. Start, game over -->
-  <div v-if="store.elementStates.startScreen" id="screen-section">
-    <StartScreen></StartScreen>
-  </div>
+  <StartScreen v-if="store.elementStates.startScreen" />
+  <LevelUp v-if="store.elementStates.levelUp" />
 
   <!-- This is for the main game elements -->
   <div id="main-game-section">

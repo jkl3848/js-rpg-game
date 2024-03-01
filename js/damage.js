@@ -19,26 +19,26 @@ export const damageFuncs = () => {
 
     //Damage boosting items
     if (attacker.player) {
-      const championBelt = player.items.find(
+      const championBelt = store.hero.items.find(
         (item) => item.name === "championBelt"
       );
-      const wallet = player.items.find((item) => item.name === "wallet");
+      const wallet = store.hero.items.find((item) => item.name === "wallet");
 
       if (championBelt) {
         damage += Math.ceil(
           damage *
             (0.01 *
               championBelt.stack *
-              ((player.currentHP / player.maxHP) * 100))
+              ((store.hero.currentHP / store.hero.maxHP) * 100))
         );
       }
       if (wallet) {
         const walletBoost = (wallet.stack - 1) * 0.01;
-        damage += Math.ceil(player.money * (0.02 + walletBoost));
+        damage += Math.ceil(store.hero.money * (0.02 + walletBoost));
       }
     }
 
-    const isCrit = isCriticalHit(attacker.critChance);
+    const isCrit = isCriticalHit(attacker.critChance, target);
 
     if (isCrit) {
       store.gameMessage = "Critical Hit!";
@@ -125,7 +125,7 @@ export const damageFuncs = () => {
     }
 
     //For Hero (based on items)
-    if (attacker.player && player.items.length > 0) {
+    if (attacker.player && store.hero.items.length > 0) {
       const molotov = attacker.items.find((item) => item.name === "molotov");
       const moonshine = attacker.items.find(
         (item) => item.name === "moonshine"
@@ -182,12 +182,12 @@ export const damageFuncs = () => {
   }
 
   //Determines if hit is crit (double damage)
-  function isCriticalHit(critChance) {
+  function isCriticalHit(critChance, target) {
     let critVal = store.getRandomNum(100);
 
     // Item- Padded Armor
     if (target.player) {
-      const paddedArmor = player.items.find(
+      const paddedArmor = store.hero.items.find(
         (item) => item.name === "paddedArmor"
       );
 

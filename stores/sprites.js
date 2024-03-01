@@ -13,18 +13,25 @@ export const useSpriteStore = defineStore("sprites", {
         spritePath: null,
         sprite: null,
         position: null,
+        lastPosition: null,
         animations: [],
+        frameIndex: 0,
+        frameArr: [],
       },
       blurbi: {
         spritePath: null,
         sprite: null,
         position: null,
+        lastPosition: null,
+        frameIndex: 0,
       },
       map: {
         spritePath: null,
         sprite: null,
         position: null,
+        lastPosition: null,
         centerScreen: null,
+        lastCenter: null,
       },
       enemies: [],
       canvasState: {
@@ -33,8 +40,6 @@ export const useSpriteStore = defineStore("sprites", {
       },
       loop: null,
       animData: {
-        framePosition: 0,
-        frameArr: [],
         lastUpdate: 0,
       },
       ctx: null,
@@ -46,6 +51,7 @@ export const useSpriteStore = defineStore("sprites", {
       const anim = animation();
 
       this.map.spritePath = anim.resources.images.overworldMap1;
+      this.blurbi.spritePath = anim.resources.images.blurbi;
 
       this.map.sprite = new anim.Sprite({
         resource: this.map.spritePath,
@@ -68,10 +74,36 @@ export const useSpriteStore = defineStore("sprites", {
         attack: [],
       };
 
-      this.hero.position = new anim.Vector2(16 * 12, 16 * 2);
-      this.map.position = new anim.Vector2(0, 0);
+      this.blurbi.sprite = new anim.Sprite({
+        resource: this.blurbi.spritePath,
+        frameSize: new anim.Vector2(48, 48),
+        hFrames: 4,
+        vFrames: 1,
+        frame: 0,
+      });
+
+      if (this.hero.lastPosition) {
+        this.hero.position = this.hero.lastPosition;
+      } else {
+        this.hero.position = new anim.Vector2(16 * 12, 16 * 3);
+      }
+      if (this.blurbi.lastPosition) {
+        this.blurbi.position = this.blurbi.lastPosition;
+      } else {
+        this.blurbi.position = new anim.Vector2(16 * 14, 16 * 2);
+      }
+
+      if (this.map.lastPosition) {
+        this.map.position = this.map.lastPosition;
+      } else {
+        this.map.position = new anim.Vector2(0, 0);
+      }
       //The center pos in the screen to determine if the maps needs to move
-      this.map.centerScreen = new anim.Vector2(16 * 16, 16 * 8);
+      if (this.map.lastCenter) {
+        this.map.centerScreen = this.map.lastCenter;
+      } else {
+        this.map.centerScreen = new anim.Vector2(16 * 16, 16 * 8);
+      }
 
       this.startOverworldLoop();
     },
@@ -99,8 +131,8 @@ export const useSpriteStore = defineStore("sprites", {
       //Updates either the
       switch (this.keyDirection[0]) {
         case "LEFT":
-          this.animData.frameArr = this.hero.animations["left"];
-          this.animData.framePosition++;
+          this.hero.frameArr = this.hero.animations["left"];
+          this.hero.frameIndex++;
           combat.adjustEncounterVal();
 
           if (
@@ -111,12 +143,13 @@ export const useSpriteStore = defineStore("sprites", {
           } else {
             if (this.hero.position.x > 2) {
               this.hero.position.x -= 2;
+              this.blurbi.position.x -= 2;
             }
           }
           break;
         case "RIGHT":
-          this.animData.frameArr = this.hero.animations["right"];
-          this.animData.framePosition++;
+          this.hero.frameArr = this.hero.animations["right"];
+          this.hero.frameIndex++;
           combat.adjustEncounterVal();
 
           if (
@@ -127,12 +160,13 @@ export const useSpriteStore = defineStore("sprites", {
           } else {
             if (this.hero.position.x < 512 - 2 - 48) {
               this.hero.position.x += 2;
+              this.blurbi.position.x += 2;
             }
           }
           break;
         case "UP":
-          this.animData.frameArr = this.hero.animations["up"];
-          this.animData.framePosition++;
+          this.hero.frameArr = this.hero.animations["up"];
+          this.hero.frameIndex++;
           combat.adjustEncounterVal();
 
           if (
@@ -143,12 +177,13 @@ export const useSpriteStore = defineStore("sprites", {
           } else {
             if (this.hero.position.y > 2) {
               this.hero.position.y -= 2;
+              this.blurbi.position.y -= 2;
             }
           }
           break;
         case "DOWN":
-          this.animData.frameArr = this.hero.animations["down"];
-          this.animData.framePosition++;
+          this.hero.frameArr = this.hero.animations["down"];
+          this.hero.frameIndex++;
           combat.adjustEncounterVal();
 
           if (
@@ -159,21 +194,29 @@ export const useSpriteStore = defineStore("sprites", {
           } else {
             if (this.hero.position.y < 256 - 2 - 48) {
               this.hero.position.y += 2;
+              this.blurbi.position.y += 2;
             }
           }
           break;
         case undefined:
-          this.animData.framePosition = 1;
+          this.hero.frameIndex = 1;
           break;
       }
 
-      if (this.animData.framePosition > 2) {
-        this.animData.framePosition = 0;
+      if (this.hero.frameIndex > 2) {
+        this.hero.frameIndex = 0;
       }
 
       if (this.animData.lastUpdate >= 6) {
-        this.hero.sprite.frame =
-          this.animData.frameArr[this.animData.framePosition];
+        this.hero.sprite.frame = this.hero.frameArr[this.hero.frameIndex];
+        this.blurbi.sprite.frame = this.blurbi.frameIndex;
+
+        if (this.blurbi.frameIndex > 3) {
+          this.blurbi.frameIndex = 0;
+        } else {
+          this.blurbi.frameIndex++;
+        }
+
         this.animData.lastUpdate = 0;
       } else {
         this.animData.lastUpdate++;
@@ -237,12 +280,18 @@ export const useSpriteStore = defineStore("sprites", {
 
       console.log(this.enemies);
 
+      this.hero.lastPosition = this.hero.position;
       this.hero.position = new anim.Vector2(16 * 16, 16 * 8);
+      this.blurbi.lastPosition = this.blurbi.position;
+      this.blurbi.position = new anim.Vector2(16 * 14, 16 * 2);
+
+      this.map.lastPosition = this.map.position;
       this.map.position = new anim.Vector2(0, 0);
       //The center pos in the screen to determine if the maps needs to move
+      this.map.lastCenter = this.map.centerScreen;
       this.map.centerScreen = new anim.Vector2(16 * 16, 16 * 8);
 
-      this.animData.frameArr = this.hero.animations["right"];
+      this.hero.frameArr = this.hero.animations["right"];
 
       this.startCombatLoop();
     },
@@ -259,17 +308,23 @@ export const useSpriteStore = defineStore("sprites", {
       const combat = useCombatStore();
 
       if (this.animData.lastUpdate >= 24) {
-        if (this.animData.framePosition >= 1) {
-          this.animData.framePosition = 0;
+        if (this.hero.frameIndex >= 1) {
+          this.hero.frameIndex = 0;
         } else {
-          this.animData.framePosition = 1;
+          this.hero.frameIndex = 1;
         }
 
-        this.hero.sprite.frame =
-          this.animData.frameArr[this.animData.framePosition];
+        if (this.blurbi.frameIndex > 3) {
+          this.blurbi.frameIndex = 0;
+        } else {
+          this.blurbi.frameIndex++;
+        }
+
+        this.blurbi.sprite.frame = this.blurbi.frameIndex;
+        this.hero.sprite.frame = this.hero.frameArr[this.hero.frameIndex];
 
         for (let i = 0; i < this.enemies.length; i++) {
-          this.enemies[i].sprite.frame = this.animData.framePosition;
+          this.enemies[i].sprite.frame = this.hero.frameIndex;
         }
 
         this.animData.lastUpdate = 0;
@@ -290,6 +345,12 @@ export const useSpriteStore = defineStore("sprites", {
         this.ctx,
         this.hero.position.x,
         this.hero.position.y
+      );
+
+      this.blurbi.sprite.drawImage(
+        this.ctx,
+        this.blurbi.position.x,
+        this.blurbi.position.y
       );
 
       if (combat.inCombat) {

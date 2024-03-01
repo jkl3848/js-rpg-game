@@ -7,14 +7,16 @@ export const healthFuncs = () => {
   function postCombatHeal() {
     let healTotal;
 
-    healTotal = player.maxHP * 0.05;
+    healTotal = store.hero.maxHP * 0.05;
 
-    if (player.class === "knight") {
+    if (store.hero.class === "knight") {
       healTotal += Math.ceil(healTotal * 0.05);
     }
 
-    let bark = player.items.find((item) => item.name === "treeBark");
-    let gauntlet = player.items.find((item) => item.name === "ironGauntlet");
+    let bark = store.hero.items.find((item) => item.name === "treeBark");
+    let gauntlet = store.hero.items.find(
+      (item) => item.name === "ironGauntlet"
+    );
 
     if (bark) {
       let heal = bark.boost;
@@ -25,7 +27,7 @@ export const healthFuncs = () => {
     }
 
     if (gauntlet) {
-      player.maxHP += gauntlet.stack;
+      store.hero.maxHP += gauntlet.stack;
     }
 
     if (healTotal > 1) {
@@ -34,7 +36,7 @@ export const healthFuncs = () => {
       healTotal = 1;
     }
 
-    player.currentHP += healTotal;
+    store.hero.currentHP += healTotal;
 
     store.gameMessage = "Healed for " + healTotal;
     balanceHealth();
@@ -42,11 +44,11 @@ export const healthFuncs = () => {
 
   //Heals user based on damage dealt to target
   function healthSteal(damage) {
-    if (player.items.length > 0) {
-      let siphon = player.items?.find((item) => item.name === "siphon");
+    if (store.hero.items.length > 0) {
+      let siphon = store.hero.items?.find((item) => item.name === "siphon");
       if (siphon) {
         const healAmount = Math.ceil(damage * (siphon.stack / 100));
-        player.currentHP += healAmount;
+        store.hero.currentHP += healAmount;
         store.gameMessage = "Healed for " + healAmount;
       }
     }
@@ -54,8 +56,8 @@ export const healthFuncs = () => {
   }
 
   function balanceHealth() {
-    if (player.currentHP > player.maxHP) {
-      setHealthToMax(player);
+    if (store.hero.currentHP > store.hero.maxHP) {
+      setHealthToMax(store.hero);
     }
   }
 

@@ -22,6 +22,11 @@ export const useCombatStore = defineStore("combat", {
       encounterVal: 6,
       areaCombatVal: 0,
       playerTarget: {},
+      playerTurn: false,
+      encounterDetails: {
+        maxTurnCount: 0,
+        xpToGain: 0,
+      },
     };
   },
   actions: {
@@ -29,11 +34,9 @@ export const useCombatStore = defineStore("combat", {
       const store = useMainStore();
       const sprite = useSpriteStore();
       const enemies = enemyData();
-      const damage = damageFuncs();
-      const health = healthFuncs();
 
       this.combatEnemies = await enemies.generateEnemies(this.encounterVal);
-      const numberOfEnemies = this.combatEnemies.length;
+      // const numberOfEnemies = this.combatEnemies.length;
 
       sprite.stopOverworldLoop();
       sprite.startCombatCanvas();
@@ -50,7 +53,7 @@ export const useCombatStore = defineStore("combat", {
         berserkerStartAttack = store.hero.attack;
       }
 
-      const xpToGain = this.combatEnemies.reduce(
+      this.encounterDetails.xpToGain = this.combatEnemies.reduce(
         (sum, obj) => sum + obj.threatLevel,
         0
       );
@@ -65,7 +68,7 @@ export const useCombatStore = defineStore("combat", {
       this.setTarget(1);
 
       //Set turn counter equal to highest speed in group
-      const maxTurnCount = this.turnQueue.reduce(
+      this.encounterDetails.maxTurnCount = this.turnQueue.reduce(
         (max, obj) => (obj.speed > max.speed ? obj : max),
         this.turnQueue[0]
       ).speed;
@@ -73,22 +76,29 @@ export const useCombatStore = defineStore("combat", {
       //Set hero's turn counter to speed
       this.turnQueue[0].turnCounter = this.turnQueue[0].speed;
 
+      this.combatLoop();
+    },
+
+    combatLoop() {
+      const store = useMainStore();
+      const damage = damageFuncs();
+      const health = healthFuncs();
+
+      console.log("Starting combat loop");
       //While the hero and at least 1 enemy has health
       while (
         store.hero.currentHP > 0 &&
         this.combatEnemies.some((obj) => obj.currentHP > 0)
       ) {
+        setTimeout(() => {
+          console.log("Delayed for 1 second.");
+        }, "1000");
+
         const currentCharacter = this.turnQueue.shift();
-        let target = null;
-        let action;
+
+        console.log(currentCharacter);
 
         this.turnQueue.push(currentCharacter);
-        // Show the next two turns in the turn list
-        // const nextTwoTurns = turnQueue.slice(0, 2);
-        // store.gameMessage = (
-        //   "Next two turns:",
-        //   nextTwoTurns.map((char) => char.name)
-        // );
 
         currentCharacter.turnCounter += currentCharacter.speed;
 
@@ -96,88 +106,126 @@ export const useCombatStore = defineStore("combat", {
           (item) => item.type === "stun"
         );
         //If the turn counter reaches the max, take an action
-        if (currentCharacter.turnCounter >= maxTurnCount && !stunned) {
-          currentCharacter.turnCounter -= maxTurnCount;
+        if (
+          currentCharacter.turnCounter >= this.encounterDetails.maxTurnCount &&
+          !stunned
+        ) {
+          currentCharacter.turnCounter -= this.encounterDetails.maxTurnCount;
           store.gameMessage = `Turn: ${currentCharacter.name}`;
+
+          console.log(`Turn: ${currentCharacter.name}`);
 
           //First resolve any effects on the acting char
           //TODO: Need to bail if the effects kill the char
           damage.resolveStatusEffects(currentCharacter);
 
           if (currentCharacter.player) {
+            this.playerTurn = true;
             //2nd action cooldown
             if (this.secondCooldown > 0) {
               this.secondCooldown--;
-              if (this.secondCooldown == 0) {
-                const btn = document.getElementById("2ndActionButton");
-                btn.disabled = false;
-              }
             }
-            //Wait for the user to pick an action before continuing
-            action = await this.waitForUserAttack();
-            target = this.playerTarget;
-          } else {
-            target = store.hero;
-          }
 
-          //Reset guardian defense for 2nd ability
-          if (store.hero.class === "guardian") {
-            this.resetStats();
+            if (store.hero.class === "guardian") {
+              this.resetStats();
+            }
+
+            //Break loop for user to take action
+            break;
           }
 
           //Different action types
-          if (action === "attack" || !currentCharacter.player) {
-            this.attack(currentCharacter, target);
-          } else if (action === "second") {
-            this.secondAction(currentCharacter, target);
-          } else if (action === "flee") {
-            const flee = fleeCombat();
+          // if (action === "attack") {
+          this.attack(currentCharacter, store.hero);
+          //TODO: these need to be set up for more complicated enemies later
+          // } else if (action === "second") {
+          //   this.secondAction(currentCharacter, target);
+          // } else if (action === "flee") {
+          //   const flee = fleeCombat();
 
-            if (flee) {
-              store.gameMessage = "You successfully fled";
-              const container = document.getElementById("characters");
-              container.innerHTML = "";
+          //   if (flee) {
+          //     store.gameMessage = "You successfully fled";
+          //     const container = document.getElementById("characters");
+          //     container.innerHTML = "";
 
-              this.resetStats(true);
-              return;
-            }
+          //     this.resetStats(true);
+          //     return;
+          //   }
 
-            store.gameMessage = "You failed to flee";
-          }
-
-          if (target.currentHP === 0 && !target.player) {
-            //If multiple enemies, remove defeated enemy
-            if (this.combatEnemies.length > 1) {
-              this.defeatedEnemy(target);
-            }
-
-            if (store.hero.class === "berserker") {
-              store.hero.currentHP += Math.ceil(store.hero.maxHP * 0.05);
-              health.balanceHealth();
-            }
-          }
+          //   store.gameMessage = "You failed to flee";
+          // }
         } else if (stunned) {
-          currentCharacter.turnCounter -= maxTurnCount;
+          currentCharacter.turnCounter -= this.encounterDetails.maxTurnCount;
           damage.resolveStatusEffects(currentCharacter);
         }
       }
 
-      this.resetStats(true);
+      if (this.combatEnemies.length === 0) {
+        this.postCombat();
+      }
+    },
 
-      const container = document.getElementById("characters");
-      container.innerHTML = "";
+    postCombat() {
+      const store = useMainStore();
+      const health = healthFuncs();
+      const sprite = useSpriteStore();
+
+      this.resetStats(true);
 
       this.inCombat = false;
       this.turnQueue = [];
       this.combatEnemies = [];
 
-      if (store.hero.currentHP > 0) {
-        store.gameMessage = "You Win!";
-        postCombat(xpToGain, numberOfEnemies);
-      } else {
+      if (store.hero.currentHP <= 0) {
         gameOver();
+      } else {
+        store.gameMessage = "You Win!";
+
+        health.postCombatHeal();
+        store.gainXP(this.encounterDetails.xpToGain);
+        this.encounterDetails.xpToGain = 0;
+
+        sprite.stopCombatLoop();
+        sprite.startOverworldCanvas();
       }
     },
+
+    playerPostAction() {
+      const store = useMainStore();
+      this.playerTurn = false;
+
+      this.checkForZeroHP();
+
+      if (
+        store.hero.currentHP > 0 &&
+        this.combatEnemies.some((obj) => obj.currentHP > 0)
+      ) {
+        this.combatLoop();
+      } else {
+        this.postCombat();
+      }
+    },
+
+    checkForZeroHP() {
+      const store = useMainStore();
+      const health = healthFuncs();
+      //Remove any defeated enemies
+      for (let i = 0; i < this.combatEnemies.length; i++) {
+        const enemy = this.combatEnemies[i];
+        if (enemy.currentHP === 0) {
+          //If multiple enemies, remove defeated enemy
+          if (this.combatEnemies.length > 1) {
+            this.defeatedEnemy(enemy);
+          }
+
+          if (store.hero.class === "berserker") {
+            store.hero.currentHP += Math.ceil(store.hero.maxHP * 0.05);
+            health.balanceHealth();
+          }
+        }
+      }
+    },
+
     defeatedEnemy(enemy) {
       const store = useMainStore();
       store.enemiesDefeated++;
@@ -207,41 +255,38 @@ export const useCombatStore = defineStore("combat", {
       }
     },
     //Attacks a target
-    attack(attacker, target, damage) {
-      if (evadeAttack(target)) {
+    attack(attacker, target, damageTotal) {
+      const store = useMainStore();
+      const damage = damageFuncs();
+      if (this.evadeAttack(target)) {
         return;
       }
 
-      if (!damage) {
-        damage = calcDamage(attacker, target);
+      if (!damageTotal) {
+        damageTotal = damage.calcDamage(attacker, target);
       }
 
-      target.currentHP = target.currentHP - damage;
+      target.currentHP = target.currentHP - damageTotal;
       if (target.currentHP < 0) {
         target.currentHP = 0;
       }
 
-      store.gameMessage = target.name + " took " + damage + " damage";
-      console.log(target.name + " took " + damage + " damage");
+      store.gameMessage = target.name + " took " + damageTotal + " damage";
+      console.log(target.name + " took " + damageTotal + " damage");
 
-      applyStatusEffect(attacker, target);
+      damage.applyStatusEffect(attacker, target);
 
       if (target.player) {
         let coin = target.items.find((item) => item.name === "rareCoin");
 
         if (coin) {
-          player.money += Math.ceil(damage * (coin.stack / 100));
+          store.hero.money += Math.ceil(damageTotal * (coin.stack / 100));
         }
 
-        if (player.class === "guardian") {
-          attacker.currentHP -= Math.ceil(damage * 0.05);
+        if (store.hero.class === "guardian") {
+          attacker.currentHP -= Math.ceil(damageTotal * 0.05);
         }
       }
-
-      // if (attacker.player) {
-      //   const atkBtn = document.getElementById("attackButton");
-      //   atkBtn.disabled = true;
-      // }
     },
     //Sets a new target for the player
     setTarget(id) {
@@ -371,7 +416,7 @@ export const useCombatStore = defineStore("combat", {
       let evasionChance = target.evasion;
 
       if (target.player) {
-        const shades = player.items.find((item) => item.name === "shades");
+        const shades = store.hero.items.find((item) => item.name === "shades");
         if (shades) {
           evasionChance += shades.stack * 5;
         }
