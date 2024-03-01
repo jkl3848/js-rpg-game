@@ -269,8 +269,8 @@ export const useSpriteStore = defineStore("sprites", {
         });
 
         tempEn.position = new anim.Vector2(
-          16 * 55 + (i % 2 ? 32 : 0),
-          16 * 10 + i * (16 * 5)
+          16 * 50 + (i % 2 ? 32 : 0),
+          16 * 14 + i * (16 * 5)
         );
 
         console.log(tempEn);
@@ -281,9 +281,9 @@ export const useSpriteStore = defineStore("sprites", {
       console.log(this.enemies);
 
       this.hero.lastPosition = this.hero.position;
-      this.hero.position = new anim.Vector2(16 * 16, 16 * 8);
+      this.hero.position = new anim.Vector2(16 * 8, 16 * 14);
       this.blurbi.lastPosition = this.blurbi.position;
-      this.blurbi.position = new anim.Vector2(16 * 14, 16 * 2);
+      this.blurbi.position = new anim.Vector2(16 * 6, 16 * 10);
 
       this.map.lastPosition = this.map.position;
       this.map.position = new anim.Vector2(0, 0);
@@ -335,22 +335,27 @@ export const useSpriteStore = defineStore("sprites", {
     drawGraphics() {
       const combat = useCombatStore();
 
+      const scale = combat.inCombat ? 2 : 1;
+
       this.map.sprite.drawImage(
         this.ctx,
         this.map.position.x,
-        this.map.position.y
+        this.map.position.y,
+        1
       );
 
       this.hero.sprite.drawImage(
         this.ctx,
         this.hero.position.x,
-        this.hero.position.y
+        this.hero.position.y,
+        scale
       );
 
       this.blurbi.sprite.drawImage(
         this.ctx,
         this.blurbi.position.x,
-        this.blurbi.position.y
+        this.blurbi.position.y,
+        scale
       );
 
       if (combat.inCombat) {
@@ -358,7 +363,8 @@ export const useSpriteStore = defineStore("sprites", {
           this.enemies[i].sprite.drawImage(
             this.ctx,
             this.enemies[i].position.x,
-            this.enemies[i].position.y
+            this.enemies[i].position.y,
+            scale
           );
         }
       }

@@ -76,7 +76,7 @@ export const animation = () => {
       }
     }
 
-    drawImage(ctx, x, y) {
+    drawImage(ctx, x, y, scale) {
       if (!this.resource.isLoaded) {
         return;
       }
@@ -100,8 +100,8 @@ export const animation = () => {
         frameSizeY,
         x, //Actual map position
         y,
-        frameSizeX * this.scale,
-        frameSizeY * this.scale
+        frameSizeX * scale,
+        frameSizeY * scale
       );
     }
   }

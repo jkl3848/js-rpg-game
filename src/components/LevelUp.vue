@@ -152,7 +152,10 @@ function spendPoint(isAdding, attr) {
       </div>
       <button
         class="primary-button"
-        @click="store.elementStates.levelUp = false"
+        @click="
+          store.elementStates.levelUp = false;
+          store.moveLock = false;
+        "
         id="level-up-button"
         :disabled="store.heroStats.levelPoints > 0"
       >
