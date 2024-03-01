@@ -10,6 +10,7 @@ export const animation = () => {
         overworldMap1: "public/assets/maps/test_map.jpg",
         combatMap1: "public/assets/maps/test_combat.png",
         knightWalking: "public/assets/characters/hero-walking/knight.png",
+        blurbi: "public/assets/characters/npcs/blurbi_sprite.png",
         enemySlime: "public/assets/characters/enemies/slime_sprite.png",
         enemyBabyTurtle:
           "public/assets/characters/enemies/baby_turtle_sprite.png",
