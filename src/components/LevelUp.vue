@@ -1,3 +1,29 @@
+<script setup>
+import { useMainStore } from "../../stores/mainStore";
+
+const store = useMainStore();
+
+function spendPoint(isAdding, attr) {
+  let upgradeAmount = 1;
+  //If adding to an attribute
+  if (attr === "maxHP") {
+    upgradeAmount *= 10;
+  }
+  if (isAdding) {
+    if (store.heroStats.levelPoints > 0) {
+      store.heroStats.levelPoints--;
+      store.hero[attr] += upgradeAmount;
+    }
+  } else {
+    if (store.heroStats.levelPoints < 4) {
+      store.heroStats.levelPoints++;
+
+      store.hero[attr] -= upgradeAmount;
+    }
+  }
+}
+</script>
+
 <template>
   <!-- Level up point allocator -->
   <div class="overlay full-overlay" id="point-allocator">
@@ -12,64 +38,123 @@
         <table>
           <tr class="point-section">
             <td class="point-attr">HP</td>
-            <td onclick="subAttrValue('maxHP')">
-              <button class="point-change-button">-</button>
+            <td>
+              <button
+                class="point-change-button"
+                @click="spendPoint(false, 'maxHP')"
+              >
+                -
+              </button>
             </td>
-            <td class="point-value" id="point-maxHP-value">7</td>
-            <td onclick="addAttrValue('maxHP')">
-              <button class="point-change-button">+</button>
+            <td class="point-value" id="point-maxHP-value">
+              {{ store.hero.maxHP }}
+            </td>
+            <td>
+              <button
+                class="point-change-button"
+                @click="spendPoint(true, 'maxHP')"
+              >
+                +
+              </button>
             </td>
           </tr>
           <tr class="point-section">
             <td class="point-attr">ATK</td>
-            <td onclick="subAttrValue('attack')">
-              <button class="point-change-button">-</button>
+            <td>
+              <button
+                class="point-change-button"
+                @click="spendPoint(false, 'attack')"
+              >
+                -
+              </button>
             </td>
-            <td class="point-value" id="point-attack-value"></td>
-            <td onclick="addAttrValue('attack')">
-              <button class="point-change-button">+</button>
+            <td class="point-value" id="point-attack-value">
+              {{ store.hero.attack }}
+            </td>
+            <td>
+              <button
+                class="point-change-button"
+                @click="spendPoint(true, 'attack')"
+              >
+                +
+              </button>
             </td>
           </tr>
 
           <tr class="point-section">
             <td class="point-attr">DEF</td>
-            <td onclick="subAttrValue('defense')">
-              <button class="point-change-button">-</button>
+            <td>
+              <button
+                class="point-change-button"
+                @click="spendPoint(false, 'defense')"
+              >
+                -
+              </button>
             </td>
-            <td class="point-value" id="point-defense-value"></td>
-            <td onclick="addAttrValue('defense')">
-              <button class="point-change-button">+</button>
+            <td class="point-value" id="point-defense-value">
+              {{ store.hero.defense }}
+            </td>
+            <td>
+              <button
+                class="point-change-button"
+                @click="spendPoint(true, 'defense')"
+              >
+                +
+              </button>
             </td>
           </tr>
 
           <tr class="point-section">
             <td class="point-attr">SPD</td>
-            <td onclick="subAttrValue('speed')">
-              <button class="point-change-button">-</button>
+            <td>
+              <button
+                class="point-change-button"
+                @click="spendPoint(false, 'speed')"
+              >
+                -
+              </button>
             </td>
-            <td class="point-value" id="point-speed-value"></td>
-            <td onclick="addAttrValue('speed')">
-              <button class="point-change-button">+</button>
+            <td class="point-value" id="point-speed-value">
+              {{ store.hero.speed }}
+            </td>
+            <td>
+              <button
+                class="point-change-button"
+                @click="spendPoint(true, 'speed')"
+              >
+                +
+              </button>
             </td>
           </tr>
           <tr class="point-section">
             <td class="point-attr">CRT</td>
-            <td onclick="subAttrValue('critChance')">
-              <button class="point-change-button">-</button>
+            <td>
+              <button
+                class="point-change-button"
+                @click="spendPoint(false, 'critChance')"
+              >
+                -
+              </button>
             </td>
-            <td class="point-value" id="point-critChance-value"></td>
-            <td onclick="addAttrValue('critChance')">
-              <button class="point-change-button">+</button>
+            <td class="point-value" id="point-critChance-value">
+              {{ store.hero.critChance }}
+            </td>
+            <td>
+              <button
+                class="point-change-button"
+                @click="spendPoint(true, 'critChance')"
+              >
+                +
+              </button>
             </td>
           </tr>
         </table>
       </div>
       <button
         class="primary-button"
-        onclick="
-document.getElementById('level-up-button').disabled = true;clearAllOverlays()"
+        @click="store.elementStates.levelUp = false"
         id="level-up-button"
-        disabled
+        :disabled="store.heroStats.levelPoints > 0"
       >
         Level Up
       </button>
