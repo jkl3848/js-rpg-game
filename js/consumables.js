@@ -208,8 +208,6 @@ export const consumableFuncs = () => {
       if (packItem) {
         stack = packItem.stack;
       }
-
-      itemSlot.innerHTML = `<span class='consum-stack'>${item.displayName}: ${stack}</span><span class='tooltip-text'>${item.desc}</span>`;
     }
   }
   return {

@@ -1,7 +1,14 @@
 <script setup>
+import { computed } from "vue";
 import { useMainStore } from "../../stores/mainStore";
+import { heroData } from "../../js/hero";
 
 const store = useMainStore();
+const heroInfo = heroData();
+
+const heroClass = computed(() => {
+  return heroInfo.classes.find((item) => item.name === store.hero.class);
+});
 
 function chunkedItems() {
   const itemsPerRow = 8;
@@ -25,7 +32,7 @@ function chunkedItems() {
 
     <!-- Player Info -->
     <div class="player-info">
-      <div class="hero-info">
+      <div class="player-info-section hero-info">
         <div id="player-name" class="hud-item">{{ store.hero.name }}</div>
         <div id="player-level" class="hud-item">
           Level: {{ store.hero.level }}
@@ -39,9 +46,19 @@ function chunkedItems() {
         </div>
         <div id="player-stats"></div>
       </div>
-      <div class="class-info">
+      <div class="player-info-section class-info">
         <div id="player-class" class="hud-item">
           Class: {{ store.hero.class }}
+        </div>
+        <div class="flex-col">
+          <span>{{ heroClass.secondAbility.name }}</span>
+          <span>{{ heroClass.secondAbility.desc }}</span>
+          <span>Cooldown: {{ heroClass.secondAbility.cooldown }}</span>
+        </div>
+        <div class="flex-col">
+          <span>Passive</span>
+          <span>{{ heroClass.secondAbility.name }}</span>
+          <span>{{ heroClass.secondAbility.desc }}</span>
         </div>
       </div>
     </div>
@@ -76,8 +93,8 @@ function chunkedItems() {
   padding: 40px;
   border-radius: 10px;
 
-  width: 512px;
-  height: 256px;
+  width: 768px;
+  height: 384px;
 
   color: white;
 }
@@ -97,6 +114,10 @@ function chunkedItems() {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.player-info-section {
+  width: 50%;
 }
 
 #player-items {
@@ -140,5 +161,10 @@ function chunkedItems() {
   transform: translateX(-50%);
   z-index: 999;
   font-size: 12px;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
 }
 </style>
