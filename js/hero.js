@@ -147,6 +147,10 @@ export const heroData = () => {
   function createHero(classIndex) {
     store.hero = structuredClone(playerTemplate);
 
+    if (store.heroName == "") {
+      store.heroName = "Nameless";
+    }
+
     const heroClass = classes[classIndex];
 
     for (const prop in heroClass) {
