@@ -13,6 +13,10 @@ function groupedItems(inputArray) {
   }
   return result;
 }
+
+function heroInventory(itemName) {
+  return store.hero.backpack.find((item) => item.name === itemName)?.stack || 0;
+}
 </script>
 
 <template>
@@ -32,8 +36,10 @@ function groupedItems(inputArray) {
         <td
           v-for="(item, cellIndex) in row"
           class="pack-item tooltip"
+          :class="heroInventory(item.name) > 1 ? '' : 'disabled'"
           @click="consumables.useConsumable(item.name)"
           :id="item.name"
+          :quantity="heroInventory(item.name) + 'x'"
         >
           {{ item.displayName }}
         </td>
@@ -85,12 +91,16 @@ function groupedItems(inputArray) {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
+.pack-item.disabled {
+  color: gray;
+}
+
 .tooltip {
   position: relative;
 }
 
 .tooltip:hover::after {
-  content: attr(id);
+  content: attr(quantity);
   position: absolute;
   background-color: black;
   color: white;

@@ -58,7 +58,7 @@ function playerAction(actionType) {
   </div>
 </template>
 
-<style>
+<style scoped>
 .hud {
   width: 1024px;
   display: flex;
