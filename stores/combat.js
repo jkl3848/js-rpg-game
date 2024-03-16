@@ -132,7 +132,7 @@ export const useCombatStore = defineStore("combat", {
             this.playerTurn = false;
             setTimeout(() => {
               this.enemyAttack(currentCharacter, store.hero);
-            }, "1500");
+            }, "800");
             break;
           }
 
@@ -283,8 +283,14 @@ export const useCombatStore = defineStore("combat", {
         target.currentHP = 0;
       }
 
-      store.gameMessage = target.name + " took " + damageTotal + " damage";
-      console.log(target.name + " took " + damageTotal + " damage");
+      store.gameMessage = `${
+        target.player ? store.heroName : target.name
+      } took ${damageTotal} damage`;
+      console.log(
+        `${
+          target.player ? store.heroName : target.name
+        } took ${damageTotal} damage`
+      );
 
       damage.applyStatusEffect(attacker, target);
 

@@ -14,6 +14,12 @@ export const animation = () => {
         enemySlime: "public/assets/characters/enemies/slime_sprite.png",
         enemyBabyTurtle:
           "public/assets/characters/enemies/baby_turtle_sprite.png",
+        enemyBigTurtle:
+          "public/assets/characters/enemies/big_turtle_sprite.png",
+        enemyTurtle: "public/assets/characters/enemies/turtle_sprite.png",
+        enemyRat: "public/assets/characters/enemies/rat_sprite.png",
+        enemyEvilMoose:
+          "public/assets/characters/enemies/evil_moose_sprite.png",
         enemyBat: "public/assets/characters/enemies/bat_sprite.png",
         iconArrowDown: "public/assets/icons/arrow_down_icon.png",
         iconEffectPoison: "public/assets/icons/poison_icon.png",

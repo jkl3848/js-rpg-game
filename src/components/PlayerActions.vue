@@ -30,7 +30,7 @@ function playerAction(actionType) {
         :disabled="!combat.playerTurn"
         @click="playerAction('attack')"
       >
-        Attack
+        Attack {{ combat.playerTurn }}
       </button>
     </div>
     <div class="tooltip" v-if="combat.inCombat">

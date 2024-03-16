@@ -25,17 +25,25 @@ function chunkedItems() {
 
     <!-- Player Info -->
     <div class="player-info">
-      <div id="player-name" class="hud-item">{{ store.hero.name }}</div>
-      <div id="player-class" class="hud-item">
-        Class: {{ store.hero.class }}
+      <div class="hero-info">
+        <div id="player-name" class="hud-item">{{ store.hero.name }}</div>
+        <div id="player-level" class="hud-item">
+          Level: {{ store.hero.level }}
+        </div>
+        <div id="player-hp" class="hud-item">
+          HP: {{ store.hero.currentHP }}
+        </div>
+        <div id="player-xp" class="hud-item">XP: {{ store.hero.xp }}</div>
+        <div id="player-money" class="hud-item">
+          Gold: {{ store.hero.money }}
+        </div>
+        <div id="player-stats"></div>
       </div>
-      <div id="player-level" class="hud-item">
-        Level: {{ store.hero.level }}
+      <div class="class-info">
+        <div id="player-class" class="hud-item">
+          Class: {{ store.hero.class }}
+        </div>
       </div>
-      <div id="player-hp" class="hud-item">HP: {{ store.hero.currentHP }}</div>
-      <div id="player-xp" class="hud-item">XP: {{ store.hero.xp }}</div>
-      <div id="player-money" class="hud-item">Gold: {{ store.hero.money }}</div>
-      <div id="player-stats"></div>
     </div>
 
     <!-- Player Items -->
@@ -83,6 +91,12 @@ function chunkedItems() {
   border: none;
   font-size: 20px;
   cursor: pointer;
+}
+
+.player-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 #player-items {

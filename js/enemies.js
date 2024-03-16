@@ -14,13 +14,33 @@ export const enemyData = () => {
   const health = healthFuncs();
 
   const mobRsrc = [
-    { name: "slime", imgResource: anim.resources.images.enemySlime },
-    { name: "rat", imgResource: anim.resources.images.enemySlime },
-    { name: "evil moose", imgResource: anim.resources.images.enemySlime },
-    { name: "bat", imgResource: anim.resources.images.enemyBat },
-    { name: "baby turtle", imgResource: anim.resources.images.enemyBabyTurtle },
-    { name: "turtle", imgResource: anim.resources.images.enemyBabyTurtle },
-    { name: "big turtle", imgResource: anim.resources.images.enemyBabyTurtle },
+    {
+      name: "slime",
+      imgResource: anim.resources.images.enemySlime,
+      frameSize: 48,
+    },
+    { name: "rat", imgResource: anim.resources.images.enemyRat, frameSize: 48 },
+    {
+      name: "evil moose",
+      imgResource: anim.resources.images.enemyEvilMoose,
+      frameSize: 64,
+    },
+    { name: "bat", imgResource: anim.resources.images.enemyBat, frameSize: 48 },
+    {
+      name: "baby turtle",
+      imgResource: anim.resources.images.enemyBabyTurtle,
+      frameSize: 48,
+    },
+    {
+      name: "turtle",
+      imgResource: anim.resources.images.enemyTurtle,
+      frameSize: 48,
+    },
+    {
+      name: "big turtle",
+      imgResource: anim.resources.images.enemyBigTurtle,
+      frameSize: 64,
+    },
   ];
 
   const mobs = [

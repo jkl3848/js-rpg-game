@@ -266,11 +266,14 @@ export const useSpriteStore = defineStore("sprites", {
       for (let i = 0; i < combat.combatEnemies.length; i++) {
         const enemyEl = combat.combatEnemies[i];
         let tempEn = {};
+        const frameSize = enData.mobRsrc.find(
+          (item) => item.name === enemyEl.name
+        ).frameSize;
 
         tempEn.sprite = new anim.Sprite({
           resource: enData.mobRsrc.find((item) => item.name === enemyEl.name)
             .imgResource,
-          frameSize: new anim.Vector2(48, 48),
+          frameSize: new anim.Vector2(frameSize, frameSize),
           hFrames: 3,
           vFrames: 1,
           frame: 0,
