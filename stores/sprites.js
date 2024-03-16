@@ -34,6 +34,11 @@ export const useSpriteStore = defineStore("sprites", {
         lastCenter: null,
       },
       enemies: [],
+      enemyArrow: {
+        sprite: null,
+        position: null,
+        frameIndex: 0,
+      },
       canvasState: {
         overworld: true,
         combat: false,
@@ -252,6 +257,14 @@ export const useSpriteStore = defineStore("sprites", {
         attack: [],
       };
 
+      this.enemyArrow.sprite = new anim.Sprite({
+        resource: anim.resources.images.iconArrowDown,
+        frameSize: new anim.Vector2(48, 48),
+        hFrames: 1,
+        vFrames: 1,
+        frame: 0,
+      });
+
       console.log(combat.combatEnemies);
 
       for (let i = 0; i < combat.combatEnemies.length; i++) {
@@ -272,6 +285,8 @@ export const useSpriteStore = defineStore("sprites", {
           16 * 50 + (i % 2 ? 32 : 0),
           16 * 14 + i * (16 * 5)
         );
+
+        tempEn.combatId = enemyEl.combatId;
 
         console.log(tempEn);
 
@@ -304,9 +319,6 @@ export const useSpriteStore = defineStore("sprites", {
       this.loop.stop();
     },
     updateCombatGraphics() {
-      const store = useMainStore();
-      const combat = useCombatStore();
-
       if (this.animData.lastUpdate >= 24) {
         if (this.hero.frameIndex >= 1) {
           this.hero.frameIndex = 0;
@@ -367,6 +379,12 @@ export const useSpriteStore = defineStore("sprites", {
             scale
           );
         }
+        this.enemyArrow.sprite.drawImage(
+          this.ctx,
+          this.enemyArrow.position.x,
+          this.enemyArrow.position.y,
+          scale
+        );
       }
     },
     keyInput() {

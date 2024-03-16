@@ -5,6 +5,7 @@ import { useSpriteStore } from "./sprites";
 import enemyData from "../js/enemies";
 import damageFuncs from "../js/damage";
 import healthFuncs from "../js/health";
+import animation from "../js/animation";
 
 let thiefStartSpeed;
 let guardianStartDefense;
@@ -227,13 +228,19 @@ export const useCombatStore = defineStore("combat", {
 
     defeatedEnemy(enemy) {
       const store = useMainStore();
+      const sprite = useSpriteStore();
+
       store.enemiesDefeated++;
       store.gameMessage = `${enemy.name} defeated!`;
+
       this.turnQueue = this.turnQueue.filter(
         (char) => char.combatId !== enemy.combatId
       );
       this.combatEnemies = this.combatEnemies.filter(
         (char) => char.combatId !== enemy.combatId
+      );
+      sprite.enemies = sprite.enemies.filter(
+        (item) => item.combatId !== enemy.combatId
       );
 
       //Sets the first enemy as the default target for the user
@@ -289,25 +296,22 @@ export const useCombatStore = defineStore("combat", {
     },
     //Sets a new target for the player
     setTarget(id) {
-      //Reset target selection and color
-      // const targetEl = document.querySelectorAll(".target-enemy");
-
-      // targetEl.forEach((el) => {
-      //   el.classList.remove("target-enemy");
-      // });
-
       this.playerTarget = this.combatEnemies.find(
         (enemy) => enemy.combatId === id
       );
 
-      // const target = document.getElementById("char-" + id);
-      // target.classList.add("target-enemy");
+      this.adjustArrowPosition(id);
+    },
+    adjustArrowPosition(id) {
+      const sprite = useSpriteStore();
+      const anim = animation();
 
-      // const turnEls = document.querySelectorAll(`#turn-char-${id}`);
+      const index = id - 1;
 
-      // turnEls.forEach((el) => {
-      //   el.classList.add("target-enemy");
-      // });
+      sprite.enemyArrow.position = new anim.Vector2(
+        16 * 50 + (index % 2 ? 32 : 0),
+        16 * 10 + index * (16 * 5)
+      );
     },
     //Decides if user can flee. Starts at 25% chance, increase based on player health
     fleeCombat() {
