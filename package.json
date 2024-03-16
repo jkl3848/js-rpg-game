@@ -9,13 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vitejs/plugin-vue": "^4.5.2",
     "pinia": "^2.1.7",
-    "vue": "~3.4.21"
+    "vue": "~3.4.21",
+    "vite": "^4.3.4"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.5.2",
     "@vue-macros/reactivity-transform": "^0.4.3",
-    "unplugin-vue-macros": "^2.7.10",
-    "vite": "^4.3.4"
+    "unplugin-vue-macros": "^2.7.10"
   }
 }
