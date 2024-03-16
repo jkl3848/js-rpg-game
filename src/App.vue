@@ -10,6 +10,7 @@ import PlayerActions from "./components/PlayerActions.vue";
 import Backpack from "./components/Backpack.vue";
 import GameMessages from "./components/GameMessages.vue";
 import LevelUp from "./components/LevelUp.vue";
+import PlayerStats from "./components/PlayerStats.vue";
 
 const store = useMainStore();
 const combat = useCombatStore();
@@ -72,6 +73,7 @@ onMounted(() => {
   <!-- This is for game overlays -->
   <div id="overlays-section">
     <Backpack v-if="store.elementStates.backpackOpen"></Backpack>
+    <PlayerStats v-if="store.elementStates.playerStats" />
   </div>
 
   <!-- Dev space -->

@@ -30,6 +30,9 @@ function playerAction(actionType) {
     <div class="tooltip" v-if="combat.inCombat">
       <button
         class="action-button"
+        :class="
+          combat.secondCooldown > 0 || !combat.playerTurn ? 'disabled' : ''
+        "
         id="2ndActionButton"
         :disabled="combat.secondCooldown > 0 || !combat.playerTurn"
         @click="playerAction('2')"
@@ -52,7 +55,9 @@ function playerAction(actionType) {
       <img
         src="../../public/assets/icons/backpack_icon.png"
         class="backpack-icon"
-        @click="store.elementStates.backpackOpen = true"
+        @click="
+          store.elementStates.backpackOpen = !store.elementStates.backpackOpen
+        "
       />
     </div>
   </div>
@@ -89,7 +94,7 @@ function playerAction(actionType) {
   background-color: rgb(237, 18, 18);
 }
 
-.action-button :disabled {
+.action-button.disabled {
   opacity: 0.7;
 }
 

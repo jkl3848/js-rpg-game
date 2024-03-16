@@ -66,6 +66,9 @@ function togglePlayerStats() {
   color: white; /* Text color */
   padding: 10px; /* Adjust padding as needed */
   box-sizing: border-box; /* Ensure padding doesn't affect width */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .hud-item {
