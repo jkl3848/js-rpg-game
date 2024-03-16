@@ -111,7 +111,6 @@ export const useCombatStore = defineStore("combat", {
           !stunned
         ) {
           currentCharacter.turnCounter -= this.encounterDetails.maxTurnCount;
-          store.gameMessage = `Turn: ${currentCharacter.name}`;
 
           console.log(`Turn: ${currentCharacter.name}`);
 
@@ -368,8 +367,6 @@ export const useCombatStore = defineStore("combat", {
       else if (store.hero.secondAbility.name === "Rage") {
         store.hero.currentHP -= Math.ceil(store.hero.maxHP * 0.2);
         store.hero.attack += Math.ceil(store.hero.attack * 1.2);
-
-        updatePlayerHealth();
       }
       //Alchemist
       else if (store.hero.secondAbility.name === "Toxin") {

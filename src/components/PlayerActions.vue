@@ -24,8 +24,8 @@ function playerAction(actionType) {
         :disabled="!combat.playerTurn"
         @click="playerAction('attack')"
       >
-        Attack</button
-      ><span class="tooltip-text">Attack for 100% damage</span>
+        Attack
+      </button>
     </div>
     <div class="tooltip" v-if="combat.inCombat">
       <button
@@ -34,8 +34,8 @@ function playerAction(actionType) {
         :disabled="combat.secondCooldown > 0 || !combat.playerTurn"
         @click="playerAction('2')"
       >
-        2nd Action</button
-      ><span class="tooltip-text" id="2ndActionTooltip"></span>
+        2nd Action
+      </button>
     </div>
     <div class="tooltip" v-if="combat.inCombat">
       <button
@@ -44,27 +44,29 @@ function playerAction(actionType) {
         :disabled="!combat.playerTurn"
         @click="playerAction('flee')"
       >
-        Flee</button
-      ><span class="tooltip-text">Flee from combat</span>
+        Flee
+      </button>
     </div>
-    <div class="tooltip">
-      <img src="../../public/assets/icons/backpack_icon.png" /><span
-        class="tooltip-text"
-        >Open Backpack</span
-      >
+    <div></div>
+    <div class="tooltip" id="backpack">
+      <img
+        src="../../public/assets/icons/backpack_icon.png"
+        class="backpack-icon"
+        @click="store.elementStates.backpackOpen = true"
+      />
     </div>
   </div>
 </template>
 
 <style>
 .hud {
-  width: 100%;
+  width: 1024px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 
   background-color: gray;
-  height: 40px;
+  height: 48px;
 
   padding: auto;
 }
@@ -76,11 +78,27 @@ function playerAction(actionType) {
   width: 80px;
   height: 30px;
 
+  margin: 8px;
+
   border: none;
   border-radius: 15px;
+  cursor: pointer;
+}
+
+.action-button:hover {
+  background-color: rgb(237, 18, 18);
 }
 
 .action-button :disabled {
   opacity: 0.7;
+}
+
+#backpack {
+  position: absolute;
+  left: 970px;
+}
+
+.backpack-icon {
+  cursor: pointer;
 }
 </style>

@@ -1,7 +1,11 @@
 import { useMainStore } from "../stores/mainStore";
+import damageFuncs from "./damage";
+import healthFuncs from "./health";
 
 export const consumableFuncs = () => {
   const store = useMainStore();
+  const damage = damageFuncs();
+  const health = healthFuncs();
 
   const consumables = [
     {
@@ -92,15 +96,15 @@ export const consumableFuncs = () => {
 
       item = consumables[itemNumber];
     }
-    if (player.backpack.find((obj) => obj.name === item.name)) {
-      itemObj = player.backpack.find((obj) => obj.name === item.name);
+    if (store.hero.backpack.find((obj) => obj.name === item.name)) {
+      itemObj = store.hero.backpack.find((obj) => obj.name === item.name);
       itemObj.stack++;
     }
     //otherwise add it
     else {
       itemObj = structuredClone(item);
       itemObj.stack = 1;
-      player.backpack.push(itemObj);
+      store.hero.backpack.push(itemObj);
     }
 
     store.gameMessage = "Gained " + item.name;
@@ -109,23 +113,21 @@ export const consumableFuncs = () => {
   }
 
   function useConsumable(itemName) {
-    const item = player.backpack.find((obj) => obj.name === itemName);
+    const item = store.hero.backpack.find((obj) => obj.name === itemName);
 
-    const poison = player.effects.find((item) => item.type === "poison");
-    const burn = player.effects.find((item) => item.type === "burn");
-    const broken = player.effects.find((item) => item.type === "broken");
+    const poison = store.hero.effects.find((item) => item.type === "poison");
+    const burn = store.hero.effects.find((item) => item.type === "burn");
+    const broken = store.hero.effects.find((item) => item.type === "broken");
 
     if (!item) {
       return;
     }
 
     if (item.type === "heal") {
-      if (player.currentHP < player.maxHP) {
+      if (store.hero.currentHP < store.hero.maxHP) {
         console.log("healing");
-        player.currentHP += item.boost;
-        balanceHealth();
-
-        updatePlayerHealth();
+        store.hero.currentHP += item.boost;
+        health.balanceHealth();
       } else {
         return;
       }
@@ -139,7 +141,7 @@ export const consumableFuncs = () => {
         if (poison.stack > 1) {
           poison.stack--;
         } else {
-          player.effects = player.effects.filter(
+          store.hero.effects = store.hero.effects.filter(
             (item) => item.type !== "poison"
           );
         }
@@ -151,7 +153,7 @@ export const consumableFuncs = () => {
         if (burn.stack > 1) {
           burn.stack--;
         } else {
-          player.effects = player.effects.filter(
+          store.hero.effects = store.hero.effects.filter(
             (item) => item.type !== "burn"
           );
         }
@@ -163,14 +165,14 @@ export const consumableFuncs = () => {
         if (broken.stack > 1) {
           broken.stack--;
         } else {
-          player.effects = player.effects.filter(
+          store.hero.effects = store.hero.effects.filter(
             (item) => item.type !== "broken"
           );
         }
       } else if (item.name === "fireCracker") {
-        applyStatusEffect(player, playerTarget, "burn", 3);
+        damage.applyStatusEffect(store.hero, store.heroTarget, "burn", 3);
       } else if (item.name === "rawChicken") {
-        applyStatusEffect(player, playerTarget, "poison", 3);
+        damage.applyStatusEffect(store.hero, store.heroTarget, "poison", 3);
       } else if (item.name === "bomb") {
         let enemyList = turnQueue.filter((item) => !item.player);
         for (let i = 0; i < enemyList.length; i++) {
@@ -186,7 +188,9 @@ export const consumableFuncs = () => {
     if (item.stack > 1) {
       item.stack--;
     } else {
-      player.backpack = player.backpack.filter((obj) => obj.name !== item.name);
+      store.hero.backpack = store.hero.backpack.filter(
+        (obj) => obj.name !== item.name
+      );
     }
 
     updateBackpack();
@@ -197,7 +201,9 @@ export const consumableFuncs = () => {
       const item = consumables[i];
       const itemSlot = document.getElementById(item.name);
       let stack = 0;
-      const packItem = player.backpack.find((obj) => obj.name === item.name);
+      const packItem = store.hero.backpack.find(
+        (obj) => obj.name === item.name
+      );
 
       if (packItem) {
         stack = packItem.stack;
