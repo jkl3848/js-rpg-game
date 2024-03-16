@@ -10,7 +10,12 @@ function playerAction(actionType) {
     combat.attack(store.hero, combat.playerTarget);
   }
 
+  if (actionType === "2") {
+    combat.secondAction(store.hero, combat.playerTarget);
+  }
+
   combat.playerPostAction();
+  combat.playerTurn = false;
 }
 </script>
 
@@ -20,6 +25,7 @@ function playerAction(actionType) {
     <div class="tooltip" v-if="combat.inCombat">
       <button
         class="action-button"
+        :class="!combat.playerTurn ? 'disabled' : ''"
         id="attackButton"
         :disabled="!combat.playerTurn"
         @click="playerAction('attack')"
@@ -43,6 +49,7 @@ function playerAction(actionType) {
     <div class="tooltip" v-if="combat.inCombat">
       <button
         class="action-button"
+        :class="!combat.playerTurn ? 'disabled' : ''"
         id="fleeButton"
         :disabled="!combat.playerTurn"
         @click="playerAction('flee')"
@@ -95,7 +102,7 @@ function playerAction(actionType) {
 }
 
 .action-button.disabled {
-  opacity: 0.7;
+  background-color: rgb(110, 14, 14);
 }
 
 #backpack {

@@ -263,10 +263,7 @@ export const useSpriteStore = defineStore("sprites", {
         frame: 0,
       });
 
-      console.log(combat.combatEnemies);
-
       for (let i = 0; i < combat.combatEnemies.length; i++) {
-        console.log("Generating enemy " + i);
         const enemyEl = combat.combatEnemies[i];
         let tempEn = {};
 
@@ -286,12 +283,8 @@ export const useSpriteStore = defineStore("sprites", {
 
         tempEn.combatId = enemyEl.combatId;
 
-        console.log(tempEn);
-
         this.enemies.push(tempEn);
       }
-
-      console.log(this.enemies);
 
       this.hero.lastPosition = this.hero.position;
       this.hero.position = new anim.Vector2(16 * 8, 16 * 14);

@@ -4,6 +4,7 @@ import { useSpriteStore } from "./sprites";
 import heroData from "../js/hero";
 import healthFuncs from "../js/health";
 import itemFuncs from "../js/items";
+import { useCombatStore } from "./combat";
 
 export const useMainStore = defineStore("mainStore", {
   state: () => {
@@ -110,6 +111,91 @@ export const useMainStore = defineStore("mainStore", {
 
       health.setHealthToMax(this.hero);
       this.gameMessage = "You are now level " + this.hero.level;
+    },
+    clearDataForNewGame() {
+      const combat = useCombatStore();
+      const sprite = useSpriteStore();
+      //combat
+
+      combat.inCombat = false;
+      combat.turnQueue = [];
+      combat.combatEnemies = [];
+      combat.secondCooldown = 0;
+      combat.randomEncounter = 200;
+      combat.areaEncounterVal = 1;
+      combat.encounterVal = 6;
+      combat.areaCombatVal = 0;
+      combat.playerTarget = {};
+      //this
+      this.heroName = "";
+      this.hero = {};
+      this.blurbi = { level: 1, skills: [] };
+      this.heroStats = { levelPoints: 4, nextXPLevel: 10, lastXPLevel: 0 };
+      this.gameStats = { enemiesDefeated: 0 };
+      //sprite
+      sprite.hero = {
+        spritePath: null,
+        sprite: null,
+        position: null,
+        lastPosition: null,
+        animations: [],
+        frameIndex: 0,
+        frameArr: [],
+      };
+      sprite.blurbi = {
+        spritePath: null,
+        sprite: null,
+        position: null,
+        lastPosition: null,
+        frameIndex: 0,
+      };
+      sprite.map = {
+        spritePath: null,
+        sprite: null,
+        position: null,
+        lastPosition: null,
+        centerScreen: null,
+        lastCenter: null,
+      };
+      sprite.enemies = [];
+      sprite.enemyArrow = {
+        sprite: null,
+        position: null,
+        frameIndex: 0,
+      };
+      sprite.canvasState = {
+        overworld: true,
+        combat: false,
+      };
+      sprite.loop = null;
+      sprite.animData = {
+        lastUpdate: 0,
+      };
+      sprite.ctx = null;
+      sprite.keyDirection = [];
+    },
+
+    gameOver() {
+      const sprite = useSpriteStore();
+      sprite.stopCombatLoop();
+      this.gameMessage = "";
+
+      this.elementStates = {
+        startScreen: true,
+        playerHud: false,
+        gameCanvas: false,
+        playerActions: false,
+        gameOverScreen: false,
+        playerStats: false,
+        backpackOpen: false,
+        levelUp: false,
+      };
+      this.clearDataForNewGame();
+      store.gameMessage = "You Lose!";
+      document.getElementById("startButton").disabled = false;
+      moveLock = true;
+
+      document.getElementById("game-over").style.display = "flex";
     },
   },
 });

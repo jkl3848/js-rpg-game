@@ -86,18 +86,13 @@ export const useCombatStore = defineStore("combat", {
       const health = healthFuncs();
 
       console.log("Starting combat loop");
+      this.playerTurn = false;
       //While the hero and at least 1 enemy has health
       while (
         store.hero.currentHP > 0 &&
         this.combatEnemies.some((obj) => obj.currentHP > 0)
       ) {
-        setTimeout(() => {
-          console.log("Delayed for 1 second.");
-        }, "1000");
-
         const currentCharacter = this.turnQueue.shift();
-
-        console.log(currentCharacter);
 
         this.turnQueue.push(currentCharacter);
 
@@ -120,6 +115,7 @@ export const useCombatStore = defineStore("combat", {
           damage.resolveStatusEffects(currentCharacter);
 
           if (currentCharacter.player) {
+            console.log("Players turn");
             this.playerTurn = true;
             //2nd action cooldown
             if (this.secondCooldown > 0) {
@@ -132,11 +128,16 @@ export const useCombatStore = defineStore("combat", {
 
             //Break loop for user to take action
             break;
+          } else {
+            this.playerTurn = false;
+            setTimeout(() => {
+              this.enemyAttack(currentCharacter, store.hero);
+            }, "1500");
+            break;
           }
 
           //Different action types
           // if (action === "attack") {
-          this.attack(currentCharacter, store.hero);
           //TODO: these need to be set up for more complicated enemies later
           // } else if (action === "second") {
           //   this.secondAction(currentCharacter, target);
@@ -177,12 +178,13 @@ export const useCombatStore = defineStore("combat", {
       this.combatEnemies = [];
 
       if (store.hero.currentHP <= 0) {
-        gameOver();
+        store.gameOver();
       } else {
         store.gameMessage = "You Win!";
 
         health.postCombatHeal();
         store.gainXP(this.encounterDetails.xpToGain);
+        store.gainMoney(this.encounterVal * 5);
         this.encounterDetails.xpToGain = 0;
 
         sprite.stopCombatLoop();
@@ -192,7 +194,6 @@ export const useCombatStore = defineStore("combat", {
 
     playerPostAction() {
       const store = useMainStore();
-      this.playerTurn = false;
 
       this.checkForZeroHP();
 
@@ -204,6 +205,11 @@ export const useCombatStore = defineStore("combat", {
       } else {
         this.postCombat();
       }
+    },
+
+    enemyAttack(enemy, hero) {
+      this.attack(enemy, hero);
+      this.combatLoop();
     },
 
     checkForZeroHP() {
@@ -340,10 +346,11 @@ export const useCombatStore = defineStore("combat", {
     //2nd actions, different per class
     secondAction(currentCharacter, target) {
       const store = useMainStore();
+      const damage = damageFuncs();
       //Knight
       if (store.hero.secondAbility.name === "For Honor") {
-        const damage = calcDamage(currentCharacter, target, 1.25);
-        this.attack(currentCharacter, target, damage);
+        const damageVal = damage.calcDamage(currentCharacter, target, 1.25);
+        this.attack(currentCharacter, target, damageVal);
 
         let defReduce = Math.ceil(target.defense * 0.2);
         if (defReduce < 1) {
@@ -354,10 +361,18 @@ export const useCombatStore = defineStore("combat", {
       }
       //Thief
       else if (store.hero.secondAbility.name === "Dual Slash") {
-        const firstAtkDamage = calcDamage(currentCharacter, target, 0.75);
+        const firstAtkDamage = damage.calcDamage(
+          currentCharacter,
+          target,
+          0.75
+        );
         this.attack(currentCharacter, target, firstAtkDamage);
 
-        const secondAtkDamage = calcDamage(currentCharacter, target, 0.75);
+        const secondAtkDamage = damage.calcDamage(
+          currentCharacter,
+          target,
+          0.75
+        );
         this.attack(currentCharacter, target, secondAtkDamage);
 
         store.hero.speed += 2;
@@ -378,9 +393,9 @@ export const useCombatStore = defineStore("combat", {
 
         for (let i = 0; i < enemyList.length; i++) {
           let target = enemyList[i];
-          const damage = calcDamage(currentCharacter, target, 0.25);
-          this.attack(currentCharacter, target, damage);
-          applyStatusEffect(currentCharacter, target, "poison", 3);
+          const damageVal = damage.calcDamage(currentCharacter, target, 0.25);
+          this.attack(currentCharacter, target, damageVal);
+          damage.applyStatusEffect(currentCharacter, target, "poison", 3);
         }
       }
       //Professor
@@ -389,7 +404,7 @@ export const useCombatStore = defineStore("combat", {
 
         for (let i = 0; i < enemyList.length; i++) {
           let target = enemyList[i];
-          applyStatusEffect(currentCharacter, target, "stun", 1);
+          damage.applyStatusEffect(currentCharacter, target, "stun", 1);
         }
       }
 

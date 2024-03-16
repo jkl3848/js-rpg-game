@@ -4,13 +4,11 @@ import { useMainStore } from "../../stores/mainStore";
 const store = useMainStore();
 
 function chunkedItems() {
-  console.log(store.hero.itemss);
   const itemsPerRow = 8;
   const chunks = [];
   for (let i = 0; i < store.hero.items.length; i += itemsPerRow) {
     chunks.push(store.hero.items.slice(i, i + itemsPerRow));
   }
-  console.log(chunks);
   return chunks;
 }
 </script>

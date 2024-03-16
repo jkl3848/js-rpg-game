@@ -205,8 +205,6 @@ export const enemyData = () => {
         randomIndex = Math.floor(Math.random() * mobs.length);
       } while (bannedEnemies.includes(randomIndex));
 
-      console.log(mobs[randomIndex]);
-
       const randomEnemy = structuredClone(mobs[randomIndex]);
 
       //Create mobs combat element
@@ -221,7 +219,6 @@ export const enemyData = () => {
 
         // Otherwise, add the random item to the selectedItems array
         enemies.push(randomEnemy);
-        console.log("added new enemy");
       } else {
         bannedEnemies.push(randomIndex);
       }
