@@ -131,8 +131,6 @@ export const useSpriteStore = defineStore("sprites", {
         return;
       }
 
-      // console.log(this.keyDirection[0]);
-
       //Updates either the
       switch (this.keyDirection[0]) {
         case "LEFT":
@@ -159,11 +157,11 @@ export const useSpriteStore = defineStore("sprites", {
 
           if (
             this.hero.position.x + 80 > this.map.centerScreen.x &&
-            this.map.position.x > (this.map.sprite.frameSize.x - 512) * -1
+            this.map.position.x > (this.map.sprite.frameSize.x - 1024) * -1
           ) {
             this.map.position.x -= 2;
           } else {
-            if (this.hero.position.x < 512 - 2 - 48) {
+            if (this.hero.position.x < 1024 - 2 - 48) {
               this.hero.position.x += 2;
               this.blurbi.position.x += 2;
             }
@@ -193,11 +191,11 @@ export const useSpriteStore = defineStore("sprites", {
 
           if (
             this.hero.position.y + 80 > this.map.centerScreen.y &&
-            this.map.position.y > (this.map.sprite.frameSize.y - 256) * -1
+            this.map.position.y > (this.map.sprite.frameSize.y - 512) * -1
           ) {
             this.map.position.y -= 2;
           } else {
-            if (this.hero.position.y < 256 - 2 - 48) {
+            if (this.hero.position.y < 512 - 2 - 48) {
               this.hero.position.y += 2;
               this.blurbi.position.y += 2;
             }
