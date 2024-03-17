@@ -46,9 +46,6 @@ jobs:
         with:
           # Upload dist repository
           path: "./dist"
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@4.1.6  # Using a different GitHub Pages deploy action for better handling of assets
-        with:
-          branch: gh-pages
-          folder: .  # Deploying from the root directory
-          cleanup: false
+       - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
