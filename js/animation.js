@@ -7,23 +7,23 @@ export const animation = () => {
     constructor() {
       //Downloads images for use
       this.toLoad = {
-        overworldMap1: "public/assets/maps/test_map.jpg",
-        combatMap1: "public/assets/maps/test_combat.png",
-        knightWalking: "public/assets/characters/hero-walking/knight.png",
-        blurbi: "public/assets/characters/npcs/blurbi_sprite.png",
-        enemySlime: "public/assets/characters/enemies/slime_sprite.png",
+        overworldMap1: "./public/assets/maps/test_map.jpg",
+        combatMap1: "./public/assets/maps/test_combat.png",
+        knightWalking: "./public/assets/characters/hero-walking/knight.png",
+        blurbi: "./public/assets/characters/npcs/blurbi_sprite.png",
+        enemySlime: "./public/assets/characters/enemies/slime_sprite.png",
         enemyBabyTurtle:
-          "public/assets/characters/enemies/baby_turtle_sprite.png",
+          "./public/assets/characters/enemies/baby_turtle_sprite.png",
         enemyBigTurtle:
-          "public/assets/characters/enemies/big_turtle_sprite.png",
-        enemyTurtle: "public/assets/characters/enemies/turtle_sprite.png",
-        enemyRat: "public/assets/characters/enemies/rat_sprite.png",
+          "./public/assets/characters/enemies/big_turtle_sprite.png",
+        enemyTurtle: "./public/assets/characters/enemies/turtle_sprite.png",
+        enemyRat: "./public/assets/characters/enemies/rat_sprite.png",
         enemyEvilMoose:
-          "public/assets/characters/enemies/evil_moose_sprite.png",
-        enemyBat: "public/assets/characters/enemies/bat_sprite.png",
-        iconArrowDown: "public/assets/icons/arrow_down_icon.png",
-        iconEffectPoison: "public/assets/icons/poison_icon.png",
-        iconEffectFire: "public/assets/icons/fire_icon.png",
+          "./public/assets/characters/enemies/evil_moose_sprite.png",
+        enemyBat: "./public/assets/characters/enemies/bat_sprite.png",
+        iconArrowDown: "./public/assets/icons/arrow_down_icon.png",
+        iconEffectPoison: "./public/assets/icons/poison_icon.png",
+        iconEffectFire: "./public/assets/icons/fire_icon.png",
       };
 
       //Holds all images
