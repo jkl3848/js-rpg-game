@@ -24,7 +24,7 @@ function togglePlayerStats() {
       </div>
       <div class="hud-item">
         <span @click="togglePlayerStats" id="info-button"
-          ><img src="../../public/assets/icons/info_icon.png"
+          ><img src="../../assets/icons/info_icon.png"
         /></span>
       </div>
     </div>

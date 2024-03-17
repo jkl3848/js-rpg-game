@@ -60,7 +60,7 @@ function playerAction(actionType) {
     <div></div>
     <div class="tooltip" id="backpack">
       <img
-        src="../../public/assets/icons/backpack_icon.png"
+        src="../../assets/icons/backpack_icon.png"
         class="backpack-icon"
         @click="
           store.elementStates.backpackOpen = !store.elementStates.backpackOpen
