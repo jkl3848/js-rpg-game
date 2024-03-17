@@ -9,7 +9,7 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/",
+  base: "./",
   plugins: [
     VueMacros({
       plugins: {
@@ -21,7 +21,6 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": "/src",
-      "public/assets": "@assets",
     },
   },
 });
