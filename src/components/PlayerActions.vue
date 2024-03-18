@@ -1,9 +1,11 @@
 <script setup>
 import { useCombatStore } from "../../stores/combat";
 import { useMainStore } from "../../stores/mainStore";
+import heroData from "../../js/hero";
 
 const store = useMainStore();
 const combat = useCombatStore();
+const heroInfo = heroData();
 
 function playerAction(actionType) {
   if (actionType === "attack") {
@@ -30,7 +32,7 @@ function playerAction(actionType) {
         :disabled="!combat.playerTurn"
         @click="playerAction('attack')"
       >
-        Attack {{ combat.playerTurn }}
+        Attack
       </button>
     </div>
     <div class="tooltip" v-if="combat.inCombat">
@@ -43,7 +45,10 @@ function playerAction(actionType) {
         :disabled="combat.secondCooldown > 0 || !combat.playerTurn"
         @click="playerAction('2')"
       >
-        2nd Action
+        {{
+          heroInfo.classes.find((item) => item.name === store.hero.class)
+            .secondAbility.name
+        }}
       </button>
     </div>
     <div class="tooltip" v-if="combat.inCombat">
@@ -87,7 +92,7 @@ function playerAction(actionType) {
   background-color: rgb(211, 16, 16);
   color: white;
 
-  width: 80px;
+  width: 120px;
   height: 30px;
 
   margin: 8px;

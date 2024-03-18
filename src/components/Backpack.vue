@@ -51,9 +51,8 @@ function heroInventory(itemName) {
 <style scoped>
 #backpack-overlay {
   position: fixed;
-  top: 33%;
-  left: 40%;
-  transform: translate(-50%, -50%);
+  top: 256px;
+  left: 256px;
   background-color: rgba(0, 0, 0, 0.8);
   z-index: 9999;
   padding: 40px;
