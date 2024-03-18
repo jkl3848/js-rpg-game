@@ -1,5 +1,20 @@
 import { useMainStore } from "../stores/mainStore";
 
+import overworldMap1 from "assets/maps/test_map.jpg";
+import combatMap1 from "assets/maps/test_combat.png";
+import knightWalking from "assets/characters/hero-walking/knight.png";
+import blurbi from "assets/characters/npcs/blurbi_sprite.png";
+import enemySlime from "assets/characters/enemies/slime_sprite.png";
+import enemyBabyTurtle from "assets/characters/enemies/baby_turtle_sprite.png";
+import enemyBigTurtle from "assets/characters/enemies/big_turtle_sprite.png";
+import enemyTurtle from "assets/characters/enemies/turtle_sprite.png";
+import enemyRat from "assets/characters/enemies/rat_sprite.png";
+import enemyEvilMoose from "assets/characters/enemies/evil_moose_sprite.png";
+import enemyBat from "assets/characters/enemies/bat_sprite.png";
+import iconArrowDown from "assets/icons/arrow_down_icon.png";
+import iconEffectPoison from "assets/icons/poison_icon.png";
+import iconEffectFire from "assets/icons/fire_icon.png";
+
 export const animation = () => {
   const store = useMainStore();
 
@@ -7,20 +22,20 @@ export const animation = () => {
     constructor() {
       //Downloads images for use
       this.toLoad = {
-        overworldMap1: "../assets/maps/test_map.jpg",
-        combatMap1: "../assets/maps/test_combat.png",
-        knightWalking: "../assets/characters/hero-walking/knight.png",
-        blurbi: "../assets/characters/npcs/blurbi_sprite.png",
-        enemySlime: "../assets/characters/enemies/slime_sprite.png",
-        enemyBabyTurtle: "../assets/characters/enemies/baby_turtle_sprite.png",
-        enemyBigTurtle: "../assets/characters/enemies/big_turtle_sprite.png",
-        enemyTurtle: "../assets/characters/enemies/turtle_sprite.png",
-        enemyRat: "../assets/characters/enemies/rat_sprite.png",
-        enemyEvilMoose: "../assets/characters/enemies/evil_moose_sprite.png",
-        enemyBat: "../assets/characters/enemies/bat_sprite.png",
-        iconArrowDown: "../assets/icons/arrow_down_icon.png",
-        iconEffectPoison: "../assets/icons/poison_icon.png",
-        iconEffectFire: "../assets/icons/fire_icon.png",
+        overworldMap1,
+        combatMap1,
+        knightWalking,
+        blurbi,
+        enemySlime,
+        enemyBabyTurtle,
+        enemyBigTurtle,
+        enemyTurtle,
+        enemyRat,
+        enemyEvilMoose,
+        enemyBat,
+        iconArrowDown,
+        iconEffectPoison,
+        iconEffectFire,
       };
 
       //Holds all images
