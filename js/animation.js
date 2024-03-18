@@ -1,19 +1,19 @@
 import { useMainStore } from "../stores/mainStore";
 
-import overworldMap1 from "assets/maps/test_map.jpg";
-import combatMap1 from "assets/maps/test_combat.png";
-import knightWalking from "assets/characters/hero-walking/knight.png";
-import blurbi from "assets/characters/npcs/blurbi_sprite.png";
-import enemySlime from "assets/characters/enemies/slime_sprite.png";
-import enemyBabyTurtle from "assets/characters/enemies/baby_turtle_sprite.png";
-import enemyBigTurtle from "assets/characters/enemies/big_turtle_sprite.png";
-import enemyTurtle from "assets/characters/enemies/turtle_sprite.png";
-import enemyRat from "assets/characters/enemies/rat_sprite.png";
-import enemyEvilMoose from "assets/characters/enemies/evil_moose_sprite.png";
-import enemyBat from "assets/characters/enemies/bat_sprite.png";
-import iconArrowDown from "assets/icons/arrow_down_icon.png";
-import iconEffectPoison from "assets/icons/poison_icon.png";
-import iconEffectFire from "assets/icons/fire_icon.png";
+import overworldMap1 from "../assets/maps/test_map.jpg";
+import combatMap1 from "../assets/maps/test_combat.png";
+import knightWalking from "../assets/characters/hero-walking/knight.png";
+import blurbi from "../assets/characters/npcs/blurbi_sprite.png";
+import enemySlime from "../assets/characters/enemies/slime_sprite.png";
+import enemyBabyTurtle from "../assets/characters/enemies/baby_turtle_sprite.png";
+import enemyBigTurtle from "../assets/characters/enemies/big_turtle_sprite.png";
+import enemyTurtle from "../assets/characters/enemies/turtle_sprite.png";
+import enemyRat from "../assets/characters/enemies/rat_sprite.png";
+import enemyEvilMoose from "../assets/characters/enemies/evil_moose_sprite.png";
+import enemyBat from "../assets/characters/enemies/bat_sprite.png";
+import iconArrowDown from "../assets/icons/arrow_down_icon.png";
+import iconEffectPoison from "../assets/icons/poison_icon.png";
+import iconEffectFire from "../assets/icons/fire_icon.png";
 
 export const animation = () => {
   const store = useMainStore();
