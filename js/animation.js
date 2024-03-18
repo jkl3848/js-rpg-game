@@ -7,20 +7,20 @@ export const animation = () => {
     constructor() {
       //Downloads images for use
       this.toLoad = {
-        overworldMap1: "assets/maps/test_map.jpg",
-        combatMap1: "assets/maps/test_combat.png",
-        knightWalking: "assets/characters/hero-walking/knight.png",
-        blurbi: "assets/characters/npcs/blurbi_sprite.png",
-        enemySlime: "assets/characters/enemies/slime_sprite.png",
-        enemyBabyTurtle: "assets/characters/enemies/baby_turtle_sprite.png",
-        enemyBigTurtle: "assets/characters/enemies/big_turtle_sprite.png",
-        enemyTurtle: "assets/characters/enemies/turtle_sprite.png",
-        enemyRat: "assets/characters/enemies/rat_sprite.png",
-        enemyEvilMoose: "assets/characters/enemies/evil_moose_sprite.png",
-        enemyBat: "assets/characters/enemies/bat_sprite.png",
-        iconArrowDown: "assets/icons/arrow_down_icon.png",
-        iconEffectPoison: "assets/icons/poison_icon.png",
-        iconEffectFire: "assets/icons/fire_icon.png",
+        overworldMap1: "../assets/maps/test_map.jpg",
+        combatMap1: "../assets/maps/test_combat.png",
+        knightWalking: "../assets/characters/hero-walking/knight.png",
+        blurbi: "../assets/characters/npcs/blurbi_sprite.png",
+        enemySlime: "../assets/characters/enemies/slime_sprite.png",
+        enemyBabyTurtle: "../assets/characters/enemies/baby_turtle_sprite.png",
+        enemyBigTurtle: "../assets/characters/enemies/big_turtle_sprite.png",
+        enemyTurtle: "../assets/characters/enemies/turtle_sprite.png",
+        enemyRat: "../assets/characters/enemies/rat_sprite.png",
+        enemyEvilMoose: "../assets/characters/enemies/evil_moose_sprite.png",
+        enemyBat: "../assets/characters/enemies/bat_sprite.png",
+        iconArrowDown: "../assets/icons/arrow_down_icon.png",
+        iconEffectPoison: "../assets/icons/poison_icon.png",
+        iconEffectFire: "../assets/icons/fire_icon.png",
       };
 
       //Holds all images
